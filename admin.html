@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Finclarity</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        body {
+            background-color: #111827; /* Darker admin background */
+            color: #f9fafb;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .admin-card {
+            background-color: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 0.75rem;
+        }
+        .form-input {
+            background-color: #374151;
+            border: 1px solid #4b5563;
+            border-radius: 0.5rem;
+            color: #f9fafb;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px #1e40af;
+        }
+        .primary-btn {
+            background-color: #1d4ed8;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .primary-btn:hover {
+            background-color: #1e40af;
+        }
+         .secondary-btn {
+            background-color: #4b5563;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .secondary-btn:hover {
+            background-color: #6b7280;
+        }
+        .danger-btn {
+            color: #fca5a5;
+        }
+        .danger-btn:hover {
+            color: #ef4444;
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+        /* Simple Tab Styling */
+        .tab-button.active {
+            border-bottom-color: #3b82f6;
+            color: #3b82f6;
+        }
+    </style>
+</head>
+<body class="antialiased flex">
+
+    <aside class="w-64 bg-[#0f172a] h-screen sticky top-0 flex flex-col p-4">
+        <div class="text-2xl font-bold tracking-wider text-white mb-10" id="logo">
+            <a href="index.html">FINCLARITY</a>
+            <span class="block text-xs font-normal text-gray-400">Admin Panel</span>
+        </div>
+        <nav class="flex flex-col space-y-2">
+            <a href="#" class="flex items-center gap-3 text-gray-300 hover:text-white hover:bg-gray-700 p-3 rounded-lg transition-colors">
+                <i class="fas fa-tachometer-alt fa-fw"></i>
+                <span>Overview</span>
+            </a>
+            <a href="#" id="articles-tab-btn" class="tab-button active flex items-center gap-3 font-semibold text-white bg-gray-700 p-3 rounded-lg transition-colors">
+                <i class="fas fa-newspaper fa-fw"></i>
+                <span>Manage Articles</span>
+            </a>
+            <a href="#" id="results-tab-btn" class="tab-button flex items-center gap-3 text-gray-300 hover:text-white hover:bg-gray-700 p-3 rounded-lg transition-colors">
+                <i class="fas fa-chart-line fa-fw"></i>
+                <span>Manage Results</span>
+            </a>
+            <a href="#" id="users-tab-btn" class="tab-button flex items-center gap-3 text-gray-300 hover:text-white hover:bg-gray-700 p-3 rounded-lg transition-colors">
+                <i class="fas fa-users fa-fw"></i>
+                <span>Manage Users</span>
+            </a>
+        </nav>
+        <div class="mt-auto">
+             <a href="index.html" class="flex items-center gap-3 text-gray-400 hover:text-white p-3 rounded-lg transition-colors">
+                <i class="fas fa-globe fa-fw"></i>
+                <span>Back to Main Site</span>
+            </a>
+        </div>
+    </aside>
+
+    <main class="flex-1 p-8 overflow-y-auto">
+        
+        <section id="manage-articles">
+            <h1 class="text-3xl font-bold mb-8">Manage Articles</h1>
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+                <div class="xl:col-span-1">
+                    <div class="admin-card p-6">
+                        <h2 class="text-xl font-bold mb-4">Create New Article</h2>
+                        <form class="space-y-4">
+                            <div>
+                                <label for="article-title" class="block text-sm font-medium text-gray-300 mb-1">Title</label>
+                                <input type="text" id="article-title" class="form-input w-full p-2" placeholder="e.g., The 5 Pillars of Wealth">
+                            </div>
+                            <div>
+                                <label for="article-author" class="block text-sm font-medium text-gray-300 mb-1">Author</label>
+                                <input type="text" id="article-author" class="form-input w-full p-2" value="The Finclarity Team">
+                            </div>
+                            <div>
+                                <label for="article-content" class="block text-sm font-medium text-gray-300 mb-1">Content (Markdown supported)</label>
+                                <textarea id="article-content" rows="10" class="form-input w-full p-2" placeholder="Write your article content here..."></textarea>
+                            </div>
+                            <div class="flex gap-4">
+                                <button type="submit" class="primary-btn font-bold py-2 px-4 rounded-lg w-full">Publish Article</button>
+                                <button type="reset" class="secondary-btn font-bold py-2 px-4 rounded-lg">Clear</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="xl:col-span-2">
+                    <div class="admin-card p-6">
+                         <h2 class="text-xl font-bold mb-4">Existing Articles</h2>
+                         <div class="space-y-4">
+                              <div class="flex justify-between items-center p-4 bg-gray-900/50 rounded-lg">
+                                 <div>
+                                     <h3 class="font-semibold text-lg">The 5 Pillars of Modern Wealth Creation</h3>
+                                     <p class="text-sm text-gray-400">By The Finclarity Team</p>
+                                 </div>
+                                 <div class="flex gap-2">
+                                     <button class="secondary-btn p-2 w-10 h-10 rounded-md"><i class="fas fa-pencil-alt"></i></button>
+                                     <button class="danger-btn p-2 w-10 h-10 rounded-md"><i class="fas fa-trash-alt"></i></button>
+                                 </div>
+                             </div>
+                              <div class="flex justify-between items-center p-4 bg-gray-900/50 rounded-lg">
+                                 <div>
+                                     <h3 class="font-semibold text-lg">Introduction to Dividend Investing</h3>
+                                     <p class="text-sm text-gray-400">By The Finclarity Team</p>
+                                 </div>
+                                 <div class="flex gap-2">
+                                     <button class="secondary-btn p-2 w-10 h-10 rounded-md"><i class="fas fa-pencil-alt"></i></button>
+                                     <button class="danger-btn p-2 w-10 h-10 rounded-md"><i class="fas fa-trash-alt"></i></button>
+                                 </div>
+                             </div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="manage-results" class="hidden">
+             <h1 class="text-3xl font-bold mb-8">Manage Real-World Results</h1>
+              <p class="text-gray-400">This section is for managing case studies and member spotlights.</p>
+        </section>
+
+        <section id="manage-users" class="hidden">
+             <h1 class="text-3xl font-bold mb-8">Manage Users</h1>
+              <p class="text-gray-400">This section displays a list of all registered members.</p>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = {
+                articles: document.getElementById('manage-articles'),
+                results: document.getElementById('manage-results'),
+                users: document.getElementById('manage-users')
+            };
+
+            const tabButtons = {
+                articles: document.getElementById('articles-tab-btn'),
+                results: document.getElementById('results-tab-btn'),
+                users: document.getElementById('users-tab-btn')
+            };
+
+            function switchTab(tabName) {
+                Object.values(sections).forEach(section => section.classList.add('hidden'));
+                Object.values(tabButtons).forEach(button => {
+                    button.classList.remove('active', 'bg-gray-700', 'font-semibold', 'text-white');
+                    button.classList.add('text-gray-300');
+                });
+
+                if (sections[tabName]) {
+                    sections[tabName].classList.remove('hidden');
+                }
+                if (tabButtons[tabName]) {
+                    tabButtons[tabName].classList.add('active', 'bg-gray-700', 'font-semibold', 'text-white');
+                    tabButtons[tabName].classList.remove('text-gray-300');
+                }
+            }
+
+            tabButtons.articles.addEventListener('click', (e) => { e.preventDefault(); switchTab('articles'); });
+            tabButtons.results.addEventListener('click', (e) => { e.preventDefault(); switchTab('results'); });
+            tabButtons.users.addEventListener('click', (e) => { e.preventDefault(); switchTab('users'); });
+
+            switchTab('articles'); 
+        });
+    </script>
+</body>
+</html>

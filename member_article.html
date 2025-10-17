@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articles | Finclarity</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        html {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        html::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        body {
+            background-color: #0c111e; /* Fallback */
+            background-image: radial-gradient(circle at top left, rgba(26, 35, 54, 0.8), transparent 40%),
+                              radial-gradient(circle at bottom right, rgba(26, 35, 54, 0.8), transparent 40%);
+            background-attachment: fixed;
+            color: #f4f6f9;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .glass-card-hover:hover {
+             border-color: rgba(0, 82, 204, 0.5);
+             transform: translateY(-5px);
+        }
+        .article-content {
+            line-height: 1.75;
+        }
+        /* View Controller */
+        .page-view {
+            display: none;
+        }
+        .page-view.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header id="header" class="bg-[#111827]/30 backdrop-blur-md sticky top-0 z-30">
+        <div class="container mx-auto flex justify-between items-center p-4">
+            <div class="flex items-center gap-4">
+                <a href="member_dashboard.html" class="text-white hover:text-blue-400 p-2 rounded-full hover:bg-white/10" title="Back to Dashboard">
+                    <i class="fas fa-arrow-left fa-lg"></i>
+                 </a>
+                <div class="text-2xl font-bold tracking-wider text-white" id="logo">
+                    <a href="index.html">FINCLARITY</a>
+                </div>
+            </div>
+            <nav class="flex items-center gap-4">
+                 <span class="hidden sm:inline text-gray-300">Welcome, Member</span>
+                 <a href="#" class="text-white p-2 rounded-full hover:bg-white/10"><i class="fas fa-user-circle fa-lg"></i></a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <div id="articles-list-view" class="page-view active">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-bold">All Articles</h1>
+                <p class="text-lg text-gray-400 mt-4 max-w-2xl mx-auto">Browse our library of in-depth guides and strategies, designed to provide clarity on your financial journey.</p>
+            </div>
+            <div class="space-y-6 max-w-4xl mx-auto">
+                <a href="#" data-target="full-article-view" class="glass-card glass-card-hover block p-6 md:p-8">
+                    <div class="md:flex justify-between items-center">
+                        <div>
+                            <h2 class="text-2xl font-bold mb-2">The 5 Pillars of Modern Wealth Creation</h2>
+                            <p class="text-gray-400 mb-4 md:mb-0">The foundational guide that underpins every strategy on our platform.</p>
+                        </div>
+                        <div class="text-gray-400 text-sm text-left md:text-right flex-shrink-0">
+                            <span>Oct 17, 2025</span>
+                            <span class="mx-2">&bull;</span>
+                            <span>8 min read</span>
+                        </div>
+                    </div>
+                </a>
+                 </div>
+        </div>
+        
+        <div id="full-article-view" class="page-view">
+            <div class="max-w-4xl mx-auto">
+                <a href="#" data-target="articles-list-view" class="text-blue-400 hover:text-blue-300 mb-6 inline-block">
+                    &larr; Back to All Articles
+                </a>
+                <div class="glass-card">
+                    <div class="p-6 md:p-10">
+                        <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-4">The 5 Pillars of Modern Wealth Creation</h1>
+                        <div class="flex items-center text-gray-400 mb-8">
+                            <span>By The Finclarity Team</span>
+                            <span class="mx-2">&bull;</span>
+                            <span>October 17, 2025</span>
+                            <span class="mx-2">&bull;</span>
+                            <span>8 min read</span>
+                        </div>
+                        <article class="article-content text-gray-300 space-y-6">
+                            <p class="text-xl text-gray-100">Welcome to the foundational guide that underpins every strategy on this platform. Before diving into specific tactics like stock trading, real estate, or entrepreneurship, it's crucial to understand the universal principles that govern wealth creation in today's world. These are the pillars that provide stability and direction to your financial journey.</p>
+                            
+                            <h2 class="text-3xl font-bold pt-6 border-t border-white/10">Pillar 1: Mindset</h2>
+                            <p>This is the most overlooked yet most critical pillar...</p>
+
+                            <h2 class="text-3xl font-bold pt-6 border-t border-white/10">Pillar 2: Capital</h2>
+                            <p>Capital is the fuel for your wealth-building engine...</p>
+                            
+                            <h2 class="text-3xl font-bold pt-6 border-t border-white/10">Pillar 3: Effort</h2>
+                            <p>There is no such thing as "get rich quick."...</p>
+                            
+                            <h2 class="text-3xl font-bold pt-6 border-t border-white/10">Pillar 4: Time Horizon</h2>
+                            <p>Your time horizon dramatically changes which strategies are viable...</p>
+
+                            <h2 class="text-3xl font-bold pt-6 border-t border-white/10">Pillar 5: Scalability</h2>
+                            <p>Scalability is the difference between earning a living and building true wealth...</p>
+
+                            <div class="pt-8 mt-8 border-t border-blue-500/30">
+                                <h3 class="text-2xl font-bold">Conclusion: Building Your Foundation</h3>
+                                <p class="mt-4">By internalizing these five pillars... you are building a strategic framework for every financial decision you make.</p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const pageViews = document.querySelectorAll('.page-view');
+            const navLinks = document.querySelectorAll('a[data-target]');
+
+            function navigateTo(pageId) {
+                pageViews.forEach(page => page.classList.remove('active'));
+                const targetPage = document.getElementById(pageId);
+                if (targetPage) {
+                    targetPage.classList.add('active');
+                    window.scrollTo(0, 0);
+                }
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetPageId = link.getAttribute('data-target');
+                    navigateTo(targetPageId);
+                });
+            });
+
+            navigateTo('articles-list-view');
+        });
+    </script>
+</body>
+</html>
