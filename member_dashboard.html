@@ -163,21 +163,9 @@
 
                     <div class="glass-card p-8">
                         <h3 class="text-2xl font-bold mb-4">Latest Articles</h3>
-                        <div class="space-y-2">
-                            <div class="p-4 rounded-lg group hover:bg-white/5 transition-colors">
-                                <a href="member_article.html" class="text-lg font-semibold text-white group-hover:text-blue-400">Introduction to Dividend Investing</a>
-                                <p class="text-gray-400 text-sm">A beginner's guide to generating passive income through stocks.</p>
-                            </div>
-                            <hr class="border-white/10 mx-4">
-                             <div class="p-4 rounded-lg group hover:bg-white/5 transition-colors">
-                                <a href="member_article.html" class="text-lg font-semibold text-white group-hover:text-blue-400">Analyzing Real Estate Deals Like a Pro</a>
-                                <p class="text-gray-400 text-sm">Learn the key metrics for evaluating investment properties.</p>
-                            </div>
-                            <hr class="border-white/10 mx-4">
-                             <div class="p-4 rounded-lg group hover:bg-white/5 transition-colors">
-                                <a href="member_article.html" class="text-lg font-semibold text-white group-hover:text-blue-400">Scaling Your Side Hustle: From Idea to Income Stream</a>
-                                <p class="text-gray-400 text-sm">Actionable steps to turn your passion project into a viable business.</p>
-                            </div>
+                        <!-- Real articles will be loaded here -->
+                        <div id="latest-articles-list" class="space-y-2">
+                            <p class="text-gray-400 text-center">Loading latest articles...</p>
                         </div>
                     </div>
                 </div>
@@ -217,9 +205,9 @@
 
     </main>
 
+    <!-- Sidebar functionality script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- SIDEBAR FUNCTIONALITY ---
             const openSidebarBtn = document.getElementById('open-sidebar-btn');
             const closeSidebarBtn = document.getElementById('close-sidebar-btn');
             const sidebar = document.getElementById('sidebar');
@@ -244,5 +232,64 @@
             sidebarOverlay.addEventListener('click', closeSidebar);
         });
     </script>
+    
+    <!-- Firebase SDK Scripts to fetch articles -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+        import { getFirestore, collection, onSnapshot, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
+
+        // Use the same Firebase config from your admin panel
+        const firebaseConfig = {
+            apiKey: "AIzaSyCRtzONV0M1syCLTF6H5__cGEBgJxM13sM",
+            authDomain: "adminpanel-93879.firebaseapp.com",
+            projectId: "adminpanel-93879",
+            storageBucket: "adminpanel-93879.appspot.com",
+            messagingSenderId: "854889610123",
+            appId: "1:854889610123:web:4522c7fc685e9864014d8e"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const articlesListContainer = document.getElementById('latest-articles-list');
+        
+        // Create a query to get the 3 most recent articles
+        const articlesCollection = collection(db, "articles");
+        const q = query(articlesCollection, orderBy("createdAt", "desc"), limit(3));
+
+        onSnapshot(q, (snapshot) => {
+            // Clear the loading message or any old content
+            articlesListContainer.innerHTML = ''; 
+
+            if (snapshot.empty) {
+                articlesListContainer.innerHTML = '<p class="text-gray-400 text-center">No articles available yet.</p>';
+                return;
+            }
+
+            snapshot.forEach((doc, index) => {
+                const article = { id: doc.id, ...doc.data() };
+
+                // Create the article link element
+                const articleDiv = document.createElement('div');
+                articleDiv.className = 'p-4 rounded-lg group hover:bg-white/5 transition-colors';
+                
+                // Note: The link will go to a page that can read the article ID from the URL
+                articleDiv.innerHTML = `
+                    <a href="member_article.html?id=${article.id}" class="text-lg font-semibold text-white group-hover:text-blue-400">${article.title}</a>
+                    <p class="text-gray-400 text-sm">${article.readTime} &bull; Published on ${article.createdAt ? article.createdAt.toDate().toLocaleDateString() : 'N/A'}</p>
+                `;
+                
+                articlesListContainer.appendChild(articleDiv);
+
+                // Add a divider line, but not after the last article
+                if (index < snapshot.docs.length - 1) {
+                    const divider = document.createElement('hr');
+                    divider.className = 'border-white/10 mx-4';
+                    articlesListContainer.appendChild(divider);
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>
