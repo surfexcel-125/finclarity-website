@@ -10,7 +10,7 @@
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
 
     <!-- Font Awesome for Icons -->
@@ -67,6 +67,23 @@
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
+        }
+
+        /* --- NEW: Article loading animation --- */
+        .article-item-animate {
+            opacity: 0; /* Start hidden */
+            animation: slideDownFadeIn 0.5s ease-out forwards;
+        }
+
+        @keyframes slideDownFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
@@ -131,11 +148,11 @@
         // IMPORTANT: Replace with your actual Firebase config
         const firebaseConfig = {
         	apiKey: "AIzaSyCRtzONV0M1syCLTF6H5__cGEBgJxM13sM",
-  		authDomain: "adminpanel-93879.firebaseapp.com",
-  		projectId: "adminpanel-93879",
-  		storageBucket: "adminpanel-93879.firebasestorage.app",
-  		messagingSenderId: "854889610123",
-  		appId: "1:854889610123:web:4522c7fc685e9864014d8e"
+    		authDomain: "adminpanel-93879.firebaseapp.com",
+    		projectId: "adminpanel-93879",
+    		storageBucket: "adminpanel-93879.appspot.com",
+    		messagingSenderId: "854889610123",
+    		appId: "1:854889610123:web:4522c7fc685e9864014d8e"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -159,14 +176,18 @@
                 return;
             }
 
-            querySnapshot.forEach((doc) => {
+            querySnapshot.forEach((doc, index) => { // Added index for animation delay
                 const article = { id: doc.id, ...doc.data() };
                 allArticles.push(article);
 
                 const articleEl = document.createElement('a');
                 articleEl.href = '#';
-                articleEl.className = 'glass-card glass-card-hover block p-6 md:p-8';
+                // --- MODIFIED: Added animation class ---
+                articleEl.className = 'glass-card glass-card-hover block p-6 md:p-8 article-item-animate';
                 articleEl.dataset.id = article.id;
+
+                // --- NEW: Staggered animation delay ---
+                articleEl.style.animationDelay = `${index * 0.1}s`;
                 
                 const formattedDate = article.createdAt?.toDate().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) || 'No date';
 
