@@ -83,6 +83,11 @@
                     <i class="fas fa-newspaper fa-fw"></i>
                     <span>Articles</span>
                 </a>
+                <!-- UPDATED: Link to screenshots page -->
+                <a href="screenshots.html" class="flex items-center gap-4 text-gray-300 hover:text-white hover:bg-white/5 p-3 rounded-lg transition-colors">
+                    <i class="fas fa-camera fa-fw"></i>
+                    <span>My Screenshots</span>
+                </a>
                 <a href="real_results.html" class="flex items-center gap-4 text-gray-300 hover:text-white hover:bg-white/5 p-3 rounded-lg transition-colors">
                     <i class="fas fa-chart-line fa-fw"></i>
                     <span>Real-World Results</span>
@@ -163,7 +168,6 @@
 
                     <div class="glass-card p-8">
                         <h3 class="text-2xl font-bold mb-4">Latest Articles</h3>
-                        <!-- Real articles will be loaded here -->
                         <div id="latest-articles-list" class="space-y-2">
                             <p class="text-gray-400 text-center">Loading latest articles...</p>
                         </div>
@@ -171,7 +175,17 @@
                 </div>
 
                 <div class="space-y-8">
-                    <div class="glass-card p-8">
+                    <!-- UPDATED: Added screenshots card -->
+                    <a href="screenshots.html" class="block">
+                        <div class="glass-card p-8 hover:border-blue-500/50 transition-all duration-300">
+                             <div class="flex items-center gap-4 mb-4">
+                                 <i class="fas fa-camera text-2xl text-blue-400"></i>
+                                 <h3 class="text-2xl font-bold">My Screenshots</h3>
+                             </div>
+                             <p class="text-gray-400">View your saved screenshots from the Chrome extension.</p>
+                        </div>
+                    </a>
+                     <div class="glass-card p-8">
                         <h3 class="text-2xl font-bold mb-6">New Results</h3>
                         <div class="space-y-6">
                             <div class="flex items-start gap-4 group">
@@ -190,15 +204,6 @@
                             </div>
                         </div>
                     </div>
-                    <a href="tools_calculators.html" class="block">
-                        <div class="glass-card p-8 hover:border-blue-500/50 transition-all duration-300">
-                             <div class="flex items-center gap-4 mb-4">
-                                 <i class="fas fa-tools text-2xl text-blue-400"></i>
-                                 <h3 class="text-2xl font-bold">Tools & Calculators</h3>
-                             </div>
-                             <p class="text-gray-400">Use our suite of financial calculators to model scenarios and plan for the future.</p>
-                        </div>
-                    </a>
                 </div>
             </div>
         </section>
@@ -253,12 +258,10 @@
 
         const articlesListContainer = document.getElementById('latest-articles-list');
         
-        // Create a query to get the 3 most recent articles
         const articlesCollection = collection(db, "articles");
         const q = query(articlesCollection, orderBy("createdAt", "desc"), limit(3));
 
         onSnapshot(q, (snapshot) => {
-            // Clear the loading message or any old content
             articlesListContainer.innerHTML = ''; 
 
             if (snapshot.empty) {
@@ -268,20 +271,13 @@
 
             snapshot.forEach((doc, index) => {
                 const article = { id: doc.id, ...doc.data() };
-
-                // Create the article link element
                 const articleDiv = document.createElement('div');
                 articleDiv.className = 'p-4 rounded-lg group hover:bg-white/5 transition-colors';
-                
-                // Note: The link will go to a page that can read the article ID from the URL
                 articleDiv.innerHTML = `
                     <a href="member_article.html?id=${article.id}" class="text-lg font-semibold text-white group-hover:text-blue-400">${article.title}</a>
                     <p class="text-gray-400 text-sm">${article.readTime} &bull; Published on ${article.createdAt ? article.createdAt.toDate().toLocaleDateString() : 'N/A'}</p>
                 `;
-                
                 articlesListContainer.appendChild(articleDiv);
-
-                // Add a divider line, but not after the last article
                 if (index < snapshot.docs.length - 1) {
                     const divider = document.createElement('hr');
                     divider.className = 'border-white/10 mx-4';
@@ -290,6 +286,6 @@
             });
         });
     </script>
-
 </body>
 </html>
+
