@@ -62,7 +62,6 @@
             </header>
 
             <main class="container mx-auto p-4 md:p-8">
-                 <!-- UPDATED: Ticker is now wrapped in a glass-card for better aesthetics -->
                  <div class="glass-card py-2 mb-8">
                     <div class="tradingview-widget-container">
                       <div class="tradingview-widget-container__widget"></div>
@@ -96,6 +95,33 @@
     <script type="module">
         const newsFeedContainer = document.getElementById('custom-news-feed');
 
+        /**
+         * Converts a date string into a relative time format (e.g., "5m ago").
+         * @param {string} dateString - The ISO 8601 date string from the API.
+         * @returns {string} A formatted relative time string.
+         */
+        function timeAgo(dateString) {
+            const now = new Date();
+            const articleDate = new Date(dateString);
+            const seconds = Math.round((now - articleDate) / 1000);
+            
+            const minutes = Math.round(seconds / 60);
+            const hours = Math.round(minutes / 60);
+            const days = Math.round(hours / 24);
+
+            if (seconds < 60) {
+                return `${seconds}s ago`;
+            } else if (minutes < 60) {
+                return `${minutes}m ago`;
+            } else if (hours < 24) {
+                return `${hours}h ago`;
+            } else if (days === 1) {
+                return `1d ago`;
+            } else {
+                return `${days}d ago`;
+            }
+        }
+
         async function fetchNews() {
             try {
                 // This is a free, public API proxy that requires no key.
@@ -114,14 +140,17 @@
                         articleEl.rel = 'noopener noreferrer';
                         articleEl.className = 'glass-card block p-4 hover:border-blue-500/50 transition-colors duration-300';
 
-                        // Fallback for missing images
                         const imageUrl = article.urlToImage || 'https://placehold.co/600x400/0c111e/FFFFFF?text=News';
+                        const relativeTime = timeAgo(article.publishedAt);
 
                         articleEl.innerHTML = `
                             <img src="${imageUrl}" alt="" class="rounded-lg mb-4 h-40 w-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/0c111e/FFFFFF?text=Image+Error';">
                             <h3 class="font-bold text-lg mb-2">${article.title}</h3>
                             <p class="text-sm text-gray-400">${article.description || 'No description available.'}</p>
-                            <div class="text-xs text-gray-500 mt-3">Source: ${article.source.name}</div>
+                            <div class="flex justify-between items-center text-xs text-gray-500 mt-3">
+                                <span>Source: ${article.source.name}</span>
+                                <span>${relativeTime}</span>
+                            </div>
                         `;
                         newsFeedContainer.appendChild(articleEl);
                     });
