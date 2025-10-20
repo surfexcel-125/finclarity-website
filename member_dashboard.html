@@ -10,14 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        html {
-            scroll-behavior: smooth;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-        html::-webkit-scrollbar {
-            display: none;
-        }
+        html { scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none; }
+        html::-webkit-scrollbar { display: none; }
         body {
             background-color: #0c111e;
             background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
@@ -48,13 +42,13 @@
                 </div>
                 <nav id="sidebar-nav" class="flex flex-col space-y-2 text-lg">
                     <a href="member_dashboard.html" class="sidebar-link active flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-tachometer-alt fa-fw w-6"></i><span>Dashboard</span></a>
-                    <a href="#" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-wallet fa-fw w-6"></i><span>Portfolio</span></a>
-                    <a href="#" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-search-dollar fa-fw w-6"></i><span>Market Screener</span></a>
-                    <a href="member_article.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-newspaper fa-fw w-6"></i><span>News & Articles</span></a>
-                    <a href="#" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-calendar-alt fa-fw w-6"></i><span>Economic Calendar</span></a>
-                    <a href="#" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-book fa-fw w-6"></i><span>Trading Journal</span></a>
+                    <a href="portfolio.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-wallet fa-fw w-6"></i><span>Portfolio</span></a>
+                    <a href="market_screener.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-search-dollar fa-fw w-6"></i><span>Market Screener</span></a>
+                    <a href="news.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-newspaper fa-fw w-6"></i><span>News & Articles</span></a>
+                    <a href="economic_calendar.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-calendar-alt fa-fw w-6"></i><span>Economic Calendar</span></a>
+                    <a href="trading_journal.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-book fa-fw w-6"></i><span>Trading Journal</span></a>
                     <a href="tools_calculators.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-tools fa-fw w-6"></i><span>Tools</span></a>
-                    <a href="#" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-user-cog fa-fw w-6"></i><span>Settings</span></a>
+                    <a href="settings.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-user-cog fa-fw w-6"></i><span>Settings</span></a>
                 </nav>
                 <div class="mt-auto">
                     <a href="#" id="logout-btn" class="flex items-center gap-4 text-red-400 hover:text-red-300 hover:bg-red-500/10 p-3 rounded-lg transition-colors"><i class="fas fa-sign-out-alt fa-fw w-6"></i><span>Log Out</span></a>
@@ -71,32 +65,25 @@
                     </div>
                     <nav class="flex items-center gap-4">
                          <span id="user-email" class="hidden sm:inline text-gray-300"></span>
-                         <a href="#" class="text-white p-2 rounded-full hover:bg-white/10"><i class="fas fa-user-circle fa-lg"></i></a>
+                         <a href="settings.html" class="text-white p-2 rounded-full hover:bg-white/10"><i class="fas fa-user-circle fa-lg"></i></a>
                     </nav>
                 </div>
             </header>
 
             <main class="container mx-auto">
-                
                 <section class="h-[calc(100vh-68px)] flex flex-col items-center justify-center text-center p-4 relative">
                     <div class="max-w-3xl">
                         <h1 class="text-4xl md:text-6xl font-bold">Welcome back.</h1>
                         <p class="text-lg md:text-xl text-gray-300 mt-4 max-w-xl mx-auto">Here is your at-a-glance command center for the markets.</p>
                     </div>
                     <div class="absolute bottom-10 left-1/2 -translate-x-1/2">
-                        <a href="#dashboard-content" class="text-gray-400 animate-bounce">
-                            <i class="fas fa-chevron-down fa-2x"></i>
-                        </a>
+                        <a href="#dashboard-content" class="text-gray-400 animate-bounce"><i class="fas fa-chevron-down fa-2x"></i></a>
                     </div>
                 </section>
-
                 <section id="dashboard-content" class="p-4 md:py-16">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        
-                        <!-- Portfolio Snapshot -->
                         <div class="lg:col-span-2 glass-card p-6">
                             <h3 class="text-xl font-bold mb-4">Portfolio Snapshot</h3>
-                            <!-- This is a placeholder; it would be dynamically populated -->
                             <div class="flex items-center justify-between">
                                 <div>
                                     <span class="text-gray-400 text-sm">Total Value</span>
@@ -108,117 +95,28 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        <!-- Market Sentiment -->
                         <div class="glass-card p-6 flex flex-col items-center justify-center">
                             <h3 class="text-xl font-bold mb-4">Market Sentiment</h3>
-                             <div class="tradingview-widget-container" style="height:150px; width:100%">
-                                <div class="tradingview-widget-container__widget"></div>
-                                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-fear-and-greed-index.js" async>
-                                { "theme": "dark", "locale": "en", "isTransparent": true }
-                                </script>
-                            </div>
+                             <div class="tradingview-widget-container" style="height:150px; width:100%"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-fear-and-greed-index.js" async>{ "theme": "dark", "locale": "en", "isTransparent": true }</script></div>
                         </div>
-
-                        <!-- Economic Events -->
                         <div class="glass-card p-6">
                              <h3 class="text-xl font-bold mb-4">Today's High-Impact Events</h3>
-                             <div class="tradingview-widget-container" style="height:150px; width:100%">
-                                <div class="tradingview-widget-container__widget"></div>
-                                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
-                                { "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "locale": "en", "importanceFilter": "1" }
-                                </script>
-                            </div>
+                             <div class="tradingview-widget-container" style="height:150px; width:100%"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>{ "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "locale": "en", "importanceFilter": "1" }</script></div>
                         </div>
-
-                        <!-- Dynamic Watchlist -->
                         <div class="lg:col-span-4 glass-card p-6">
                             <h3 class="text-xl font-bold mb-4">Dynamic Watchlist</h3>
-                            <div class="tradingview-widget-container" style="height:400px; width:100%">
-                                <div class="tradingview-widget-container__widget"></div>
-                                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
-                                { "width": "100%", "height": "100%", "symbolsGroups": [ { "name": "Indices", "originalName": "Indices", "symbols": [ { "name": "FOREXCOM:SPXUSD", "displayName": "S&P 500" }, { "name": "FOREXCOM:NSXUSD", "displayName": "US 100" }, { "name": "FOREXCOM:DJI", "displayName": "Dow 30" } ] }, { "name": "Technology", "originalName": "Technology", "symbols": [ { "name": "NASDAQ:AAPL", "displayName": "Apple" }, { "name": "NASDAQ:GOOGL", "displayName": "Google" }, { "name": "NASDAQ:MSFT", "displayName": "Microsoft" } ] }, { "name": "Crypto", "originalName": "Crypto", "symbols": [ { "name": "BITSTAMP:BTCUSD", "displayName": "Bitcoin" }, { "name": "BITSTAMP:ETHUSD", "displayName": "Ethereum" } ] } ], "showSymbolLogo": true, "colorTheme": "dark", "isTransparent": true, "locale": "en" }
-                                </script>
-                            </div>
+                            <div class="tradingview-widget-container" style="height:400px; width:100%"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>{ "width": "100%", "height": "100%", "symbolsGroups": [ { "name": "Indices", "originalName": "Indices", "symbols": [ { "name": "FOREXCOM:SPXUSD", "displayName": "S&P 500" }, { "name": "FOREXCOM:NSXUSD", "displayName": "US 100" }, { "name": "FOREXCOM:DJI", "displayName": "Dow 30" } ] }, { "name": "Technology", "originalName": "Technology", "symbols": [ { "name": "NASDAQ:AAPL", "displayName": "Apple" }, { "name": "NASDAQ:GOOGL", "displayName": "Google" }, { "name": "NASDAQ:MSFT", "displayName": "Microsoft" } ] }, { "name": "Crypto", "originalName": "Crypto", "symbols": [ { "name": "BITSTAMP:BTCUSD", "displayName": "Bitcoin" }, { "name": "BITSTAMP:ETHUSD", "displayName": "Ethereum" } ] } ], "showSymbolLogo": true, "colorTheme": "dark", "isTransparent": true, "locale": "en" }</script></div>
                         </div>
-
-                        <!-- Sector Heatmap -->
                         <div class="lg:col-span-4 glass-card p-6">
                             <h3 class="text-xl font-bold mb-4">Sector Heatmap</h3>
-                            <div class="tradingview-widget-container" style="height:500px; width:100%">
-                                <div class="tradingview-widget-container__widget"></div>
-                                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>
-                                { "exchanges": [], "dataSource": "SPX500", "grouping": "sector", "blockSize": "market_cap_basic", "blockColor": "change", "chartColor": "rgba(0, 0, 0, 0)", "backgroundColor": "rgba(0, 0, 0, 0)", "allowSymbolChange": true, "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "locale": "en" }
-                                </script>
-                            </div>
+                            <div class="tradingview-widget-container" style="height:500px; width:100%"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>{ "exchanges": [], "dataSource": "SPX500", "grouping": "sector", "blockSize": "market_cap_basic", "blockColor": "change", "chartColor": "rgba(0, 0, 0, 0)", "backgroundColor": "rgba(0, 0, 0, 0)", "allowSymbolChange": true, "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "locale": "en" }</script></div>
                         </div>
-
                     </div>
                 </section>
             </main>
         </div>
     </div>
-    
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
-        
-        const firebaseConfig = {
-            apiKey: "AIzaSyCRtzONV0M1syCLTF6H5__cGEBgJxM13sM",
-            authDomain: "adminpanel-93879.firebaseapp.com",
-            projectId: "adminpanel-93879",
-            storageBucket: "adminpanel-93879.appspot.com",
-            messagingSenderId: "854889610123",
-            appId: "1:854889610123:web:4522c7fc685e9864014d8e"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
-        const appWrapper = document.getElementById('app-wrapper');
-        const userEmailSpan = document.getElementById('user-email');
-
-        onAuthStateChanged(auth, user => {
-            if (user) {
-                appWrapper.style.display = 'block';
-                userEmailSpan.textContent = user.email;
-            } else {
-                window.location.replace(new URL('login.html', window.location.href).href);
-            }
-        });
-
-        const openSidebarBtn = document.getElementById('open-sidebar-btn');
-        const closeSidebarBtn = document.getElementById('close-sidebar-btn');
-        const sidebar = document.getElementById('sidebar');
-        const sidebarNav = document.getElementById('sidebar-nav');
-        const sidebarOverlay = document.getElementById('sidebar-overlay');
-        
-        function openSidebar() {
-            sidebar.classList.remove('-translate-x-full');
-            sidebarOverlay.classList.remove('hidden');
-            setTimeout(() => sidebarOverlay.classList.remove('opacity-0'), 10);
-        }
-        function closeSidebar() {
-            sidebar.classList.add('-translate-x-full');
-            sidebarOverlay.classList.add('opacity-0');
-            setTimeout(() => sidebarOverlay.classList.add('hidden'), 300);
-        }
-        
-        openSidebarBtn.addEventListener('click', openSidebar);
-        closeSidebarBtn.addEventListener('click', closeSidebar);
-        sidebarOverlay.addEventListener('click', closeSidebar);
-        
-        sidebarNav.addEventListener('click', (e) => {
-            if (e.target.closest('a') && window.innerWidth < 1024) {
-                closeSidebar();
-            }
-        });
-        
-        document.getElementById('logout-btn').addEventListener('click', (e) => {
-            e.preventDefault();
-            signOut(auth).catch(error => console.error("Sign out error", error));
-        });
-    </script>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>
 
