@@ -114,9 +114,62 @@
                                 <h3 class="text-xl font-bold mb-4">Dynamic Watchlist</h3>
                                 <div class="tradingview-widget-container" style="height: 25vh; width:100%"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>{ "width": "100%", "height": "100%", "symbolsGroups": [ { "name": "Watchlist", "originalName": "Watchlist", "symbols": [ { "name": "NASDAQ:AAPL" }, { "name": "NASDAQ:TSLA" }, { "name": "BITSTAMP:BTCUSD" }, { "name": "BITSTAMP:ETHUSD" } ] } ], "showSymbolLogo": true, "colorTheme": "dark", "isTransparent": true, "locale": "en" }</script></div>
                             </div>
-                             <div class="glass-card p-6">
-                                <h3 class="text-xl font-bold mb-4">High-Impact Events</h3>
-                                <div class="tradingview-widget-container" style="height: 25vh; width:100%"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>{ "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "locale": "en", "importanceFilter": "1" }</script></div>
+                            <div class="glass-card p-6">
+                                <h3 class="text-xl font-bold mb-4">Upcoming Events</h3>
+                                <div class="space-y-4">
+                                    <!-- Event 1: High Impact -->
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-3">
+                                            <span class="font-semibold text-gray-400 text-sm">23:30</span>
+                                            <span class="text-lg">🇺🇸</span>
+                                            <span class="text-white text-sm">Fed Rate Decision</span>
+                                        </div>
+                                        <div class="flex gap-1 items-center" title="High Impact">
+                                            <div class="w-2 h-4 bg-red-500 rounded-sm"></div>
+                                            <div class="w-2 h-4 bg-red-500 rounded-sm"></div>
+                                            <div class="w-2 h-4 bg-red-500 rounded-sm"></div>
+                                        </div>
+                                    </div>
+                                    <!-- Event 2: Medium Impact -->
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-3">
+                                            <span class="font-semibold text-gray-400 text-sm">11:30</span>
+                                            <span class="text-lg">🇬🇧</span>
+                                            <span class="text-white text-sm">Claimant Count</span>
+                                        </div>
+                                        <div class="flex gap-1 items-center" title="Medium Impact">
+                                            <div class="w-2 h-4 bg-orange-500 rounded-sm"></div>
+                                            <div class="w-2 h-4 bg-orange-500 rounded-sm"></div>
+                                            <div class="w-2 h-4 bg-gray-600 rounded-sm"></div>
+                                        </div>
+                                    </div>
+                                    <!-- Event 3: High Impact -->
+                                     <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-3">
+                                            <span class="font-semibold text-gray-400 text-sm">18:15</span>
+                                            <span class="text-lg">🇪🇺</span>
+                                            <span class="text-white text-sm">ECB Press Conference</span>
+                                        </div>
+                                        <div class="flex gap-1 items-center" title="High Impact">
+                                            <div class="w-2 h-4 bg-red-500 rounded-sm"></div>
+                                            <div class="w-2 h-4 bg-red-500 rounded-sm"></div>
+                                            <div class="w-2 h-4 bg-red-500 rounded-sm"></div>
+                                        </div>
+                                    </div>
+                                     <!-- Event 4: Low Impact -->
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-3">
+                                            <span class="font-semibold text-gray-400 text-sm">18:00</span>
+                                            <span class="text-lg">🇩🇪</span>
+                                            <span class="text-white text-sm">German ZEW Sentiment</span>
+                                        </div>
+                                        <div class="flex gap-1 items-center" title="Low Impact">
+                                            <div class="w-2 h-4 bg-yellow-500 rounded-sm"></div>
+                                            <div class="w-2 h-4 bg-gray-600 rounded-sm"></div>
+                                            <div class="w-2 h-4 bg-gray-600 rounded-sm"></div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
