@@ -19,9 +19,9 @@
         #sidebar { transition: transform 0.3s ease-in-out; }
         #sidebar-overlay { transition: opacity 0.3s ease-in-out; }
         .glass-card { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem; }
-        .filter-btn { background-color: rgba(255, 255, 255, 0.05); transition: background-color 0.2s, color 0.2s; border: 1px solid transparent;}
-        .filter-btn:hover { background-color: rgba(255, 255, 255, 0.1); }
-        .filter-btn.active-btn { background-color: #0052cc; color: white; border-color: #0052cc;}
+        .timeframe-btn { background-color: rgba(255, 255, 255, 0.05); transition: background-color 0.2s; }
+        .timeframe-btn:hover { background-color: rgba(255, 255, 255, 0.1); }
+        .timeframe-btn.active-btn { background-color: #0052cc; color: white; }
     </style>
 </head>
 <body class="antialiased">
@@ -70,35 +70,30 @@
                     <p class="text-lg text-gray-400 mt-2 max-w-3xl mx-auto">Stay ahead of market-moving events. Track important announcements from around the world in real-time.</p>
                 </div>
                 
-                <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-6">
-                    <div class="inline-flex rounded-lg bg-gray-900/50 p-1" id="timeframe-filters">
-                        <button data-mode="today" class="filter-btn timeframe-btn font-semibold py-2 px-4 rounded-md">Today</button>
-                        <button data-mode="this_week" class="filter-btn timeframe-btn font-semibold py-2 px-4 rounded-md">This Week</button>
-                    </div>
-                    <div class="inline-flex rounded-lg bg-gray-900/50 p-1" id="importance-filters">
-                        <button data-importance="1" class="filter-btn importance-btn font-semibold py-2 px-4 rounded-md">High</button>
-                        <button data-importance="0" class="filter-btn importance-btn font-semibold py-2 px-4 rounded-md">Medium</button>
-                        <button data-importance="-1" class="filter-btn importance-btn font-semibold py-2 px-4 rounded-md">Low</button>
+                <div class="flex justify-center mb-6">
+                    <div class="inline-flex rounded-lg bg-gray-900/50 p-1">
+                        <button data-mode="today" class="timeframe-btn font-semibold py-2 px-5 rounded-md">Today</button>
+                        <button data-mode="this_week" class="timeframe-btn font-semibold py-2 px-5 rounded-md">This Week</button>
                     </div>
                 </div>
 
                 <div class="glass-card overflow-hidden" style="height: 70vh;">
-                     <div id="calendar-container" class="tradingview-widget-container h-full"></div>
+                     <div id="calendar-container" class="tradingview-widget-container h-full">
+                        <!-- TradingView Widget will be loaded here by JavaScript -->
+                    </div>
                 </div>
             </main>
         </div>
     </div>
     <script type="module">
-        import './js/main.js';
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
+        import { auth } from './js/main.js'; // Assuming auth is exported from main.js
 
-        let currentMode = 'today';
-        // Start with all importance levels selected by default
-        let currentImportance = '-1,0,1';
-
-        function loadCalendar() {
+        // --- Calendar Customization Logic ---
+        function loadCalendar(mode) {
             const container = document.getElementById('calendar-container');
             if (!container) return;
-            container.innerHTML = ''; 
+            container.innerHTML = ''; // Clear the container
 
             const config = {
                 "colorTheme": "dark",
@@ -106,16 +101,17 @@
                 "width": "100%",
                 "height": "100%",
                 "locale": "en",
-                "importanceFilter": currentImportance,
+                "importanceFilter": "0,1", // Medium and High importance
                 "currencyFilter": "USD,EUR,JPY,GBP,CAD,AUD,NZD,CNY,CHF,INR"
             };
 
-            if (currentMode === 'today') {
+            // Set the display mode based on the button clicked
+            if (mode === 'today') {
                 config.displayMode = "day";
-            } else if (currentMode === 'this_week') {
+            } else if (mode === 'this_week') {
                 config.displayMode = "week";
             }
-            
+
             const script = document.createElement('script');
             script.type = 'text/javascript';
             script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-economic-calendar.js';
@@ -123,52 +119,29 @@
             script.innerHTML = JSON.stringify(config);
 
             container.appendChild(script);
-        }
 
-        function updateActiveButtons() {
-            // Update timeframe buttons
-            document.querySelectorAll('#timeframe-filters .timeframe-btn').forEach(btn => {
-                btn.classList.toggle('active-btn', btn.dataset.mode === currentMode);
-            });
-            // Update importance buttons
-            const importanceValues = new Set(currentImportance.split(','));
-            document.querySelectorAll('#importance-filters .importance-btn').forEach(btn => {
-                 btn.classList.toggle('active-btn', importanceValues.has(btn.dataset.importance));
+            // Update active button style
+            document.querySelectorAll('.timeframe-btn').forEach(btn => {
+                btn.classList.remove('active-btn');
+                if (btn.dataset.mode === mode) {
+                    btn.classList.add('active-btn');
+                }
             });
         }
         
+        // This needs to be available for main.js which is a module
         window.setupPage = () => {
-            // Timeframe filter logic
-            document.querySelectorAll('#timeframe-filters .timeframe-btn').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    currentMode = e.currentTarget.dataset.mode;
-                    loadCalendar();
-                    updateActiveButtons();
-                });
-            });
+             // Initial calendar load
+            loadCalendar('today');
 
-            // Importance filter logic
-            document.querySelectorAll('#importance-filters .importance-btn').forEach(button => {
-                button.addEventListener('click', e => {
-                    const importanceValue = e.currentTarget.dataset.importance;
-                    // Use a Set for easy toggling
-                    const selectedValues = new Set(currentImportance ? currentImportance.split(',') : []);
-                    
-                    if (selectedValues.has(importanceValue)) {
-                        selectedValues.delete(importanceValue); // If it's already selected, deselect it
-                    } else {
-                        selectedValues.add(importanceValue); // Otherwise, select it
-                    }
-                    
-                    currentImportance = Array.from(selectedValues).join(',');
-                    loadCalendar();
-                    updateActiveButtons();
+            // Add event listeners to buttons
+            const buttons = document.querySelectorAll('.timeframe-btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const mode = e.currentTarget.dataset.mode;
+                    loadCalendar(mode);
                 });
             });
-            
-            // Initial Load on page setup
-            loadCalendar();
-            updateActiveButtons();
         };
 
     </script>
