@@ -88,9 +88,11 @@
             </main>
         </div>
     </div>
-    <script type="module">
-        import './js/main.js';
 
+    <script type="module">
+        // This script block is ONLY for defining the page-specific logic.
+        // It does NOT import or run main.js.
+        
         let currentMode = 'today';
         // Start with all importance levels selected by default
         let currentImportance = '-1,0,1';
@@ -131,12 +133,13 @@
                 btn.classList.toggle('active-btn', btn.dataset.mode === currentMode);
             });
             // Update importance buttons
-            const importanceValues = new Set(currentImportance.split(','));
+            const importanceValues = new Set(currentImportance ? currentImportance.split(',') : []);
             document.querySelectorAll('#importance-filters .importance-btn').forEach(btn => {
                  btn.classList.toggle('active-btn', importanceValues.has(btn.dataset.importance));
             });
         }
         
+        // Define the function that main.js will call.
         window.setupPage = () => {
             // Timeframe filter logic
             document.querySelectorAll('#timeframe-filters .timeframe-btn').forEach(button => {
@@ -151,13 +154,15 @@
             document.querySelectorAll('#importance-filters .importance-btn').forEach(button => {
                 button.addEventListener('click', e => {
                     const importanceValue = e.currentTarget.dataset.importance;
-                    // Use a Set for easy toggling
                     const selectedValues = new Set(currentImportance ? currentImportance.split(',') : []);
                     
                     if (selectedValues.has(importanceValue)) {
-                        selectedValues.delete(importanceValue); // If it's already selected, deselect it
+                        // Prevent deselecting the last active filter
+                        if (selectedValues.size > 1) {
+                            selectedValues.delete(importanceValue);
+                        }
                     } else {
-                        selectedValues.add(importanceValue); // Otherwise, select it
+                        selectedValues.add(importanceValue);
                     }
                     
                     currentImportance = Array.from(selectedValues).join(',');
@@ -170,8 +175,10 @@
             loadCalendar();
             updateActiveButtons();
         };
-
     </script>
+    
+    <!-- This script runs AFTER setupPage is defined on the window. -->
+    <!-- It handles auth and then calls window.setupPage(). -->
     <script type="module" src="js/main.js"></script>
 </body>
 </html>
