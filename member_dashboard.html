@@ -28,9 +28,9 @@
         .sidebar-link:hover, .sidebar-link.active { color: #ffffff; background-color: rgba(255, 255, 255, 0.08); }
         #sidebar { transition: transform 0.3s ease-in-out; }
         #sidebar-overlay { transition: opacity 0.3s ease-in-out; }
-        /* Styles for the new Market Snapshot tabs */
         .tab-button { transition: all 0.2s ease; border-bottom: 2px solid transparent; }
         .tab-button.active { color: #3b82f6; border-bottom-color: #3b82f6; }
+        #dashboard-content { scroll-margin-top: 1rem; }
     </style>
 </head>
 <body class="antialiased">
@@ -71,73 +71,87 @@
                 </div>
             </header>
 
-            <main class="container mx-auto p-4 md:py-8">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div class="lg:col-span-2 space-y-8">
-                        <div class="glass-card flex flex-col md:flex-row items-center gap-8 p-8 transition-all duration-300 hover:border-blue-500/50">
-                            <div class="text-7xl text-blue-500 flex-shrink-0"><i class="fas fa-book-open"></i></div>
-                            <div>
-                                <span class="text-sm font-semibold text-blue-400 uppercase tracking-wider">Featured Guide</span>
-                                <h2 class="text-3xl font-bold mt-2 mb-3">Unlock The 5 Pillars of Wealth</h2>
-                                <p class="text-gray-300 mb-6">You have full access. Dive deep into the core principles that form the foundation of your entire financial journey.</p>
-                                <a href="member_article.html" class="main-button font-bold py-3 px-6 rounded-lg inline-block">Start Reading</a>
-                            </div>
-                        </div>
-                        
-                        <!-- NEW: Market Snapshot Section -->
-                        <div class="glass-card p-6 md:p-8">
-                            <h3 class="text-2xl font-bold mb-4">Market Snapshot</h3>
-                            <div class="border-b border-white/10 mb-4">
-                                <nav id="market-tabs" class="flex space-x-4" aria-label="Tabs">
-                                    <button class="tab-button active font-semibold text-gray-300 hover:text-white py-2 px-1" data-tab="indices">Major Indices</button>
-                                    <button class="tab-button font-semibold text-gray-300 hover:text-white py-2 px-1" data-tab="crypto">Cryptocurrency</button>
-                                </nav>
-                            </div>
-                            <div id="indices-tab-content">
-                                <div class="tradingview-widget-container" style="height:400px; width:100%">
-                                    <div class="tradingview-widget-container__widget" style="height:100%; width:100%"></div>
-                                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
-                                    { "colorTheme": "dark", "dateRange": "12M", "showChart": true, "locale": "en", "largeChartUrl": "", "isTransparent": true, "showSymbolLogo": true, "showFloatingTooltip": false, "width": "100%", "height": "100%", "plotLineColorGrowing": "rgba(41, 98, 255, 1)", "plotLineColorFalling": "rgba(255, 75, 75, 1)", "gridLineColor": "rgba(240, 243, 250, 0)", "scaleFontColor": "rgba(120, 123, 134, 1)", "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)", "belowLineFillColorFalling": "rgba(255, 75, 75, 0.12)", "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)", "belowLineFillColorFallingBottom": "rgba(255, 75, 75, 0)", "symbolActiveColor": "rgba(41, 98, 255, 0.12)", "tabs": [ { "title": "Indices", "symbols": [ { "s": "FOREXCOM:SPXUSD", "d": "S&P 500" }, { "s": "FOREXCOM:NSXUSD", "d": "US 100" }, { "s": "FOREXCOM:DJI", "d": "Dow 30" }, { "s": "INDEX:NKY", "d": "Nikkei 225" }, { "s": "INDEX:DEU40", "d": "DAX Index" }, { "s": "FOREXCOM:UKXGBP", "d": "UK 100" } ], "originalTitle": "Indices" } ] }
-                                    </script>
-                                </div>
-                            </div>
-                            <div id="crypto-tab-content" class="hidden">
-                                <div class="tradingview-widget-container" style="height:400px; width:100%">
-                                  <div class="tradingview-widget-container__widget" style="height:100%; width:100%"></div>
-                                  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-crypto-market-ticker.js" async>
-                                  { "width": "100%", "height": "100%", "displayCurrency": "USD", "widgetTheme": "dark", "locale": "en", "isTransparent": true }
-                                  </script>
-                                </div>
-                            </div>
-                        </div>
+            <main class="container mx-auto">
+                
+                <section class="h-[calc(100vh-68px)] flex flex-col items-center justify-center text-center p-4 relative">
+                    <div class="max-w-3xl">
+                        <h1 class="text-4xl md:text-6xl font-bold">Welcome back, Member.</h1>
+                        <p class="text-lg md:text-xl text-gray-300 mt-4 max-w-xl mx-auto">Clarity is the key to financial growth. What will you learn today?</p>
+                    </div>
+                       <div class="absolute bottom-10 left-1/2 -translate-x-1/2">
+                        <a href="#dashboard-content" class="text-gray-400 animate-bounce">
+                            <i class="fas fa-chevron-down fa-2x"></i>
+                        </a>
+                    </div>
+                </section>
 
-                        <div class="glass-card p-8">
-                            <h3 class="text-2xl font-bold mb-4">Latest Articles</h3>
-                            <div id="latest-articles-list" class="space-y-2"><p class="text-gray-400 text-center">Loading latest articles...</p></div>
+                <section id="dashboard-content" class="p-4 md:py-16">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2 space-y-8">
+                            <div class="glass-card flex flex-col md:flex-row items-center gap-8 p-8 transition-all duration-300 hover:border-blue-500/50">
+                                <div class="text-7xl text-blue-500 flex-shrink-0"><i class="fas fa-book-open"></i></div>
+                                <div>
+                                    <span class="text-sm font-semibold text-blue-400 uppercase tracking-wider">Featured Guide</span>
+                                    <h2 class="text-3xl font-bold mt-2 mb-3">Unlock The 5 Pillars of Wealth</h2>
+                                    <p class="text-gray-300 mb-6">You have full access. Dive deep into the core principles that form the foundation of your entire financial journey.</p>
+                                    <a href="member_article.html" class="main-button font-bold py-3 px-6 rounded-lg inline-block">Start Reading</a>
+                                </div>
+                            </div>
+                            
+                            <div class="glass-card p-6 md:p-8">
+                                <h3 class="text-2xl font-bold mb-4">Market Snapshot</h3>
+                                <div class="border-b border-white/10 mb-4">
+                                    <nav id="market-tabs" class="flex space-x-4" aria-label="Tabs">
+                                        <button class="tab-button active font-semibold text-gray-300 hover:text-white py-2 px-1" data-tab="indices">Major Indices</button>
+                                        <button class="tab-button font-semibold text-gray-300 hover:text-white py-2 px-1" data-tab="crypto">Cryptocurrency</button>
+                                    </nav>
+                                </div>
+                                <div id="indices-tab-content">
+                                    <div class="tradingview-widget-container" style="height:400px; width:100%">
+                                        <div class="tradingview-widget-container__widget" style="height:100%; width:100%"></div>
+                                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+                                        { "colorTheme": "dark", "dateRange": "12M", "showChart": true, "locale": "en", "largeChartUrl": "", "isTransparent": true, "showSymbolLogo": true, "showFloatingTooltip": false, "width": "100%", "height": "100%", "plotLineColorGrowing": "rgba(41, 98, 255, 1)", "plotLineColorFalling": "rgba(255, 75, 75, 1)", "gridLineColor": "rgba(240, 243, 250, 0)", "scaleFontColor": "rgba(120, 123, 134, 1)", "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)", "belowLineFillColorFalling": "rgba(255, 75, 75, 0.12)", "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)", "belowLineFillColorFallingBottom": "rgba(255, 75, 75, 0)", "symbolActiveColor": "rgba(41, 98, 255, 0.12)", "tabs": [ { "title": "Indices", "symbols": [ { "s": "FOREXCOM:SPXUSD", "d": "S&P 500" }, { "s": "FOREXCOM:NSXUSD", "d": "US 100" }, { "s": "FOREXCOM:DJI", "d": "Dow 30" }, { "s": "INDEX:NKY", "d": "Nikkei 225" }, { "s": "INDEX:DEU40", "d": "DAX Index" }, { "s": "FOREXCOM:UKXGBP", "d": "UK 100" } ], "originalTitle": "Indices" } ] }
+                                        </script>
+                                    </div>
+                                </div>
+                                <div id="crypto-tab-content" class="hidden">
+                                    <div class="tradingview-widget-container" style="height:400px; width:100%">
+                                      <div class="tradingview-widget-container__widget" style="height:100%; width:100%"></div>
+                                      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-crypto-market-ticker.js" async>
+                                      { "width": "100%", "height": "100%", "displayCurrency": "USD", "widgetTheme": "dark", "locale": "en", "isTransparent": true }
+                                      </script>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="glass-card p-8">
+                                <h3 class="text-2xl font-bold mb-4">Latest Articles</h3>
+                                <div id="latest-articles-list" class="space-y-2"><p class="text-gray-400 text-center">Loading latest articles...</p></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="space-y-8">
-                         <div class="glass-card p-8">
-                            <h3 class="text-2xl font-bold mb-6">Quick Actions</h3>
-                            <div class="space-y-4">
-                                <a href="tools_calculators.html" class="flex items-start gap-4 group p-3 -m-3 rounded-lg hover:bg-white/5">
-                                    <i class="fas fa-calculator text-blue-400 text-xl mt-1 fa-fw"></i>
-                                    <div>
-                                        <p class="font-semibold text-white group-hover:text-blue-400 transition-colors">Calculators</p>
-                                        <p class="text-sm text-gray-400">Run the numbers for your next move.</p>
-                                    </div>
-                                </a>
-                                <a href="real_results.html" class="flex items-start gap-4 group p-3 -m-3 rounded-lg hover:bg-white/5">
-                                    <i class="fas fa-chart-pie text-green-400 text-xl mt-1 fa-fw"></i>
-                                    <div>
-                                        <p class="font-semibold text-white group-hover:text-blue-400 transition-colors">Case Studies</p>
-                                        <p class="text-sm text-gray-400">See real-world examples in action.</p>
-                                    </div>
-                                </a>
+                        <div class="space-y-8">
+                             <div class="glass-card p-8">
+                                <h3 class="text-2xl font-bold mb-6">Quick Actions</h3>
+                                <div class="space-y-4">
+                                    <a href="tools_calculators.html" class="flex items-start gap-4 group p-3 -m-3 rounded-lg hover:bg-white/5">
+                                        <i class="fas fa-calculator text-blue-400 text-xl mt-1 fa-fw"></i>
+                                        <div>
+                                            <p class="font-semibold text-white group-hover:text-blue-400 transition-colors">Calculators</p>
+                                            <p class="text-sm text-gray-400">Run the numbers for your next move.</p>
+                                        </div>
+                                    </a>
+                                    <a href="real_results.html" class="flex items-start gap-4 group p-3 -m-3 rounded-lg hover:bg-white/5">
+                                        <i class="fas fa-chart-pie text-green-400 text-xl mt-1 fa-fw"></i>
+                                        <div>
+                                            <p class="font-semibold text-white group-hover:text-blue-400 transition-colors">Case Studies</p>
+                                            <p class="text-sm text-gray-400">See real-world examples in action.</p>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </section>
             </main>
         </div>
     </div>
@@ -227,7 +241,6 @@
             });
         }
 
-        // --- NEW: Market Snapshot Tab Logic ---
         const marketTabs = document.getElementById('market-tabs');
         const indicesContent = document.getElementById('indices-tab-content');
         const cryptoContent = document.getElementById('crypto-tab-content');
@@ -235,11 +248,9 @@
         marketTabs.addEventListener('click', (e) => {
             if (e.target.tagName !== 'BUTTON') return;
 
-            // Deactivate all buttons and hide all content
             marketTabs.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
             [indicesContent, cryptoContent].forEach(content => content.classList.add('hidden'));
             
-            // Activate the clicked button and show its content
             e.target.classList.add('active');
             const tab = e.target.dataset.tab;
             if (tab === 'indices') {
