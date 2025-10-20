@@ -72,44 +72,73 @@
 
             <main class="container mx-auto">
                 <section class="h-[calc(100vh-68px)] flex flex-col items-center justify-center text-center p-4 relative">
-                    <div class="max-w-3xl">
-                        <h1 class="text-4xl md:text-6xl font-bold">Welcome back.</h1>
-                        <p class="text-lg md:text-xl text-gray-300 mt-4 max-w-xl mx-auto">Here is your at-a-glance command center for the markets.</p>
+                    <div class="max-w-4xl">
+                        <h1 id="welcome-message" class="text-4xl md:text-6xl font-bold">Welcome back.</h1>
+                        <p class="text-lg md:text-xl text-gray-300 mt-4 max-w-2xl mx-auto">This is your ultimate command center. Analyze, track, and stay ahead of the markets.</p>
                     </div>
                     <div class="absolute bottom-10 left-1/2 -translate-x-1/2">
                         <a href="#dashboard-content" class="text-gray-400 animate-bounce"><i class="fas fa-chevron-down fa-2x"></i></a>
                     </div>
                 </section>
-                <section id="dashboard-content" class="p-4 md:py-16">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div class="lg:col-span-2 glass-card p-6">
-                            <h3 class="text-xl font-bold mb-4">Portfolio Snapshot</h3>
-                            <div class="flex items-center justify-between">
-                                <div><span class="text-gray-400 text-sm">Total Value</span><p class="text-3xl font-bold">$125,430.50</p></div>
-                                <div class="text-right"><span class="text-gray-400 text-sm">Today's P/L</span><p class="text-2xl font-bold text-green-400">+$1,820.75 (+1.47%)</p></div>
-                            </div>
+                
+                <section id="dashboard-content" class="p-4 md:py-16 space-y-6">
+                     <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                        <div class="glass-card p-6">
+                             <h3 class="text-xl font-bold mb-4">Portfolio Snapshot</h3>
+                             <div class="flex items-center justify-between">
+                                 <div><span class="text-gray-400 text-sm">Total Value</span><p class="text-3xl font-bold">$125,430</p></div>
+                                 <div class="text-right"><span class="text-gray-400 text-sm">Today's P/L</span><p class="text-2xl font-bold text-green-400">+$1,820</p></div>
+                             </div>
                         </div>
                         <div class="glass-card p-6 flex flex-col items-center justify-center">
-                            <h3 class="text-xl font-bold mb-4">Market Sentiment</h3>
-                             <div class="tradingview-widget-container" style="height:150px; width:100%"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-fear-and-greed-index.js" async>{ "theme": "dark", "locale": "en", "isTransparent": true }</script></div>
+                             <h3 class="text-xl font-bold mb-2">Market Sentiment</h3>
+                             <div class="tradingview-widget-container h-24 w-full"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-fear-and-greed-index.js" async>{ "theme": "dark", "locale": "en", "isTransparent": true }</script></div>
                         </div>
-                        <div class="glass-card p-6">
-                             <h3 class="text-xl font-bold mb-4">Today's High-Impact Events</h3>
-                             <div class="tradingview-widget-container" style="height:150px; width:100%"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>{ "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "locale": "en", "importanceFilter": "1" }</script></div>
+                        <div class="lg:col-span-2 glass-card p-6">
+                            <h3 class="text-xl font-bold mb-2">Top Stories</h3>
+                            <div class="tradingview-widget-container h-24 w-full">
+                                <div class="tradingview-widget-container__widget"></div>
+                                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
+                                { "feedMode": "market", "market": "stock", "isTransparent": true, "displayMode": "compact", "width": "100%", "height": "100%", "colorTheme": "dark", "locale": "en" }
+                                </script>
+                            </div>
                         </div>
-                        <div class="lg:col-span-4 glass-card p-6">
-                            <h3 class="text-xl font-bold mb-4">Dynamic Watchlist</h3>
-                            <div class="tradingview-widget-container" style="height:400px; width:100%"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>{ "width": "100%", "height": "100%", "symbolsGroups": [ { "name": "Indices", "originalName": "Indices", "symbols": [ { "name": "FOREXCOM:SPXUSD", "displayName": "S&P 500" }, { "name": "FOREXCOM:NSXUSD", "displayName": "US 100" }, { "name": "FOREXCOM:DJI", "displayName": "Dow 30" } ] }, { "name": "Technology", "originalName": "Technology", "symbols": [ { "name": "NASDAQ:AAPL", "displayName": "Apple" }, { "name": "NASDAQ:GOOGL", "displayName": "Google" }, { "name": "NASDAQ:MSFT", "displayName": "Microsoft" } ] }, { "name": "Crypto", "originalName": "Crypto", "symbols": [ { "name": "BITSTAMP:BTCUSD", "displayName": "Bitcoin" }, { "name": "BITSTAMP:ETHUSD", "displayName": "Ethereum" } ] } ], "showSymbolLogo": true, "colorTheme": "dark", "isTransparent": true, "locale": "en" }</script></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-2 glass-card p-2" style="height: 60vh;">
+                             <div class="tradingview-widget-container h-full w-full"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>{ "autosize": true, "symbol": "NASDAQ:AAPL", "interval": "D", "timezone": "Etc/UTC", "theme": "dark", "style": "1", "locale": "en", "enable_publishing": false, "backgroundColor": "rgba(0, 0, 0, 0)", "gridColor": "rgba(255, 255, 255, 0.06)", "allow_symbol_change": true, "container_id": "tradingview-widget-container__widget" }</script></div>
                         </div>
-                        <div class="lg:col-span-4 glass-card p-6">
-                            <h3 class="text-xl font-bold mb-4">Sector Heatmap</h3>
-                            <div class="tradingview-widget-container" style="height:500px; width:100%"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>{ "exchanges": [], "dataSource": "SPX500", "grouping": "sector", "blockSize": "market_cap_basic", "blockColor": "change", "chartColor": "rgba(0, 0, 0, 0)", "backgroundColor": "rgba(0, 0, 0, 0)", "allowSymbolChange": true, "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "locale": "en" }</script></div>
+                        <div class="space-y-6">
+                            <div class="glass-card p-6">
+                                <h3 class="text-xl font-bold mb-4">Dynamic Watchlist</h3>
+                                <div class="tradingview-widget-container" style="height: 25vh; width:100%"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>{ "width": "100%", "height": "100%", "symbolsGroups": [ { "name": "Watchlist", "originalName": "Watchlist", "symbols": [ { "name": "NASDAQ:AAPL" }, { "name": "NASDAQ:TSLA" }, { "name": "BITSTAMP:BTCUSD" }, { "name": "BITSTAMP:ETHUSD" } ] } ], "showSymbolLogo": true, "colorTheme": "dark", "isTransparent": true, "locale": "en" }</script></div>
+                            </div>
+                             <div class="glass-card p-6">
+                                <h3 class="text-xl font-bold mb-4">High-Impact Events</h3>
+                                <div class="tradingview-widget-container" style="height: 25vh; width:100%"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>{ "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "locale": "en", "importanceFilter": "1" }</script></div>
+                            </div>
                         </div>
                     </div>
                 </section>
             </main>
         </div>
     </div>
+    
+    <script type="module">
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
+        import { auth } from './js/main.js'; // Import the initialized auth instance
+
+        // This runs in addition to the main.js logic
+        onAuthStateChanged(auth, user => {
+            if (user && user.email) {
+                const welcomeMessage = document.getElementById('welcome-message');
+                if (welcomeMessage) {
+                    welcomeMessage.textContent = `Welcome back, ${user.email.split('@')[0]}.`;
+                }
+            }
+        });
+    </script>
     <script type="module" src="js/main.js"></script>
 </body>
 </html>
