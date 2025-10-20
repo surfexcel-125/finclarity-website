@@ -28,6 +28,9 @@
         .sidebar-link:hover, .sidebar-link.active { color: #ffffff; background-color: rgba(255, 255, 255, 0.08); }
         #sidebar { transition: transform 0.3s ease-in-out; }
         #sidebar-overlay { transition: opacity 0.3s ease-in-out; }
+        /* Styles for the new Market Snapshot tabs */
+        .tab-button { transition: all 0.2s ease; border-bottom: 2px solid transparent; }
+        .tab-button.active { color: #3b82f6; border-bottom-color: #3b82f6; }
     </style>
 </head>
 <body class="antialiased">
@@ -80,6 +83,34 @@
                                 <a href="member_article.html" class="main-button font-bold py-3 px-6 rounded-lg inline-block">Start Reading</a>
                             </div>
                         </div>
+                        
+                        <!-- NEW: Market Snapshot Section -->
+                        <div class="glass-card p-6 md:p-8">
+                            <h3 class="text-2xl font-bold mb-4">Market Snapshot</h3>
+                            <div class="border-b border-white/10 mb-4">
+                                <nav id="market-tabs" class="flex space-x-4" aria-label="Tabs">
+                                    <button class="tab-button active font-semibold text-gray-300 hover:text-white py-2 px-1" data-tab="indices">Major Indices</button>
+                                    <button class="tab-button font-semibold text-gray-300 hover:text-white py-2 px-1" data-tab="crypto">Cryptocurrency</button>
+                                </nav>
+                            </div>
+                            <div id="indices-tab-content">
+                                <div class="tradingview-widget-container" style="height:400px; width:100%">
+                                    <div class="tradingview-widget-container__widget" style="height:100%; width:100%"></div>
+                                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+                                    { "colorTheme": "dark", "dateRange": "12M", "showChart": true, "locale": "en", "largeChartUrl": "", "isTransparent": true, "showSymbolLogo": true, "showFloatingTooltip": false, "width": "100%", "height": "100%", "plotLineColorGrowing": "rgba(41, 98, 255, 1)", "plotLineColorFalling": "rgba(255, 75, 75, 1)", "gridLineColor": "rgba(240, 243, 250, 0)", "scaleFontColor": "rgba(120, 123, 134, 1)", "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)", "belowLineFillColorFalling": "rgba(255, 75, 75, 0.12)", "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)", "belowLineFillColorFallingBottom": "rgba(255, 75, 75, 0)", "symbolActiveColor": "rgba(41, 98, 255, 0.12)", "tabs": [ { "title": "Indices", "symbols": [ { "s": "FOREXCOM:SPXUSD", "d": "S&P 500" }, { "s": "FOREXCOM:NSXUSD", "d": "US 100" }, { "s": "FOREXCOM:DJI", "d": "Dow 30" }, { "s": "INDEX:NKY", "d": "Nikkei 225" }, { "s": "INDEX:DEU40", "d": "DAX Index" }, { "s": "FOREXCOM:UKXGBP", "d": "UK 100" } ], "originalTitle": "Indices" } ] }
+                                    </script>
+                                </div>
+                            </div>
+                            <div id="crypto-tab-content" class="hidden">
+                                <div class="tradingview-widget-container" style="height:400px; width:100%">
+                                  <div class="tradingview-widget-container__widget" style="height:100%; width:100%"></div>
+                                  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-crypto-market-ticker.js" async>
+                                  { "width": "100%", "height": "100%", "displayCurrency": "USD", "widgetTheme": "dark", "locale": "en", "isTransparent": true }
+                                  </script>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="glass-card p-8">
                             <h3 class="text-2xl font-bold mb-4">Latest Articles</h3>
                             <div id="latest-articles-list" class="space-y-2"><p class="text-gray-400 text-center">Loading latest articles...</p></div>
@@ -87,22 +118,22 @@
                     </div>
                     <div class="space-y-8">
                          <div class="glass-card p-8">
-                            <h3 class="text-2xl font-bold mb-6">New Results</h3>
-                            <div class="space-y-6">
-                                <div class="flex items-start gap-4 group">
-                                    <i class="fas fa-chart-pie text-green-400 mt-1"></i>
+                            <h3 class="text-2xl font-bold mb-6">Quick Actions</h3>
+                            <div class="space-y-4">
+                                <a href="tools_calculators.html" class="flex items-start gap-4 group p-3 -m-3 rounded-lg hover:bg-white/5">
+                                    <i class="fas fa-calculator text-blue-400 text-xl mt-1 fa-fw"></i>
                                     <div>
-                                        <a href="real_results.html" class="font-semibold text-white group-hover:text-blue-400 transition-colors">Case Study: $0 to $1,500/mo with a Niche Website</a>
-                                        <p class="text-sm text-gray-400">Analysis of a 12-month journey.</p>
+                                        <p class="font-semibold text-white group-hover:text-blue-400 transition-colors">Calculators</p>
+                                        <p class="text-sm text-gray-400">Run the numbers for your next move.</p>
                                     </div>
-                                </div>
-                                 <div class="flex items-start gap-4 group">
-                                     <i class="fas fa-wallet text-green-400 mt-1"></i>
+                                </a>
+                                <a href="real_results.html" class="flex items-start gap-4 group p-3 -m-3 rounded-lg hover:bg-white/5">
+                                    <i class="fas fa-chart-pie text-green-400 text-xl mt-1 fa-fw"></i>
                                     <div>
-                                         <a href="real_results.html" class="font-semibold text-white group-hover:text-blue-400 transition-colors">Member Spotlight: Tripling a Portfolio in 2 Years</a>
-                                         <p class="text-sm text-gray-400">How one member used our dividend strategy.</p>
-                                     </div>
-                                </div>
+                                        <p class="font-semibold text-white group-hover:text-blue-400 transition-colors">Case Studies</p>
+                                        <p class="text-sm text-gray-400">See real-world examples in action.</p>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -164,7 +195,7 @@
         sidebarOverlay.addEventListener('click', closeSidebar);
         
         sidebarNav.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A' && window.innerWidth < 1024) {
+            if (e.target.closest('a') && window.innerWidth < 1024) {
                 closeSidebar();
             }
         });
@@ -186,20 +217,37 @@
                 snapshot.forEach((doc, index) => {
                     const article = doc.data();
                     const articleDiv = document.createElement('div');
-                    articleDiv.className = 'p-4 rounded-lg group hover:bg-white/5 transition-colors';
+                    articleDiv.className = 'p-4 rounded-lg group hover:bg-white/5 transition-colors -m-4';
                     articleDiv.innerHTML = `
                         <a href="member_article.html" class="text-lg font-semibold text-white group-hover:text-blue-400">${article.title}</a>
                         <p class="text-gray-400 text-sm">${article.readTime} &bull; Published on ${article.createdAt ? article.createdAt.toDate().toLocaleDateString() : 'N/A'}</p>
                     `;
                     articlesListContainer.appendChild(articleDiv);
-                    if (index < snapshot.docs.length - 1) {
-                        const divider = document.createElement('hr');
-                        divider.className = 'border-white/10 mx-4';
-                        articlesListContainer.appendChild(divider);
-                    }
                 });
             });
         }
+
+        // --- NEW: Market Snapshot Tab Logic ---
+        const marketTabs = document.getElementById('market-tabs');
+        const indicesContent = document.getElementById('indices-tab-content');
+        const cryptoContent = document.getElementById('crypto-tab-content');
+        
+        marketTabs.addEventListener('click', (e) => {
+            if (e.target.tagName !== 'BUTTON') return;
+
+            // Deactivate all buttons and hide all content
+            marketTabs.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            [indicesContent, cryptoContent].forEach(content => content.classList.add('hidden'));
+            
+            // Activate the clicked button and show its content
+            e.target.classList.add('active');
+            const tab = e.target.dataset.tab;
+            if (tab === 'indices') {
+                indicesContent.classList.remove('hidden');
+            } else if (tab === 'crypto') {
+                cryptoContent.classList.remove('hidden');
+            }
+        });
     </script>
 </body>
 </html>
