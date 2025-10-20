@@ -38,36 +38,37 @@
         <div class="md:flex md:space-x-8">
             <aside class="w-full md:w-64 mb-8 md:mb-0">
                 <div class="glass-card p-4">
-                    <h2 class="text-lg font-bold p-4">Menu</h2>
-                    <nav id="dashboard-nav" class="flex flex-col space-y-2">
-                        <a href="#" id="nav-articles" class="sidebar-link active flex items-center space-x-3 py-3 px-4 rounded-lg">
+                    <h2 class="text-lg font-bold p-4">Guest Menu</h2>
+                    <nav class="flex flex-col space-y-2">
+                        <a href="guest_dashboard.html" class="sidebar-link active flex items-center space-x-3 py-3 px-4 rounded-lg">
                             <i class="fa-solid fa-newspaper w-5 text-center"></i>
-                            <span>Articles</span>
+                            <span>Sample Article</span>
                         </a>
-                        <a href="#" id="nav-results" class="sidebar-link flex items-center space-x-3 py-3 px-4 rounded-lg">
-                            <i class="fa-solid fa-chart-line w-5 text-center"></i>
-                            <span>Real-World Results</span>
-                        </a>
+                        <div class="relative">
+                            <a href="#" class="sidebar-link flex items-center space-x-3 py-3 px-4 rounded-lg text-gray-500 cursor-not-allowed">
+                                <i class="fa-solid fa-chart-line w-5 text-center"></i>
+                                <span>Real-World Results</span>
+                            </a>
+                            <span class="absolute top-1/2 right-4 -translate-y-1/2 text-xs font-bold bg-blue-500 text-white px-2 py-1 rounded-full">Member</span>
+                        </div>
+                         <div class="relative">
+                            <a href="#" class="sidebar-link flex items-center space-x-3 py-3 px-4 rounded-lg text-gray-500 cursor-not-allowed">
+                                <i class="fas fa-image w-5 text-center"></i>
+                                <span>Analysis</span>
+                            </a>
+                            <span class="absolute top-1/2 right-4 -translate-y-1/2 text-xs font-bold bg-blue-500 text-white px-2 py-1 rounded-full">Member</span>
+                        </div>
                     </nav>
                 </div>
             </aside>
             <main class="flex-1">
-                <div id="articles-view">
+                <div>
                     <h1 class="text-4xl font-bold mb-6">Articles & Guides</h1>
                     <div class="space-y-6">
                         <div class="glass-card p-6 md:p-8 hover:border-blue-400/50">
                             <h3 class="text-2xl font-bold mb-2">The 5 Pillars of Modern Wealth Creation</h3>
                             <p class="text-gray-300 mb-4">An essential primer on the foundational principles you need to understand before choosing a financial path. We cover Mindset, Capital, Effort, Time Horizon, and Scalability.</p>
-                            <a href="guest_article.html" class="text-blue-400 font-semibold hover:text-blue-300">Read More &rarr;</a>
-                        </div>
-                    </div>
-                </div>
-                <div id="results-view" class="hidden">
-                    <h1 class="text-4xl font-bold mb-6">Real-World Results</h1>
-                    <div class="space-y-6">
-                        <div class="glass-card p-6 md:p-8 hover:border-green-400/50">
-                            <h3 class="text-2xl font-bold mb-2">Case Study: From Stagnant Earner to Side-Hustle Pro</h3>
-                            <p class="text-gray-300 mb-4">See how a user with a fixed salary used our framework to identify, launch, and scale a new income stream, increasing their monthly revenue by 40% in six months.</p>
+                            <a href="guest_article.html" class="text-blue-400 font-semibold hover:text-blue-300">Read Preview &rarr;</a>
                         </div>
                     </div>
                 </div>
@@ -75,11 +76,7 @@
         </div>
     </div>
     <script>
-        // Your original script for view toggling and the background
         document.addEventListener('DOMContentLoaded', function() {
-            const navArticles = document.getElementById('nav-articles'); const navResults = document.getElementById('nav-results'); const articlesView = document.getElementById('articles-view'); const resultsView = document.getElementById('results-view');
-            navArticles.addEventListener('click', (e) => { e.preventDefault(); articlesView.classList.remove('hidden'); resultsView.classList.add('hidden'); navArticles.classList.add('active'); navResults.classList.remove('active'); });
-            navResults.addEventListener('click', (e) => { e.preventDefault(); resultsView.classList.remove('hidden'); articlesView.classList.add('hidden'); navResults.classList.add('active'); navArticles.classList.remove('active'); });
             const canvas = document.getElementById('constellation-bg'); const ctx = canvas.getContext('2d'); let particles = [];
             const setupCanvas = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
             class Particle { constructor() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; this.vx = Math.random() * 0.4 - 0.2; this.vy = Math.random() * 0.4 - 0.2; this.radius = 1.5; } draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2); ctx.fillStyle = 'rgba(255, 255, 255, 0.5)'; ctx.fill(); } update() { this.x += this.vx; this.y += this.vy; if (this.x < 0 || this.x > canvas.width) this.vx *= -1; if (this.y < 0 || this.y > canvas.height) this.vy *= -1; } }
