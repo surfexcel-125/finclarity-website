@@ -48,10 +48,12 @@
         </aside>
 
         <div class="lg:pl-72">
-            <header id="header" class="bg-transparent backdrop-blur-md sticky top-0 z-30">
+             <header id="header" class="bg-transparent backdrop-blur-md sticky top-0 z-30">
                 <div class="container mx-auto flex justify-between items-center p-4">
-                    <button id="open-sidebar-btn" class="text-white hover:text-blue-400 p-2 rounded-full hover:bg-white/10 lg:hidden"><i class="fas fa-bars fa-lg"></i></button>
-                    <div class="text-2xl font-bold tracking-wider text-white hidden lg:block">Real-World Results</div>
+                    <div class="flex items-center gap-4">
+                        <button id="open-sidebar-btn" class="text-white hover:text-blue-400 p-2 rounded-full hover:bg-white/10 lg:hidden"><i class="fas fa-bars fa-lg"></i></button>
+                        <div class="text-2xl font-bold tracking-wider text-white hidden lg:block">Real-World Results</div>
+                    </div>
                     <nav class="flex items-center gap-4">
                          <span id="user-email" class="hidden sm:inline text-gray-300"></span>
                          <a href="#" class="text-white p-2 rounded-full hover:bg-white/10"><i class="fas fa-user-circle fa-lg"></i></a>
@@ -108,7 +110,6 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         
-        // --- AUTH & UI ---
         const appWrapper = document.getElementById('app-wrapper');
         const userEmailSpan = document.getElementById('user-email');
         onAuthStateChanged(auth, user => {
@@ -120,7 +121,6 @@
             }
         });
 
-        // --- SIDEBAR ---
         const openSidebarBtn = document.getElementById('open-sidebar-btn');
         const closeSidebarBtn = document.getElementById('close-sidebar-btn');
         const sidebar = document.getElementById('sidebar');
@@ -134,3 +134,4 @@
     </script>
 </body>
 </html>
+
