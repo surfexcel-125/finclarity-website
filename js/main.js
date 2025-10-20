@@ -31,7 +31,6 @@ onAuthStateChanged(auth, user => {
             userEmailSpan.textContent = user.email;
         }
     } else {
-        // Redirect to login page, ensuring a full URL is used.
         window.location.replace(new URL('login.html', window.location.href).href);
     }
 });
@@ -71,3 +70,4 @@ if (logoutBtn) {
         signOut(auth).catch(error => console.error("Sign out error", error));
     });
 }
+
