@@ -28,6 +28,9 @@
         #sidebar { transition: transform 0.3s ease-in-out; }
         #sidebar-overlay { transition: opacity 0.3s ease-in-out; }
         #dashboard-content { scroll-margin-top: 1rem; }
+        /* Watchlist Modal Styles */
+        #watchlist-modal { transition: opacity 0.3s ease; }
+        #watchlist-modal-content { transition: transform 0.3s ease; }
     </style>
 </head>
 <body class="antialiased">
@@ -111,8 +114,13 @@
                         </div>
                         <div class="space-y-6">
                             <div class="glass-card p-6">
-                                <h3 class="text-xl font-bold mb-4">Dynamic Watchlist</h3>
-                                <div class="tradingview-widget-container" style="height: 25vh; width:100%"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>{ "width": "100%", "height": "100%", "symbolsGroups": [ { "name": "Watchlist", "originalName": "Watchlist", "symbols": [ { "name": "NASDAQ:AAPL" }, { "name": "NASDAQ:TSLA" }, { "name": "BITSTAMP:BTCUSD" }, { "name": "BITSTAMP:ETHUSD" } ] } ], "showSymbolLogo": true, "colorTheme": "dark", "isTransparent": true, "locale": "en" }</script></div>
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="text-xl font-bold">Dynamic Watchlist</h3>
+                                    <button id="edit-watchlist-btn" class="text-gray-400 hover:text-white transition-colors"><i class="fas fa-cog"></i></button>
+                                </div>
+                                <div id="watchlist-container" class="tradingview-widget-container" style="height: 25vh; width:100%">
+                                    <!-- Watchlist will be loaded here -->
+                                </div>
                             </div>
                             <div class="glass-card p-6">
                                 <h3 class="text-xl font-bold mb-4">Upcoming Events</h3>
@@ -177,10 +185,92 @@
             </main>
         </div>
     </div>
+
+    <!-- Watchlist Edit Modal -->
+    <div id="watchlist-modal" class="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none">
+        <div id="watchlist-modal-content" class="glass-card p-8 rounded-2xl w-full max-w-md transform scale-95">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">Edit Watchlist</h2>
+                <button id="close-watchlist-modal" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            </div>
+            <div>
+                <label for="watchlist-symbols" class="text-sm text-gray-400 block mb-2">Enter ticker symbols separated by commas.</label>
+                <textarea id="watchlist-symbols" rows="5" class="w-full p-3 bg-gray-900/50 border border-white/20 rounded-lg focus:outline-none focus:border-blue-500" placeholder="e.g., NASDAQ:AAPL, NASDAQ:TSLA, BITSTAMP:BTCUSD"></textarea>
+                <button id="save-watchlist-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg mt-4">Save Watchlist</button>
+            </div>
+        </div>
+    </div>
     
     <script type="module">
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
         import { auth } from './js/main.js'; // Import the initialized auth instance
+
+        // --- WATCHLIST LOGIC ---
+        const watchlistContainer = document.getElementById('watchlist-container');
+        const editBtn = document.getElementById('edit-watchlist-btn');
+        const modal = document.getElementById('watchlist-modal');
+        const modalContent = document.getElementById('watchlist-modal-content');
+        const closeModalBtn = document.getElementById('close-watchlist-modal');
+        const saveBtn = document.getElementById('save-watchlist-btn');
+        const symbolsTextarea = document.getElementById('watchlist-symbols');
+
+        const defaultSymbols = [
+            { "name": "NASDAQ:AAPL" }, { "name": "NASDAQ:TSLA" }, 
+            { "name": "BITSTAMP:BTCUSD" }, { "name": "BITSTAMP:ETHUSD" }
+        ];
+
+        function createWatchlistWidget(symbols) {
+            watchlistContainer.innerHTML = '';
+            new TradingView.widget({
+                "container_id": "watchlist-container",
+                "width": "100%",
+                "height": "100%",
+                "symbolsGroups": [{ "name": "Watchlist", "symbols": symbols }],
+                "showSymbolLogo": true,
+                "colorTheme": "dark",
+                "isTransparent": true,
+                "locale": "en"
+            });
+        }
+        
+        function loadWatchlist() {
+            const savedSymbolsStr = localStorage.getItem('userWatchlist');
+            if (savedSymbolsStr) {
+                const symbols = JSON.parse(savedSymbolsStr);
+                createWatchlistWidget(symbols);
+                symbolsTextarea.value = symbols.map(s => s.name).join(', ');
+            } else {
+                createWatchlistWidget(defaultSymbols);
+                symbolsTextarea.value = defaultSymbols.map(s => s.name).join(', ');
+            }
+        }
+
+        function openModal() {
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modalContent.classList.remove('scale-95');
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modalContent.classList.add('scale-95');
+        }
+
+        editBtn.addEventListener('click', openModal);
+        closeModalBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        saveBtn.addEventListener('click', () => {
+            const symbolsStr = symbolsTextarea.value.trim();
+            const symbols = symbolsStr.split(',').map(s => ({ "name": s.trim() })).filter(s => s.name);
+            localStorage.setItem('userWatchlist', JSON.stringify(symbols));
+            createWatchlistWidget(symbols);
+            closeModal();
+        });
+        
+        // --- END WATCHLIST LOGIC ---
+
 
         // This runs in addition to the main.js logic
         onAuthStateChanged(auth, user => {
@@ -191,6 +281,11 @@
                 }
             }
         });
+        
+        window.setupPage = () => {
+             loadWatchlist();
+        };
+
     </script>
     <script type="module" src="js/main.js"></script>
 </body>
