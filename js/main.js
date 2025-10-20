@@ -10,6 +10,7 @@ const firebaseConfig = {
     appId: "1:854889610123:web:4522c7fc685e9864014d8e"
 };
 
+// Export the initialized app so other scripts can use it
 export const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
@@ -54,7 +55,6 @@ if (openSidebarBtn) openSidebarBtn.addEventListener('click', openSidebar);
 if (closeSidebarBtn) closeSidebarBtn.addEventListener('click', closeSidebar);
 if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
 
-// Close sidebar on navigation on mobile
 if (sidebarNav) {
     sidebarNav.addEventListener('click', (e) => {
         if (e.target.closest('a') && window.innerWidth < 1024) {
