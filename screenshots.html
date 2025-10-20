@@ -30,6 +30,9 @@
             border-radius: 1.5rem;
             transition: all 0.3s ease;
         }
+        .form-input { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .main-button { background-color: #0052cc; color: white; transition: background-color 0.3s ease; }
+        .main-button:hover { background-color: #0065ff; }
         .loader {
             border: 4px solid rgba(255, 255, 255, 0.2);
             border-left-color: #0052cc;
@@ -38,20 +41,16 @@
             height: 40px;
             animation: spin 1s linear infinite;
         }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="antialiased">
 
-    <!-- NEW: Loading container shown by default -->
     <div id="loading-container" class="min-h-screen flex flex-col items-center justify-center text-center p-4">
         <div class="loader mb-4"></div>
         <p class="text-lg text-gray-400">Initializing Member Area...</p>
     </div>
 
-    <!-- Main app wrapper, hidden until auth is confirmed -->
     <div id="app-wrapper" style="display: none;">
         <header id="header" class="bg-[#111827]/30 backdrop-blur-md sticky top-0 z-30">
             <div class="container mx-auto flex justify-between items-center p-4">
@@ -59,9 +58,7 @@
                     <a href="member_dashboard.html" class="text-white hover:text-blue-400 p-2 rounded-full hover:bg-white/10" title="Back to Dashboard">
                         <i class="fas fa-arrow-left fa-lg"></i>
                     </a>
-                    <div class="text-2xl font-bold tracking-wider text-white" id="logo">
-                        <a href="index.html">FINCLARITY</a>
-                    </div>
+                    <div class="text-2xl font-bold tracking-wider text-white" id="logo"><a href="index.html">FINCLARITY</a></div>
                 </div>
                 <nav class="flex items-center gap-4">
                     <span class="hidden sm:inline text-gray-300">Welcome, Member</span>
@@ -73,21 +70,29 @@
         <main class="container mx-auto p-4 md:p-8">
             <div class="text-center mb-12">
                 <h1 class="text-4xl md:text-5xl font-bold">My Screenshots</h1>
-                <p class="text-lg text-gray-400 mt-4 max-w-2xl mx-auto">A gallery of your saved images from the Finclarity Chrome Extension.</p>
+                <p class="text-lg text-gray-400 mt-4 max-w-2xl mx-auto">Save and view your chart images from TradingView.</p>
+            </div>
+
+            <!-- NEW: Form to add a screenshot link -->
+            <div class="glass-card max-w-3xl mx-auto p-8 mb-12">
+                <h2 class="text-2xl font-bold mb-4">Add New Screenshot</h2>
+                <form id="screenshot-form" class="flex flex-col sm:flex-row gap-4">
+                    <input type="url" id="screenshot-url" placeholder="Paste TradingView image link here (.png)" required class="form-input w-full p-3 rounded-lg flex-grow">
+                    <button type="submit" id="save-btn" class="main-button font-bold py-3 px-6 rounded-lg">Save Image</button>
+                </form>
+                <p id="form-message" class="text-center text-green-400 mt-4 text-sm" style="display: none;"></p>
             </div>
 
             <div id="screenshots-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <!-- Screenshots will be loaded here -->
                 <p id="loading-message" class="text-center text-gray-400 col-span-full">Loading your screenshots...</p>
             </div>
         </main>
     </div>
 
-    <!-- Firebase SDK Scripts -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
-        import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
+        import { getFirestore, collection, query, orderBy, onSnapshot, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCRtzONV0M1syCLTF6H5__cGEBgJxM13sM",
@@ -95,7 +100,7 @@
             projectId: "adminpanel-93879",
             storageBucket: "adminpanel-93879.appspot.com",
             messagingSenderId: "854889610123",
-            appId: "1:854889610123:web:4522c7fc685e9864014d8e"
+            appId: "1:854889610123:web:4522c7fc685e9_Hasync_Hasync"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -106,18 +111,60 @@
         const appWrapper = document.getElementById('app-wrapper');
         const screenshotsContainer = document.getElementById('screenshots-container');
         const loadingMessage = document.getElementById('loading-message');
+        const screenshotForm = document.getElementById('screenshot-form');
+        const screenshotUrlInput = document.getElementById('screenshot-url');
+        const formMessage = document.getElementById('form-message');
+        const saveBtn = document.getElementById('save-btn');
 
-        // --- REVISED SECURITY CHECK ---
+        let currentUserId = null;
+
         onAuthStateChanged(auth, user => {
             if (user) {
-                // User is confirmed to be logged in.
-                loadingContainer.style.display = 'none'; // Hide loader
-                appWrapper.style.display = 'block';     // Show the main content
-                fetchScreenshots(user.uid);
+                currentUserId = user.uid;
+                loadingContainer.style.display = 'none';
+                appWrapper.style.display = 'block';
+                fetchScreenshots(currentUserId);
             } else {
-                // User is confirmed to be logged out. Redirect safely.
                 const absoluteIndexUrl = new URL('index.html', window.location.href).href;
-                window.location.replace(absoluteIndexUrl); // Use replace to avoid polluting browser history
+                window.location.replace(absoluteIndexUrl);
+            }
+        });
+
+        // --- NEW: Handle Form Submission ---
+        screenshotForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!currentUserId) return;
+
+            const imageUrl = screenshotUrlInput.value.trim();
+            if (!imageUrl.endsWith('.png')) {
+                alert('Please provide a direct image link from TradingView (ending in .png)');
+                return;
+            }
+
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'Saving...';
+
+            try {
+                const screenshotsPath = `users/${currentUserId}/screenshots`;
+                await addDoc(collection(db, screenshotsPath), {
+                    imageUrl: imageUrl,
+                    createdAt: serverTimestamp()
+                });
+                
+                formMessage.textContent = 'Screenshot saved successfully!';
+                formMessage.style.color = '#4ade80'; // green
+                formMessage.style.display = 'block';
+                screenshotForm.reset();
+
+            } catch (error) {
+                console.error("Error saving screenshot:", error);
+                formMessage.textContent = 'Error saving screenshot. Please try again.';
+                formMessage.style.color = '#f87171'; // red
+                formMessage.style.display = 'block';
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = 'Save Image';
+                setTimeout(() => formMessage.style.display = 'none', 4000);
             }
         });
 
