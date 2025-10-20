@@ -10,7 +10,7 @@ const firebaseConfig = {
     appId: "1:854889610123:web:4522c7fc685e9864014d8e"
 };
 
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 // --- DOM Elements ---
@@ -26,7 +26,7 @@ const logoutBtn = document.getElementById('logout-btn');
 // --- Authentication ---
 onAuthStateChanged(auth, user => {
     if (user) {
-        appWrapper.style.display = 'block';
+        if(appWrapper) appWrapper.style.display = 'block';
         if (userEmailSpan) {
             userEmailSpan.textContent = user.email;
         }
