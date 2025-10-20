@@ -13,23 +13,18 @@
             background-color: #0c111e;
             background-image: radial-gradient(circle at top left, rgba(26, 35, 54, 0.8), transparent 40%),
                               radial-gradient(circle at bottom right, rgba(26, 35, 54, 0.8), transparent 40%);
-            background-attachment: fixed;
-            color: #f4f6f9;
-            font-family: 'Source Sans Pro', sans-serif;
+            background-attachment: fixed; color: #f4f6f9; font-family: 'Source Sans Pro', sans-serif;
         }
         h1, h2, h3 { font-family: 'Montserrat', sans-serif; }
         .glass-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem; }
         .form-input { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); }
-        .form-input:focus { outline: none; border-color: #0052cc; box-shadow: 0 0 0 2px rgba(0, 82, 204, 0.5); }
         .main-button { background-color: #0052cc; color: white; transition: background-color 0.3s ease; }
         .main-button:hover { background-color: #0065ff; }
     </style>
 </head>
 <body class="antialiased">
     <div class="min-h-screen flex flex-col items-center justify-center p-4">
-        <div class="text-3xl font-bold tracking-wider text-white mb-8">
-            <a href="index.html">FINCLARITY</a>
-        </div>
+        <div class="text-3xl font-bold tracking-wider text-white mb-8"><a href="index.html">FINCLARITY</a></div>
         <div class="w-full max-w-md">
             <div class="glass-card p-8">
                 <h2 class="text-2xl font-bold mb-6 text-center">Member Login</h2>
@@ -45,17 +40,12 @@
                     <button type="submit" class="main-button w-full py-3 rounded-lg font-bold">Log In</button>
                 </form>
                 <p id="login-error" class="text-center text-red-400 mt-4 text-sm" style="display: none;"></p>
-                <div class="text-center mt-6 text-sm text-gray-400">
-                    <p>Don't have an account? <a href="#" class="font-semibold text-blue-400 hover:underline">Sign Up</a></p>
-                </div>
             </div>
         </div>
     </div>
-
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
-
         const firebaseConfig = {
             apiKey: "AIzaSyCRtzONV0M1syCLTF6H5__cGEBgJxM13sM",
             authDomain: "adminpanel-93879.firebaseapp.com",
@@ -64,29 +54,27 @@
             messagingSenderId: "854889610123",
             appId: "1:854889610123:web:4522c7fc685e9864014d8e"
         };
-
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-
         const loginForm = document.getElementById('login-form');
         const loginError = document.getElementById('login-error');
-
         onAuthStateChanged(auth, user => {
             if (user) {
-                window.location.replace(new URL('member_dashboard.html', window.location.href).href);
+                window.location.href = new URL('member_dashboard.html', window.location.href).href;
             }
         });
-
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-
             signInWithEmailAndPassword(auth, email, password)
-                .catch((error) => {
+                .then(() => {
+                    loginError.style.display = 'none';
+                    window.location.href = new URL('member_dashboard.html', window.location.href).href;
+                })
+                .catch(() => {
                     loginError.textContent = "Error: Invalid email or password.";
                     loginError.style.display = 'block';
-                    console.error("Login Error:", error.code, error.message);
                 });
         });
     </script>
