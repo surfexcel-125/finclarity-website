@@ -19,8 +19,6 @@
         #sidebar { transition: transform 0.3s ease-in-out; }
         #sidebar-overlay { transition: opacity 0.3s ease-in-out; }
         .glass-card { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem; }
-        .impact-high { background-color: #ef4444; color: white; }
-        .impact-medium { background-color: #f97316; color: white; }
     </style>
 </head>
 <body class="antialiased">
@@ -63,94 +61,32 @@
                 </div>
             </header>
 
-            <main class="container mx-auto p-4 md:p-8 flex-grow">
-                <div class="mb-10">
-                    <h1 class="text-3xl font-bold text-center mb-4">Upcoming High-Impact Events</h1>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <!-- Event Card 1 -->
-                        <div class="glass-card p-5 flex items-start space-x-4">
-                            <div class="text-2xl">🇺🇸</div>
-                            <div>
-                                <p class="font-bold text-white">US CPI Inflation Rate</p>
-                                <p class="text-sm text-gray-400">Today, 18:00 IST</p>
-                                <span class="text-xs font-bold py-1 px-2 rounded-full impact-high mt-2 inline-block">High Impact</span>
-                            </div>
-                        </div>
-                        <!-- Event Card 2 -->
-                        <div class="glass-card p-5 flex items-start space-x-4">
-                            <div class="text-2xl">🇪🇺</div>
-                            <div>
-                                <p class="font-bold text-white">ECB Interest Rate Decision</p>
-                                <p class="text-sm text-gray-400">Today, 19:15 IST</p>
-                                <span class="text-xs font-bold py-1 px-2 rounded-full impact-high mt-2 inline-block">High Impact</span>
-                            </div>
-                        </div>
-                        <!-- Event Card 3 -->
-                        <div class="glass-card p-5 flex items-start space-x-4">
-                            <div class="text-2xl">🇬🇧</div>
-                            <div>
-                                <p class="font-bold text-white">UK Retail Sales MoM</p>
-                                <p class="text-sm text-gray-400">Tomorrow, 11:30 IST</p>
-                                <span class="text-xs font-bold py-1 px-2 rounded-full impact-medium mt-2 inline-block">Medium Impact</span>
-                            </div>
-                        </div>
-                        <!-- Event Card 4 -->
-                        <div class="glass-card p-5 flex items-start space-x-4">
-                            <div class="text-2xl">🇯🇵</div>
-                            <div>
-                                <p class="font-bold text-white">BoJ Policy Rate</p>
-                                <p class="text-sm text-gray-400">Oct 23, 08:30 IST</p>
-                                <span class="text-xs font-bold py-1 px-2 rounded-full impact-high mt-2 inline-block">High Impact</span>
-                            </div>
-                        </div>
-                    </div>
+            <main class="container mx-auto p-4 md:p-8 flex-grow flex flex-col">
+                <div class="text-center mb-6">
+                    <h1 class="text-4xl font-bold">Key Economic Events</h1>
+                    <p class="text-lg text-gray-400 mt-2 max-w-3xl mx-auto">Stay ahead of market-moving events. Track important announcements from around the world in real-time, and use the built-in filters to customize the view.</p>
                 </div>
-
-                <div>
-                    <h2 class="text-3xl font-bold text-center mb-4">Full Economic Calendar</h2>
-                    <div class="glass-card overflow-hidden" style="height: 75vh;">
-                         <div id="calendar-container" class="tradingview-widget-container h-full"></div>
+                
+                <div class="glass-card overflow-hidden flex-grow">
+                    <div class="tradingview-widget-container h-full">
+                        <div class="tradingview-widget-container__widget h-full"></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-economic-calendar.js" async>
+                        {
+                          "colorTheme": "dark",
+                          "isTransparent": true,
+                          "width": "100%",
+                          "height": "100%",
+                          "locale": "en",
+                          "importanceFilter": "-1,0,1"
+                        }
+                        </script>
                     </div>
                 </div>
             </main>
         </div>
     </div>
-    <script type="module">
-        // This script block is ONLY for defining the page-specific logic.
-        // It does NOT import or run main.js.
-        
-        function loadCalendar() {
-            const container = document.getElementById('calendar-container');
-            if (!container) return;
-            container.innerHTML = ''; 
-
-            const config = {
-                "colorTheme": "dark",
-                "isTransparent": true,
-                "width": "100%",
-                "height": "100%",
-                "locale": "en",
-                "importanceFilter": "-1,0,1", // Show all by default
-                 "currencyFilter": "USD,EUR,JPY,GBP,CAD,AUD,NZD,CNY,CHF,INR"
-            };
-            
-            const script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-economic-calendar.js';
-            script.async = true;
-            script.innerHTML = JSON.stringify(config);
-
-            container.appendChild(script);
-        }
-        
-        // Define the function that main.js will call.
-        window.setupPage = () => {
-            loadCalendar();
-        };
-    </script>
     
-    <!-- This script runs AFTER setupPage is defined on the window. -->
-    <!-- It handles auth and then calls window.setupPage(). -->
+    <!-- This script handles auth and page setup, but has no calendar-specific logic. -->
     <script type="module" src="js/main.js"></script>
 </body>
 </html>
