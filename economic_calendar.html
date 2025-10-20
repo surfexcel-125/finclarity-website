@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live News Feed | Finclarity</title>
+    <title>Economic Calendar | Finclarity</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,15 +19,9 @@
         #sidebar { transition: transform 0.3s ease-in-out; }
         #sidebar-overlay { transition: opacity 0.3s ease-in-out; }
         .glass-card { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem; }
-        .news-source-button {
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-        .news-source-button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-color: #0052cc;
-        }
+        .filter-btn { background-color: rgba(255, 255, 255, 0.05); transition: background-color 0.2s, color 0.2s; border: 1px solid transparent;}
+        .filter-btn:hover { background-color: rgba(255, 255, 255, 0.1); }
+        .filter-btn.active-btn { background-color: #0052cc; color: white; border-color: #0052cc;}
     </style>
 </head>
 <body class="antialiased">
@@ -44,8 +38,8 @@
                     <a href="portfolio.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-wallet fa-fw w-6"></i><span>Portfolio</span></a>
                     <a href="market_screener.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-search-dollar fa-fw w-6"></i><span>Market Screener</span></a>
                     <a href="articles.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-book-reader fa-fw w-6"></i><span>Our Articles</span></a>
-                    <a href="news.html" class="sidebar-link active flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-newspaper fa-fw w-6"></i><span>Live News Feed</span></a>
-                    <a href="economic_calendar.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-calendar-alt fa-fw w-6"></i><span>Economic Calendar</span></a>
+                    <a href="news.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-newspaper fa-fw w-6"></i><span>Live News Feed</span></a>
+                    <a href="economic_calendar.html" class="sidebar-link active flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-calendar-alt fa-fw w-6"></i><span>Economic Calendar</span></a>
                     <a href="trading_journal.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-book fa-fw w-6"></i><span>Trading Journal</span></a>
                     <a href="tools_calculators.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-tools fa-fw w-6"></i><span>Tools</span></a>
                     <a href="settings.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-user-cog fa-fw w-6"></i><span>Settings</span></a>
@@ -56,12 +50,12 @@
             </div>
         </aside>
 
-        <div>
+        <div class="min-h-screen flex flex-col">
              <header id="header" class="bg-transparent backdrop-blur-md sticky top-0 z-30">
                 <div class="container mx-auto flex justify-between items-center p-4">
                      <div class="flex items-center gap-4">
                         <button id="open-sidebar-btn" class="text-white hover:text-blue-400 p-2 rounded-full hover:bg-white/10"><i class="fas fa-bars fa-lg"></i></button>
-                        <div class="text-2xl font-bold tracking-wider text-white">Live News Feed</div>
+                        <div class="text-2xl font-bold tracking-wider text-white">Economic Calendar</div>
                     </div>
                     <nav class="flex items-center gap-4">
                          <span id="user-email" class="hidden sm:inline text-gray-300"></span>
@@ -70,64 +64,114 @@
                 </div>
             </header>
 
-            <main class="container mx-auto p-4 md:p-8 pb-20">
-                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div class="lg:col-span-2">
-                        <h2 class="text-3xl font-bold mb-4">Top Stories</h2>
-                        <div class="tradingview-widget-container" style="height:100vh; width:100%">
-                            <div class="tradingview-widget-container__widget"></div>
-                            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
-                            { "feedMode": "all_symbols", "isTransparent": true, "displayMode": "regular", "width": "100%", "height": "100%", "colorTheme": "dark", "locale": "en" }
-                            </script>
-                        </div>
+            <main class="container mx-auto p-4 md:p-8 flex-grow">
+                <div class="text-center mb-6">
+                    <h1 class="text-4xl font-bold">Key Economic Events</h1>
+                    <p class="text-lg text-gray-400 mt-2 max-w-3xl mx-auto">Stay ahead of market-moving events. Track important announcements from around the world in real-time.</p>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-6">
+                    <div class="inline-flex rounded-lg bg-gray-900/50 p-1" id="timeframe-filters">
+                        <button data-mode="today" class="filter-btn timeframe-btn font-semibold py-2 px-4 rounded-md">Today</button>
+                        <button data-mode="this_week" class="filter-btn timeframe-btn font-semibold py-2 px-4 rounded-md">This Week</button>
                     </div>
-                    <div class="space-y-8">
-                        <div>
-                            <h2 class="text-3xl font-bold mb-4">Market Overview</h2>
-                            <div class="tradingview-widget-container" style="height:450px; width:100%">
-                                <div class="tradingview-widget-container__widget"></div>
-                                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
-                                { "colorTheme": "dark", "dateRange": "12M", "showChart": true, "locale": "en", "largeChartUrl": "", "isTransparent": true, "showSymbolLogo": true, "showFloatingTooltip": false, "width": "100%", "height": "100%", "plotLineColorGrowing": "rgba(41, 98, 255, 1)", "plotLineColorFalling": "rgba(41, 98, 255, 1)", "gridLineColor": "rgba(240, 243, 250, 0)", "scaleFontColor": "rgba(120, 123, 134, 1)", "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)", "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)", "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)", "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)", "symbolActiveColor": "rgba(41, 98, 255, 0.12)", "tabs": [ { "title": "Indices", "symbols": [ { "s": "FOREXCOM:SPXUSD", "d": "S&P 500" }, { "s": "FOREXCOM:NSXUSD", "d": "US 100" }, { "s": "FOREXCOM:DJI", "d": "Dow 30" }, { "s": "INDEX:VIX", "d": "VIX" } ], "originalTitle": "Indices" }, { "title": "Futures", "symbols": [ { "s": "CME_MINI:ES1!", "d": "S&P 500" }, { "s": "CME:6E1!", "d": "Euro" }, { "s": "COMEX:GC1!", "d": "Gold" }, { "s": "NYMEX:CL1!", "d": "Crude Oil" } ], "originalTitle": "Futures" }, { "title": "Bonds", "symbols": [ { "s": "CME:GE1!", "d": "Eurodollar" }, { "s": "CBOT:ZB1!", "d": "T-Bond" }, { "s": "CBOT:UB1!", "d": "Ultra T-Bond" } ], "originalTitle": "Bonds" }, { "title": "Forex", "symbols": [ { "s": "FX:EURUSD", "d": "EUR/USD" }, { "s": "FX:GBPUSD", "d": "GBP/USD" }, { "s": "FX:USDJPY", "d": "USD/JPY" } ], "originalTitle": "Forex" } ] }
-                                </script>
-                              </div>
-                        </div>
-                        <div>
-                            <h2 class="text-3xl font-bold mb-4">Top News Sources</h2>
-                            <div class="space-y-3">
-                                <a href="https://www.reuters.com/markets/" target="_blank" rel="noopener noreferrer" class="news-source-button flex items-center justify-between p-4 rounded-lg w-full">
-                                    <span class="font-bold">Reuters Markets</span>
-                                    <i class="fas fa-external-link-alt text-gray-400"></i>
-                                </a>
-                                <a href="https://www.bloomberg.com/" target="_blank" rel="noopener noreferrer" class="news-source-button flex items-center justify-between p-4 rounded-lg w-full">
-                                    <span class="font-bold">Bloomberg</span>
-                                    <i class="fas fa-external-link-alt text-gray-400"></i>
-                                </a>
-                                <a href="https://www.wsj.com/news/markets" target="_blank" rel="noopener noreferrer" class="news-source-button flex items-center justify-between p-4 rounded-lg w-full">
-                                    <span class="font-bold">Wall Street Journal</span>
-                                    <i class="fas fa-external-link-alt text-gray-400"></i>
-                                </a>
-                                 <a href="https://www.coindesk.com/" target="_blank" rel="noopener noreferrer" class="news-source-button flex items-center justify-between p-4 rounded-lg w-full">
-                                    <span class="font-bold">CoinDesk (Crypto)</span>
-                                    <i class="fas fa-external-link-alt text-gray-400"></i>
-                                </a>
-                            </div>
-                        </div>
+                    <div class="inline-flex rounded-lg bg-gray-900/50 p-1" id="importance-filters">
+                        <button data-importance="1" class="filter-btn importance-btn font-semibold py-2 px-4 rounded-md">High</button>
+                        <button data-importance="0" class="filter-btn importance-btn font-semibold py-2 px-4 rounded-md">Medium</button>
+                        <button data-importance="-1" class="filter-btn importance-btn font-semibold py-2 px-4 rounded-md">Low</button>
                     </div>
-                 </div>
+                </div>
+
+                <div class="glass-card overflow-hidden" style="height: 70vh;">
+                     <div id="calendar-container" class="tradingview-widget-container h-full"></div>
+                </div>
             </main>
         </div>
-
-        <footer class="fixed bottom-0 left-0 right-0 z-20">
-            <div class="glass-card py-1 mx-4 mb-4 rounded-lg">
-                <div class="tradingview-widget-container">
-                    <div class="tradingview-widget-container__widget"></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-                    { "symbols": [ { "proName": "FOREXCOM:SPXUSD", "title": "S&P 500" }, { "proName": "FOREXCOM:NSXUSD", "title": "US 100" }, { "proName": "FX_IDC:EURUSD", "title": "EUR to USD" }, { "proName": "BITSTAMP:BTCUSD", "title": "Bitcoin" }, { "proName": "BITSTAMP:ETHUSD", "title": "Ethereum" } ], "showSymbolLogo": true, "colorTheme": "dark", "isTransparent": true, "displayMode": "adaptive", "locale": "en" }
-                    </script>
-                </div>
-            </div>
-        </footer>
     </div>
+    <script type="module">
+        import './js/main.js';
+
+        let currentMode = 'today';
+        // Start with all importance levels selected by default
+        let currentImportance = '-1,0,1';
+
+        function loadCalendar() {
+            const container = document.getElementById('calendar-container');
+            if (!container) return;
+            container.innerHTML = ''; 
+
+            const config = {
+                "colorTheme": "dark",
+                "isTransparent": true,
+                "width": "100%",
+                "height": "100%",
+                "locale": "en",
+                "importanceFilter": currentImportance,
+                "currencyFilter": "USD,EUR,JPY,GBP,CAD,AUD,NZD,CNY,CHF,INR"
+            };
+
+            if (currentMode === 'today') {
+                config.displayMode = "day";
+            } else if (currentMode === 'this_week') {
+                config.displayMode = "week";
+            }
+            
+            const script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-economic-calendar.js';
+            script.async = true;
+            script.innerHTML = JSON.stringify(config);
+
+            container.appendChild(script);
+        }
+
+        function updateActiveButtons() {
+            // Update timeframe buttons
+            document.querySelectorAll('#timeframe-filters .timeframe-btn').forEach(btn => {
+                btn.classList.toggle('active-btn', btn.dataset.mode === currentMode);
+            });
+            // Update importance buttons
+            const importanceValues = new Set(currentImportance.split(','));
+            document.querySelectorAll('#importance-filters .importance-btn').forEach(btn => {
+                 btn.classList.toggle('active-btn', importanceValues.has(btn.dataset.importance));
+            });
+        }
+        
+        window.setupPage = () => {
+            // Timeframe filter logic
+            document.querySelectorAll('#timeframe-filters .timeframe-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    currentMode = e.currentTarget.dataset.mode;
+                    loadCalendar();
+                    updateActiveButtons();
+                });
+            });
+
+            // Importance filter logic
+            document.querySelectorAll('#importance-filters .importance-btn').forEach(button => {
+                button.addEventListener('click', e => {
+                    const importanceValue = e.currentTarget.dataset.importance;
+                    // Use a Set for easy toggling
+                    const selectedValues = new Set(currentImportance ? currentImportance.split(',') : []);
+                    
+                    if (selectedValues.has(importanceValue)) {
+                        selectedValues.delete(importanceValue); // If it's already selected, deselect it
+                    } else {
+                        selectedValues.add(importanceValue); // Otherwise, select it
+                    }
+                    
+                    currentImportance = Array.from(selectedValues).join(',');
+                    loadCalendar();
+                    updateActiveButtons();
+                });
+            });
+            
+            // Initial Load on page setup
+            loadCalendar();
+            updateActiveButtons();
+        };
+
+    </script>
     <script type="module" src="js/main.js"></script>
 </body>
 </html>
