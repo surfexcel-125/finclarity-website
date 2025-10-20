@@ -39,9 +39,7 @@
             <div class="p-6 flex flex-col h-full">
                 <div class="flex justify-between items-center mb-8">
                     <div class="text-xl font-bold tracking-wider text-white"><a href="index.html">FINCLARITY</a></div>
-                    <button id="close-sidebar-btn" class="text-gray-400 hover:text-white lg:hidden">
-                        <i class="fas fa-times fa-lg"></i>
-                    </button>
+                    <button id="close-sidebar-btn" class="text-gray-400 hover:text-white lg:hidden"><i class="fas fa-times fa-lg"></i></button>
                 </div>
                 <nav class="flex flex-col space-y-2 text-lg">
                     <a href="member_dashboard.html" class="sidebar-link active flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-tachometer-alt fa-fw w-6"></i><span>Dashboard</span></a>
@@ -60,11 +58,9 @@
         <div class="lg:pl-72">
             <header id="header" class="bg-transparent backdrop-blur-md sticky top-0 z-30">
                 <div class="container mx-auto flex justify-between items-center p-4">
-                     <button id="open-sidebar-btn" class="text-white hover:text-blue-400 p-2 rounded-full hover:bg-white/10 lg:hidden">
-                        <i class="fas fa-bars fa-lg"></i>
-                     </button>
-                    <div class="text-2xl font-bold tracking-wider text-white hidden lg:block">
-                        Dashboard
+                     <div class="flex items-center gap-4">
+                        <button id="open-sidebar-btn" class="text-white hover:text-blue-400 p-2 rounded-full hover:bg-white/10 lg:hidden"><i class="fas fa-bars fa-lg"></i></button>
+                        <div class="text-2xl font-bold tracking-wider text-white hidden lg:block">Dashboard</div>
                     </div>
                     <nav class="flex items-center gap-4">
                          <span id="user-email" class="hidden sm:inline text-gray-300"></span>
@@ -73,47 +69,45 @@
                 </div>
             </header>
 
-            <main class="container mx-auto">
-                <section class="min-h-screen p-4 md:py-8">
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        <div class="lg:col-span-2 space-y-8">
-                            <div class="glass-card flex flex-col md:flex-row items-center gap-8 p-8 transition-all duration-300 hover:border-blue-500/50">
-                                <div class="text-7xl text-blue-500 flex-shrink-0"><i class="fas fa-book-open"></i></div>
-                                <div>
-                                    <span class="text-sm font-semibold text-blue-400 uppercase tracking-wider">Featured Guide</span>
-                                    <h2 class="text-3xl font-bold mt-2 mb-3">Unlock The 5 Pillars of Wealth</h2>
-                                    <p class="text-gray-300 mb-6">You have full access. Dive deep into the core principles that form the foundation of your entire financial journey.</p>
-                                    <a href="member_article.html" class="main-button font-bold py-3 px-6 rounded-lg inline-block">Start Reading</a>
-                                </div>
-                            </div>
-                            <div class="glass-card p-8">
-                                <h3 class="text-2xl font-bold mb-4">Latest Articles</h3>
-                                <div id="latest-articles-list" class="space-y-2"><p class="text-gray-400 text-center">Loading latest articles...</p></div>
+            <main class="container mx-auto p-4 md:py-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 space-y-8">
+                        <div class="glass-card flex flex-col md:flex-row items-center gap-8 p-8 transition-all duration-300 hover:border-blue-500/50">
+                            <div class="text-7xl text-blue-500 flex-shrink-0"><i class="fas fa-book-open"></i></div>
+                            <div>
+                                <span class="text-sm font-semibold text-blue-400 uppercase tracking-wider">Featured Guide</span>
+                                <h2 class="text-3xl font-bold mt-2 mb-3">Unlock The 5 Pillars of Wealth</h2>
+                                <p class="text-gray-300 mb-6">You have full access. Dive deep into the core principles that form the foundation of your entire financial journey.</p>
+                                <a href="member_article.html" class="main-button font-bold py-3 px-6 rounded-lg inline-block">Start Reading</a>
                             </div>
                         </div>
-                        <div class="space-y-8">
-                             <div class="glass-card p-8">
-                                <h3 class="text-2xl font-bold mb-6">New Results</h3>
-                                <div class="space-y-6">
-                                    <div class="flex items-start gap-4 group">
-                                        <i class="fas fa-chart-pie text-green-400 mt-1"></i>
-                                        <div>
-                                            <a href="real_results.html" class="font-semibold text-white group-hover:text-blue-400 transition-colors">Case Study: $0 to $1,500/mo with a Niche Website</a>
-                                            <p class="text-sm text-gray-400">Analysis of a 12-month journey.</p>
-                                        </div>
+                        <div class="glass-card p-8">
+                            <h3 class="text-2xl font-bold mb-4">Latest Articles</h3>
+                            <div id="latest-articles-list" class="space-y-2"><p class="text-gray-400 text-center">Loading latest articles...</p></div>
+                        </div>
+                    </div>
+                    <div class="space-y-8">
+                         <div class="glass-card p-8">
+                            <h3 class="text-2xl font-bold mb-6">New Results</h3>
+                            <div class="space-y-6">
+                                <div class="flex items-start gap-4 group">
+                                    <i class="fas fa-chart-pie text-green-400 mt-1"></i>
+                                    <div>
+                                        <a href="real_results.html" class="font-semibold text-white group-hover:text-blue-400 transition-colors">Case Study: $0 to $1,500/mo with a Niche Website</a>
+                                        <p class="text-sm text-gray-400">Analysis of a 12-month journey.</p>
                                     </div>
-                                     <div class="flex items-start gap-4 group">
-                                         <i class="fas fa-wallet text-green-400 mt-1"></i>
-                                        <div>
-                                             <a href="real_results.html" class="font-semibold text-white group-hover:text-blue-400 transition-colors">Member Spotlight: Tripling a Portfolio in 2 Years</a>
-                                             <p class="text-sm text-gray-400">How one member used our dividend strategy.</p>
-                                         </div>
-                                    </div>
+                                </div>
+                                 <div class="flex items-start gap-4 group">
+                                     <i class="fas fa-wallet text-green-400 mt-1"></i>
+                                    <div>
+                                         <a href="real_results.html" class="font-semibold text-white group-hover:text-blue-400 transition-colors">Member Spotlight: Tripling a Portfolio in 2 Years</a>
+                                         <p class="text-sm text-gray-400">How one member used our dividend strategy.</p>
+                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section>
+                </div>
             </main>
         </div>
     </div>
@@ -136,7 +130,6 @@
         const db = getFirestore(app);
         const auth = getAuth(app);
 
-        // --- AUTHENTICATION & UI SETUP ---
         const appWrapper = document.getElementById('app-wrapper');
         const userEmailSpan = document.getElementById('user-email');
 
@@ -150,38 +143,24 @@
             }
         });
 
-        // --- SIDEBAR LOGIC ---
         const openSidebarBtn = document.getElementById('open-sidebar-btn');
         const closeSidebarBtn = document.getElementById('close-sidebar-btn');
         const sidebar = document.getElementById('sidebar');
         const sidebarOverlay = document.getElementById('sidebar-overlay');
-
-        function openSidebar() {
-            sidebar.classList.remove('-translate-x-full');
-            sidebarOverlay.classList.remove('hidden');
-        }
-        function closeSidebar() {
-            sidebar.classList.add('-translate-x-full');
-            sidebarOverlay.classList.add('hidden');
-        }
-
+        function openSidebar() { sidebar.classList.remove('-translate-x-full'); sidebarOverlay.classList.remove('hidden'); }
+        function closeSidebar() { sidebar.classList.add('-translate-x-full'); sidebarOverlay.classList.add('hidden'); }
         openSidebarBtn.addEventListener('click', openSidebar);
         closeSidebarBtn.addEventListener('click', closeSidebar);
         sidebarOverlay.addEventListener('click', closeSidebar);
         
-        // --- LOGOUT ---
         document.getElementById('logout-btn').addEventListener('click', (e) => {
             e.preventDefault();
-            signOut(auth).then(() => {
-                window.location.href = new URL('index.html', window.location.href).href;
-            });
+            signOut(auth).catch(error => console.error("Sign out error", error));
         });
 
-        // --- DATA FETCHING ---
         function fetchLatestArticles() {
             const articlesListContainer = document.getElementById('latest-articles-list');
             const q = query(collection(db, "articles"), orderBy("createdAt", "desc"), limit(3));
-
             onSnapshot(q, (snapshot) => {
                 articlesListContainer.innerHTML = ''; 
                 if (snapshot.empty) {
@@ -208,3 +187,4 @@
     </script>
 </body>
 </html>
+
