@@ -98,36 +98,28 @@
                              <div class="tradingview-widget-container h-24 w-full"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-fear-and-greed-index.js" async>{ "theme": "dark", "locale": "en", "isTransparent": true }</script></div>
                         </div>
                         <div class="lg:col-span-2 glass-card p-6">
-                            <h3 class="text-xl font-bold mb-2">Today's Top Movers</h3>
+                            <h3 class="text-xl font-bold mb-2">Major Markets</h3>
                             <div class="tradingview-widget-container h-24 w-full">
                                 <div class="tradingview-widget-container__widget"></div>
-                                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
+                                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
                                 {
                                 "width": "100%",
                                 "height": "100%",
-                                "defaultColumn": "overview",
-                                "screener_type": "crypto_mkt",
-                                "displayCurrency": "USD",
+                                "symbolsGroups": [
+                                    {
+                                    "name": "Indices & Forex",
+                                    "symbols": [
+                                        { "name": "FOREXCOM:SPXUSD", "displayName": "S&P 500" },
+                                        { "name": "FOREXCOM:NSXUSD", "displayName": "NASDAQ 100" },
+                                        { "name": "FX_IDC:EURUSD", "displayName": "EUR/USD" },
+                                        { "name": "FX_IDC:USDJPY", "displayName": "USD/JPY" }
+                                    ]
+                                    }
+                                ],
+                                "showSymbolLogo": true,
                                 "colorTheme": "dark",
                                 "isTransparent": true,
-                                "locale": "en",
-                                "tabs": [
-                                    {
-                                        "title": "Top Gainers",
-                                        "screener": "crypto_mkt",
-                                        "sort": { "sortBy": "change", "order": "desc" }
-                                    },
-                                    {
-                                        "title": "Top Losers",
-                                        "screener": "crypto_mkt",
-                                        "sort": { "sortBy": "change", "order": "asc" }
-                                    },
-                                    {
-                                        "title": "Most Active",
-                                        "screener": "crypto_mkt",
-                                        "sort": { "sortBy": "volume", "order": "desc" }
-                                    }
-                                ]
+                                "locale": "en"
                                 }
                                 </script>
                             </div>
