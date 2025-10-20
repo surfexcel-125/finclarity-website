@@ -10,8 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        html { scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none; }
-        html::-webkit-scrollbar { display: none; }
+        html { scroll-behavior: smooth; }
         body {
             background-color: #0c111e;
             background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
@@ -22,7 +21,7 @@
             color: #f4f6f9; font-family: 'Source Sans Pro', sans-serif;
         }
         h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; }
-        .glass-card { background: rgba(17, 24, 39, 0.6); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem; }
+        .glass-card { background: rgba(17, 24, 39, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem; }
         .main-button { background-color: #0052cc; color: white; transition: background-color 0.3s ease, transform 0.2s ease; }
         .main-button:hover { background-color: #0065ff; transform: scale(1.05); }
         .sidebar-link { transition: all 0.2s ease; color: #a9a9b3; }
@@ -33,15 +32,15 @@
 </head>
 <body class="antialiased">
     <div id="app-wrapper" style="display: none;">
-        <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden lg:hidden"></div>
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-60 z-40 opacity-0 hidden"></div>
 
-        <aside id="sidebar" class="fixed top-0 left-0 h-full w-72 bg-[#111827]/80 backdrop-blur-lg shadow-2xl z-50 transform -translate-x-full lg:translate-x-0">
+        <aside id="sidebar" class="fixed top-0 left-0 h-full w-72 bg-[#111827]/80 backdrop-blur-lg shadow-2xl z-50 transform -translate-x-full">
             <div class="p-6 flex flex-col h-full">
                 <div class="flex justify-between items-center mb-8">
                     <div class="text-xl font-bold tracking-wider text-white"><a href="index.html">FINCLARITY</a></div>
-                    <button id="close-sidebar-btn" class="text-gray-400 hover:text-white lg:hidden"><i class="fas fa-times fa-lg"></i></button>
+                    <button id="close-sidebar-btn" class="text-gray-400 hover:text-white"><i class="fas fa-times fa-lg"></i></button>
                 </div>
-                <nav class="flex flex-col space-y-2 text-lg">
+                <nav id="sidebar-nav" class="flex flex-col space-y-2 text-lg">
                     <a href="member_dashboard.html" class="sidebar-link active flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-tachometer-alt fa-fw w-6"></i><span>Dashboard</span></a>
                     <a href="member_article.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-newspaper fa-fw w-6"></i><span>Articles</span></a>
                     <a href="analysis.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-image fa-fw w-6"></i><span>Analysis</span></a>
@@ -55,12 +54,12 @@
             </div>
         </aside>
 
-        <div class="lg:pl-72">
+        <div>
             <header id="header" class="bg-transparent backdrop-blur-md sticky top-0 z-30">
                 <div class="container mx-auto flex justify-between items-center p-4">
                      <div class="flex items-center gap-4">
-                        <button id="open-sidebar-btn" class="text-white hover:text-blue-400 p-2 rounded-full hover:bg-white/10 lg:hidden"><i class="fas fa-bars fa-lg"></i></button>
-                        <div class="text-2xl font-bold tracking-wider text-white hidden lg:block">Dashboard</div>
+                        <button id="open-sidebar-btn" class="text-white hover:text-blue-400 p-2 rounded-full hover:bg-white/10"><i class="fas fa-bars fa-lg"></i></button>
+                        <div class="text-2xl font-bold tracking-wider text-white">Dashboard</div>
                     </div>
                     <nav class="flex items-center gap-4">
                          <span id="user-email" class="hidden sm:inline text-gray-300"></span>
@@ -146,12 +145,29 @@
         const openSidebarBtn = document.getElementById('open-sidebar-btn');
         const closeSidebarBtn = document.getElementById('close-sidebar-btn');
         const sidebar = document.getElementById('sidebar');
+        const sidebarNav = document.getElementById('sidebar-nav');
         const sidebarOverlay = document.getElementById('sidebar-overlay');
-        function openSidebar() { sidebar.classList.remove('-translate-x-full'); sidebarOverlay.classList.remove('hidden'); }
-        function closeSidebar() { sidebar.classList.add('-translate-x-full'); sidebarOverlay.classList.add('hidden'); }
+        
+        function openSidebar() {
+            sidebar.classList.remove('-translate-x-full');
+            sidebarOverlay.classList.remove('hidden');
+            setTimeout(() => sidebarOverlay.classList.remove('opacity-0'), 10);
+        }
+        function closeSidebar() {
+            sidebar.classList.add('-translate-x-full');
+            sidebarOverlay.classList.add('opacity-0');
+            setTimeout(() => sidebarOverlay.classList.add('hidden'), 300);
+        }
+        
         openSidebarBtn.addEventListener('click', openSidebar);
         closeSidebarBtn.addEventListener('click', closeSidebar);
         sidebarOverlay.addEventListener('click', closeSidebar);
+        
+        sidebarNav.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A' && window.innerWidth < 1024) {
+                closeSidebar();
+            }
+        });
         
         document.getElementById('logout-btn').addEventListener('click', (e) => {
             e.preventDefault();
