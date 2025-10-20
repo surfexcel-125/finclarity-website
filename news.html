@@ -70,16 +70,7 @@
                 </div>
             </header>
 
-            <main class="container mx-auto p-4 md:p-8">
-                 <div class="glass-card py-2 mb-8">
-                    <div class="tradingview-widget-container">
-                      <div class="tradingview-widget-container__widget"></div>
-                      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-                      { "symbols": [ { "proName": "FOREXCOM:SPXUSD", "title": "S&P 500" }, { "proName": "FOREXCOM:NSXUSD", "title": "US 100" }, { "proName": "FX_IDC:EURUSD", "title": "EUR to USD" }, { "proName": "BITSTAMP:BTCUSD", "title": "Bitcoin" }, { "proName": "BITSTAMP:ETHUSD", "title": "Ethereum" } ], "showSymbolLogo": true, "colorTheme": "dark", "isTransparent": true, "displayMode": "adaptive", "locale": "en" }
-                      </script>
-                    </div>
-                 </div>
-
+            <main class="container mx-auto p-4 md:p-8 pb-20">
                  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div class="lg:col-span-2">
                         <h2 class="text-3xl font-bold mb-4">Top Stories</h2>
@@ -125,6 +116,17 @@
                  </div>
             </main>
         </div>
+
+        <footer class="fixed bottom-0 left-0 right-0 z-20">
+            <div class="glass-card py-1 mx-4 mb-4 rounded-lg">
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+                    { "symbols": [ { "proName": "FOREXCOM:SPXUSD", "title": "S&P 500" }, { "proName": "FOREXCOM:NSXUSD", "title": "US 100" }, { "proName": "FX_IDC:EURUSD", "title": "EUR to USD" }, { "proName": "BITSTAMP:BTCUSD", "title": "Bitcoin" }, { "proName": "BITSTAMP:ETHUSD", "title": "Ethereum" } ], "showSymbolLogo": true, "colorTheme": "dark", "isTransparent": true, "displayMode": "adaptive", "locale": "en" }
+                    </script>
+                </div>
+            </div>
+        </footer>
     </div>
     <script type="module" src="js/main.js"></script>
 </body>
