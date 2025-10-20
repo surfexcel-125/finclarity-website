@@ -19,6 +19,9 @@
         #sidebar { transition: transform 0.3s ease-in-out; }
         #sidebar-overlay { transition: opacity 0.3s ease-in-out; }
         .glass-card { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem; }
+        .timeframe-btn { background-color: rgba(255, 255, 255, 0.05); transition: background-color 0.2s; }
+        .timeframe-btn:hover { background-color: rgba(255, 255, 255, 0.1); }
+        .timeframe-btn.active-btn { background-color: #0052cc; color: white; }
     </style>
 </head>
 <body class="antialiased">
@@ -62,28 +65,86 @@
             </header>
 
             <main class="container mx-auto p-4 md:p-8 flex-grow">
-                <div class="text-center mb-8">
+                <div class="text-center mb-6">
                     <h1 class="text-4xl font-bold">Key Economic Events</h1>
-                    <p class="text-lg text-gray-400 mt-2 max-w-3xl mx-auto">Stay ahead of market-moving events. Track important economic announcements from around the world in real-time.</p>
+                    <p class="text-lg text-gray-400 mt-2 max-w-3xl mx-auto">Stay ahead of market-moving events. Track important announcements from around the world in real-time.</p>
                 </div>
-                <div class="glass-card overflow-hidden" style="height: 75vh;">
-                     <div class="tradingview-widget-container h-full">
-                        <div class="tradingview-widget-container__widget h-full"></div>
-                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
-                        {
-                            "colorTheme": "dark",
-                            "isTransparent": true,
-                            "width": "100%",
-                            "height": "100%",
-                            "locale": "en",
-                            "importanceFilter": "-1,0,1"
-                        }
-                        </script>
+                
+                <div class="flex justify-center mb-6">
+                    <div class="inline-flex rounded-lg bg-gray-900/50 p-1">
+                        <button data-mode="today" class="timeframe-btn font-semibold py-2 px-5 rounded-md">Today</button>
+                        <button data-mode="this_week" class="timeframe-btn font-semibold py-2 px-5 rounded-md">This Week</button>
+                    </div>
+                </div>
+
+                <div class="glass-card overflow-hidden" style="height: 70vh;">
+                     <div id="calendar-container" class="tradingview-widget-container h-full">
+                        <!-- TradingView Widget will be loaded here by JavaScript -->
                     </div>
                 </div>
             </main>
         </div>
     </div>
+    <script type="module">
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
+        import { auth } from './js/main.js'; // Assuming auth is exported from main.js
+
+        // --- Calendar Customization Logic ---
+        function loadCalendar(mode) {
+            const container = document.getElementById('calendar-container');
+            if (!container) return;
+            container.innerHTML = ''; // Clear the container
+
+            const config = {
+                "colorTheme": "dark",
+                "isTransparent": true,
+                "width": "100%",
+                "height": "100%",
+                "locale": "en",
+                "importanceFilter": "0,1", // Medium and High importance
+                "currencyFilter": "USD,EUR,JPY,GBP,CAD,AUD,NZD,CNY,CHF,INR"
+            };
+
+            // Set the display mode based on the button clicked
+            if (mode === 'today') {
+                config.displayMode = "day";
+            } else if (mode === 'this_week') {
+                config.displayMode = "week";
+            }
+
+            const script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-economic-calendar.js';
+            script.async = true;
+            script.innerHTML = JSON.stringify(config);
+
+            container.appendChild(script);
+
+            // Update active button style
+            document.querySelectorAll('.timeframe-btn').forEach(btn => {
+                btn.classList.remove('active-btn');
+                if (btn.dataset.mode === mode) {
+                    btn.classList.add('active-btn');
+                }
+            });
+        }
+        
+        // This needs to be available for main.js which is a module
+        window.setupPage = () => {
+             // Initial calendar load
+            loadCalendar('today');
+
+            // Add event listeners to buttons
+            const buttons = document.querySelectorAll('.timeframe-btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const mode = e.currentTarget.dataset.mode;
+                    loadCalendar(mode);
+                });
+            });
+        };
+
+    </script>
     <script type="module" src="js/main.js"></script>
 </body>
 </html>
