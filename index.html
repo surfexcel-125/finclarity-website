@@ -15,22 +15,19 @@
         h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; }
         #constellation-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
         .glass-card { background: rgba(255, 255, 255, 0.05); -webkit-backdrop-filter: blur(15px); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem; transition: all 0.3s ease; }
-        .glass-card:hover { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); transform: translateY(-5px); }
+        .glass-card:hover { transform: translateY(-5px); }
         .main-button { background-color: #0052cc; color: white; transition: background-color 0.3s ease, transform 0.2s ease; }
         .main-button:hover { background-color: #0065ff; transform: scale(1.05); }
         .secondary-button { background-color: rgba(255, 255, 255, 0.1); color: white; border: 1px solid rgba(255, 255, 255, 0.2); transition: all 0.3s ease; }
-        .secondary-button:hover { background-color: rgba(255, 255, 255, 0.2); border-color: rgba(255, 255, 255, 0.3); }
+        .secondary-button:hover { background-color: rgba(255, 255, 255, 0.2); }
     </style>
 </head>
 <body class="antialiased">
     <canvas id="constellation-bg"></canvas>
     <header id="header" class="fixed top-0 left-0 right-0 z-50 p-4">
         <div class="container mx-auto flex justify-between items-center">
-            <div class="text-2xl font-bold tracking-wider text-white" id="logo">
-                <a href="index.html">FINCLARITY</a>
-            </div>
+            <div class="text-2xl font-bold tracking-wider text-white" id="logo"><a href="index.html">FINCLARITY</a></div>
             <nav class="flex items-center space-x-4">
-                 <a href="guest_dashboard.html" class="secondary-button font-semibold py-2 px-5 rounded-lg">Guest Preview</a>
                  <a href="login.html" class="main-button font-semibold py-2 px-5 rounded-lg">Member Login</a>
             </nav>
         </div>
@@ -39,48 +36,10 @@
         <section id="hero" class="min-h-screen flex items-center justify-center text-center px-4">
             <div class="relative z-10">
                 <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-4">Clarity, Not Chaos.</h1>
-                <p class="text-lg md:text-xl max-w-3xl mx-auto text-gray-300 mb-8">
-                    Stop chasing financial trends. Start building a personalized roadmap to sustainable wealth. We help you understand the landscape, analyze your position, and choose the right path.
-                </p>
-                <a href="#why" class="main-button font-bold text-lg py-4 px-10 rounded-full shadow-lg">Discover The Method</a>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto text-gray-300 mb-8">Stop chasing financial trends. Start building a personalized roadmap to sustainable wealth with our powerful, data-driven toolkit.</p>
+                <a href="login.html" class="main-button font-bold text-lg py-4 px-10 rounded-full shadow-lg">Access The Toolkit</a>
             </div>
         </section>
-        <div class="relative z-10 py-20 px-4">
-            <div class="container mx-auto space-y-24 md:space-y-32">
-                <section id="why" class="text-center">
-                    <h2 class="text-4xl font-bold mb-4">Your Guide Through The Noise</h2>
-                    <p class="text-lg text-gray-300 max-w-3xl mx-auto mb-12">
-                        The world of finance is filled with hype and misinformation. Our fundamental goal is to build a trusted, authoritative platform for financial growth by providing a clear, understandable path forward.
-                    </p>
-                    <div class="glass-card max-w-4xl mx-auto p-8 md:p-12 text-left">
-                        <h3 class="text-2xl font-bold mb-4">The Core Value: A Personalized Roadmap</h3>
-                        <p class="text-gray-300 leading-relaxed">
-                            We don't believe in one-size-fits-all solutions. Instead of generic advice, we provide a framework that helps you analyze your own situation—your capital, your timeline, your risk tolerance—and then select the wealth creation strategies that are right for you. We empower you to make informed decisions, transforming confusion into a concrete, actionable plan.
-                        </p>
-                    </div>
-                </section>
-                <section id="who" class="text-center">
-                    <h2 class="text-4xl font-bold mb-4">Built For The Serious Builder</h2>
-                    <p class="text-lg text-gray-300 max-w-3xl mx-auto mb-12">
-                        We speak to anyone tired of the hype, who is ready to build sustainable, long-term wealth with a realistic plan.
-                    </p>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div class="glass-card p-8">
-                            <h3 class="text-2xl font-bold mb-3">The Ambitious Beginner</h3>
-                            <p class="text-gray-300">Eager to start but overwhelmed by options and doesn't know where to begin. We provide the foundational knowledge to start the journey with confidence.</p>
-                        </div>
-                        <div class="glass-card p-8">
-                             <h3 class="text-2xl font-bold mb-3">The Stagnant Earner</h3>
-                            <p class="text-gray-300">May have a decent income but feels stuck. We reveal strategies to scale wealth, create new income streams, and break through plateaus.</p>
-                        </div>
-                        <div class="glass-card p-8">
-                             <h3 class="text-2xl font-bold mb-3">The Passive Income Seeker</h3>
-                            <p class="text-gray-300">Wants to build long-term, sustainable wealth systems. We offer the realistic, actionable blueprints needed to make it happen.</p>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </div>
     </main>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
