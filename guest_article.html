@@ -39,21 +39,22 @@
     <div class="container mx-auto p-4 md:p-8">
         <div class="max-w-4xl mx-auto">
             <a href="guest_dashboard.html" class="text-blue-400 hover:text-blue-300 mb-6 inline-block">
-                &larr; Back to Dashboard
+                &larr; Back to Guest Dashboard
             </a>
             <div class="glass-card">
                 <div class="p-6 md:p-10">
                     <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-4">The 5 Pillars of Modern Wealth Creation</h1>
                     <div class="paywall-container">
-                        <article class="article-content text-gray-300 space-y-6">
-                           </article>
+                        <article id="article-content" class="article-content text-gray-300 space-y-6">
+                            <p>Loading article preview...</p>
+                        </article>
                     </div>
                     <div class="relative -mt-24 z-10 flex flex-col items-center justify-center text-center p-8">
                         <div class="glass-card text-center p-6 w-full max-w-lg">
                             <h2 class="text-xl font-bold mb-2">Unlock The Full Guide</h2>
-                            <p class="text-gray-300 mb-4 text-sm">To access the remaining pillars and learn how to apply them, create a free account.</p>
+                            <p class="text-gray-300 mb-4 text-sm">To access the remaining pillars and learn how to apply them, become a member.</p>
                             <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                                <a href="login.html" class="main-button font-bold text-sm py-2 px-6 rounded-lg">Create Your Free Account</a>
+                                <a href="login.html" class="main-button font-bold text-sm py-2 px-6 rounded-lg">Create a Free Account</a>
                                 <a href="login.html" class="secondary-button font-bold text-sm py-2 px-6 rounded-lg">Already a member? Log In</a>
                             </div>
                         </div>
@@ -62,8 +63,42 @@
             </div>
         </div>
     </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+        import { getFirestore, collection, query, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCRtzONV0M1syCLTF6H5__cGEBgJxM13sM",
+            authDomain: "adminpanel-93879.firebaseapp.com",
+            projectId: "adminpanel-93879",
+            storageBucket: "adminpanel-93879.appspot.com",
+            messagingSenderId: "854889610123",
+            appId: "1:854889610123:web:4522c7fc685e9864014d8e"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function fetchSampleArticle() {
+            const articleContentEl = document.getElementById('article-content');
+            try {
+                const q = query(collection(db, "articles"), limit(1));
+                const querySnapshot = await getDocs(q);
+                if (!querySnapshot.empty) {
+                    const article = querySnapshot.docs[0].data();
+                    articleContentEl.innerHTML = article.content;
+                } else {
+                    articleContentEl.innerHTML = "<p>Could not load the sample article at this time.</p>";
+                }
+            } catch (error) {
+                console.error("Error fetching sample article: ", error);
+                articleContentEl.innerHTML = "<p>Could not load the sample article at this time.</p>";
+            }
+        }
+        
+        fetchSampleArticle();
+    </script>
     <script>
-        // Your original script for the constellation background
         document.addEventListener('DOMContentLoaded', function() {
             const canvas = document.getElementById('constellation-bg'); const ctx = canvas.getContext('2d'); let particles = [];
             const setupCanvas = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
