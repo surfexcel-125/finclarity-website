@@ -4,13 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Member Login | Finclarity</title>
-    
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
-
     <style>
         body {
             background-color: #0c111e;
@@ -21,28 +18,14 @@
             font-family: 'Source Sans Pro', sans-serif;
         }
         h1, h2, h3 { font-family: 'Montserrat', sans-serif; }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 1.5rem;
-        }
-        .form-input {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .main-button {
-            background-color: #0052cc;
-            color: white;
-            transition: background-color 0.3s ease;
-        }
-        .main-button:hover {
-            background-color: #0065ff;
-        }
+        .glass-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem; }
+        .form-input { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .form-input:focus { outline: none; border-color: #0052cc; box-shadow: 0 0 0 2px rgba(0, 82, 204, 0.5); }
+        .main-button { background-color: #0052cc; color: white; transition: background-color 0.3s ease; }
+        .main-button:hover { background-color: #0065ff; }
     </style>
 </head>
 <body class="antialiased">
-
     <div class="min-h-screen flex flex-col items-center justify-center p-4">
         <div class="text-3xl font-bold tracking-wider text-white mb-8">
             <a href="index.html">FINCLARITY</a>
@@ -69,7 +52,6 @@
         </div>
     </div>
 
-    <!-- Firebase SDK Scripts -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
@@ -80,7 +62,7 @@
             projectId: "adminpanel-93879",
             storageBucket: "adminpanel-93879.appspot.com",
             messagingSenderId: "854889610123",
-            appId: "1:854889610123:web:4522c7fc685e9_Hasync_Hasync"
+            appId: "1:854889610123:web:4522c7fc685e9864014d8e"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -89,29 +71,19 @@
         const loginForm = document.getElementById('login-form');
         const loginError = document.getElementById('login-error');
 
-        // Redirect if already logged in
         onAuthStateChanged(auth, user => {
             if (user) {
-                // If a user session already exists, go straight to the dashboard
-                window.location.href = 'member_dashboard.html';
+                window.location.replace(new URL('member_dashboard.html', window.location.href).href);
             }
         });
 
-        // Handle login form submission
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
             signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    // Successful login, redirect to the dashboard.
-                    // The onAuthStateChanged listener above will also catch this.
-                    loginError.style.display = 'none';
-                    window.location.href = 'member_dashboard.html';
-                })
                 .catch((error) => {
-                    // Handle login errors
                     loginError.textContent = "Error: Invalid email or password.";
                     loginError.style.display = 'block';
                     console.error("Login Error:", error.code, error.message);
