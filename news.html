@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>News & Articles | Finclarity</title>
+    <title>Live News Feed | Finclarity</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,7 +33,8 @@
                     <a href="member_dashboard.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-tachometer-alt fa-fw w-6"></i><span>Dashboard</span></a>
                     <a href="portfolio.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-wallet fa-fw w-6"></i><span>Portfolio</span></a>
                     <a href="market_screener.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-search-dollar fa-fw w-6"></i><span>Market Screener</span></a>
-                    <a href="news.html" class="sidebar-link active flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-newspaper fa-fw w-6"></i><span>News & Articles</span></a>
+                    <a href="articles.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-book-reader fa-fw w-6"></i><span>Our Articles</span></a>
+                    <a href="news.html" class="sidebar-link active flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-newspaper fa-fw w-6"></i><span>Live News Feed</span></a>
                     <a href="economic_calendar.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-calendar-alt fa-fw w-6"></i><span>Economic Calendar</span></a>
                     <a href="trading_journal.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-book fa-fw w-6"></i><span>Trading Journal</span></a>
                     <a href="tools_calculators.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-tools fa-fw w-6"></i><span>Tools</span></a>
@@ -46,11 +47,19 @@
         </aside>
 
         <div>
+             <!-- NEW: Ticker Tape Header -->
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+              { "symbols": [ { "proName": "FOREXCOM:SPXUSD", "title": "S&P 500" }, { "proName": "FOREXCOM:NSXUSD", "title": "US 100" }, { "proName": "FX_IDC:EURUSD", "title": "EUR to USD" }, { "proName": "BITSTAMP:BTCUSD", "title": "Bitcoin" }, { "proName": "BITSTAMP:ETHUSD", "title": "Ethereum" } ], "showSymbolLogo": true, "colorTheme": "dark", "isTransparent": true, "displayMode": "adaptive", "locale": "en" }
+              </script>
+            </div>
+
             <header id="header" class="bg-transparent backdrop-blur-md sticky top-0 z-30">
                 <div class="container mx-auto flex justify-between items-center p-4">
                      <div class="flex items-center gap-4">
                         <button id="open-sidebar-btn" class="text-white hover:text-blue-400 p-2 rounded-full hover:bg-white/10"><i class="fas fa-bars fa-lg"></i></button>
-                        <div class="text-2xl font-bold tracking-wider text-white">News & Articles</div>
+                        <div class="text-2xl font-bold tracking-wider text-white">Live News Feed</div>
                     </div>
                     <nav class="flex items-center gap-4">
                          <span id="user-email" class="hidden sm:inline text-gray-300"></span>
@@ -60,7 +69,28 @@
             </header>
 
             <main class="container mx-auto p-4 md:p-8">
-                <div class="tradingview-widget-container" style="height:80vh; width:100%"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>{ "feedMode": "all_symbols", "isTransparent": true, "displayMode": "regular", "width": "100%", "height": "100%", "colorTheme": "dark", "locale": "en" }</script></div>
+                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Main News Feed -->
+                    <div class="lg:col-span-2">
+                        <h2 class="text-3xl font-bold mb-4">Top Stories</h2>
+                        <div class="tradingview-widget-container" style="height:80vh; width:100%">
+                            <div class="tradingview-widget-container__widget"></div>
+                            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
+                            { "feedMode": "all_symbols", "isTransparent": true, "displayMode": "regular", "width": "100%", "height": "100%", "colorTheme": "dark", "locale": "en" }
+                            </script>
+                        </div>
+                    </div>
+                    <!-- Technical Analysis Ideas -->
+                    <div>
+                        <h2 class="text-3xl font-bold mb-4">Technical Analysis Ideas</h2>
+                         <div class="tradingview-widget-container" style="height:80vh; width:100%">
+                            <div class="tradingview-widget-container__widget"></div>
+                            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ideas-stream.js" async>
+                            { "feedMode": "all_symbols", "isTransparent": true, "displayMode": "regular", "width": "100%", "height": "100%", "colorTheme": "dark", "locale": "en" }
+                            </script>
+                        </div>
+                    </div>
+                 </div>
             </main>
         </div>
     </div>
