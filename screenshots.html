@@ -73,14 +73,13 @@
                 <p class="text-lg text-gray-400 mt-4 max-w-2xl mx-auto">Save and view your chart images from TradingView.</p>
             </div>
 
-            <!-- NEW: Form to add a screenshot link -->
             <div class="glass-card max-w-3xl mx-auto p-8 mb-12">
                 <h2 class="text-2xl font-bold mb-4">Add New Screenshot</h2>
                 <form id="screenshot-form" class="flex flex-col sm:flex-row gap-4">
-                    <input type="url" id="screenshot-url" placeholder="Paste TradingView image link here (.png)" required class="form-input w-full p-3 rounded-lg flex-grow">
+                    <input type="url" id="screenshot-url" placeholder="Paste your TradingView share link here" required class="form-input w-full p-3 rounded-lg flex-grow">
                     <button type="submit" id="save-btn" class="main-button font-bold py-3 px-6 rounded-lg">Save Image</button>
                 </form>
-                <p id="form-message" class="text-center text-green-400 mt-4 text-sm" style="display: none;"></p>
+                <p id="form-message" class="text-center mt-4 text-sm" style="display: none;"></p>
             </div>
 
             <div id="screenshots-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -130,24 +129,59 @@
             }
         });
 
-        // --- NEW: Handle Form Submission ---
+        // --- NEW: Function to extract the real image URL ---
+        async function extractImageUrl(pageUrl) {
+            // Use a public CORS proxy to bypass browser security restrictions
+            const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(pageUrl)}`;
+            try {
+                const response = await fetch(proxyUrl);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const html = await response.text();
+                
+                // Find the <meta property="og:image" ...> tag in the HTML
+                const match = html.match(/<meta\s+property="og:image"\s+content="([^"]+)"/);
+                if (match && match[1]) {
+                    return match[1]; // Return the extracted .png URL
+                } else {
+                    throw new Error('Could not find the image URL in the page source.');
+                }
+            } catch (error) {
+                console.error('Failed to extract image URL:', error);
+                return null;
+            }
+        }
+
         screenshotForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             if (!currentUserId) return;
 
-            const imageUrl = screenshotUrlInput.value.trim();
-            if (!imageUrl.endsWith('.png')) {
-                alert('Please provide a direct image link from TradingView (ending in .png)');
+            const pageUrl = screenshotUrlInput.value.trim();
+            if (!pageUrl.includes('tradingview.com')) {
+                alert('Please provide a valid TradingView share link.');
                 return;
             }
 
             saveBtn.disabled = true;
-            saveBtn.textContent = 'Saving...';
+            saveBtn.textContent = 'Processing...';
+            formMessage.style.display = 'none';
+
+            // --- UPDATED LOGIC ---
+            const imageUrl = await extractImageUrl(pageUrl);
+
+            if (!imageUrl) {
+                formMessage.textContent = 'Could not process this link. Please ensure it is a valid TradingView chart link.';
+                formMessage.style.color = '#f87171'; // red
+                formMessage.style.display = 'block';
+                saveBtn.disabled = false;
+                saveBtn.textContent = 'Save Image';
+                return;
+            }
 
             try {
                 const screenshotsPath = `users/${currentUserId}/screenshots`;
                 await addDoc(collection(db, screenshotsPath), {
-                    imageUrl: imageUrl,
+                    imageUrl: imageUrl, // Save the REAL .png link
+                    sourceUrl: pageUrl, // Optionally save the original link for reference
                     createdAt: serverTimestamp()
                 });
                 
@@ -158,8 +192,8 @@
 
             } catch (error) {
                 console.error("Error saving screenshot:", error);
-                formMessage.textContent = 'Error saving screenshot. Please try again.';
-                formMessage.style.color = '#f87171'; // red
+                formMessage.textContent = 'Error saving to database. Please try again.';
+                formMessage.style.color = '#f87171';
                 formMessage.style.display = 'block';
             } finally {
                 saveBtn.disabled = false;
@@ -174,14 +208,7 @@
 
             onSnapshot(q, (snapshot) => {
                 loadingMessage.style.display = 'none';
-
-                if (snapshot.empty) {
-                    screenshotsContainer.innerHTML = '<p class="text-center text-gray-400 col-span-full">You haven\'t saved any screenshots yet.</p>';
-                    return;
-                }
-                
-                screenshotsContainer.innerHTML = ''; 
-
+                screenshotsContainer.innerHTML = snapshot.empty ? '<p class="text-center text-gray-400 col-span-full">You haven\'t saved any screenshots yet.</p>' : '';
                 snapshot.forEach(doc => {
                     const screenshot = doc.data();
                     const card = document.createElement('div');
