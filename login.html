@@ -63,60 +63,64 @@
         <p><strong class="text-gray-400">Pass:</strong> testuser123</p>
     </div>
 
-    <div class="min-h-screen flex flex-col items-center justify-center p-4 pb-24">
-        <div class="text-3xl font-bold tracking-wider text-white mb-8">
-            <a href="index.html">FINEX</a>
-        </div>
-        
-        <div class="w-full max-w-md" style="perspective: 1000px;">
-            <div id="form-flipper" class="relative w-full h-full">
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div class="relative -translate-y-12">
+            <div class="text-3xl font-bold tracking-wider text-white mb-8 text-center">
+                <a href="index.html">FINEX</a>
+            </div>
+            
+            <div class="w-full max-w-md" style="perspective: 1000px;">
+                <div id="form-flipper" class="relative w-full" style="height: 480px;">
 
-                <!-- Login Form Face -->
-                <div class="form-face w-full h-full absolute">
-                    <div class="glass-card p-8">
-                        <form id="login-form" class="space-y-6">
-                            <h2 class="text-3xl font-bold text-center">Welcome Back</h2>
-                            <div class="relative form-input rounded-lg">
-                                <i class="fas fa-envelope absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"></i>
-                                <input type="email" id="login-email" required class="bg-transparent w-full p-3 pl-10 rounded-lg text-white" placeholder="Email">
-                            </div>
-                            <div class="relative form-input rounded-lg">
-                                <i class="fas fa-lock absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"></i>
-                                <input type="password" id="login-password" required class="bg-transparent w-full p-3 pl-10 rounded-lg text-white" placeholder="Password">
-                            </div>
-                            <button type="submit" class="main-button w-full py-3 rounded-lg font-bold text-lg">Log In</button>
-                            <p id="login-error" class="text-center text-red-400 text-sm h-4"></p>
-                            <p class="text-center text-sm text-gray-400 pt-4">
-                                Don't have an account? 
-                                <button type="button" id="show-signup-btn" class="font-semibold text-blue-400 hover:underline">Sign Up</button>
-                            </p>
-                        </form>
+                    <!-- Login Form Face -->
+                    <div class="form-face w-full h-full absolute">
+                        <div class="glass-card p-8 h-full flex flex-col">
+                            <form id="login-form" class="space-y-6 flex flex-col flex-grow">
+                                <h2 class="text-3xl font-bold text-center">Welcome Back</h2>
+                                <div class="relative form-input rounded-lg">
+                                    <i class="fas fa-envelope absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"></i>
+                                    <input type="email" id="login-email" required class="bg-transparent w-full p-3 pl-10 rounded-lg text-white" placeholder="Email">
+                                </div>
+                                <div class="relative form-input rounded-lg">
+                                    <i class="fas fa-lock absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"></i>
+                                    <input type="password" id="login-password" required class="bg-transparent w-full p-3 pl-10 rounded-lg text-white" placeholder="Password">
+                                </div>
+                                <button type="submit" class="main-button w-full py-3 rounded-lg font-bold text-lg">Log In</button>
+                                <p id="login-error" class="text-center text-red-400 text-sm h-4"></p>
+                                <div class="flex-grow"></div>
+                                <p class="text-center text-sm text-gray-400">
+                                    Don't have an account? 
+                                    <button type="button" id="show-signup-btn" class="font-semibold text-blue-400 hover:underline">Sign Up</button>
+                                </p>
+                            </form>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Signup Form Face -->
-                <div class="form-face form-back w-full h-full absolute">
-                    <div class="glass-card p-8">
-                        <form id="signup-form" class="space-y-6">
-                            <h2 class="text-3xl font-bold text-center">Create Account</h2>
-                            <div class="relative form-input rounded-lg">
-                                <i class="fas fa-envelope absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"></i>
-                                <input type="email" id="signup-email" required class="bg-transparent w-full p-3 pl-10 rounded-lg text-white" placeholder="Email">
-                            </div>
-                            <div class="relative form-input rounded-lg">
-                                 <i class="fas fa-lock absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"></i>
-                                <input type="password" id="signup-password" required class="bg-transparent w-full p-3 pl-10 rounded-lg text-white" placeholder="Password (6+ characters)">
-                            </div>
-                            <button type="submit" class="main-button w-full py-3 rounded-lg font-bold text-lg">Create Account</button>
-                            <p id="signup-error" class="text-center text-red-400 text-sm h-4"></p>
-                            <p class="text-center text-sm text-gray-400 pt-4">
-                                Already have an account? 
-                                <button type="button" id="show-login-btn" class="font-semibold text-blue-400 hover:underline">Log In</button>
-                             </p>
-                        </form>
+                    <!-- Signup Form Face -->
+                    <div class="form-face form-back w-full h-full absolute">
+                        <div class="glass-card p-8 h-full flex flex-col">
+                            <form id="signup-form" class="space-y-6 flex flex-col flex-grow">
+                                <h2 class="text-3xl font-bold text-center">Create Account</h2>
+                                <div class="relative form-input rounded-lg">
+                                    <i class="fas fa-envelope absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"></i>
+                                    <input type="email" id="signup-email" required class="bg-transparent w-full p-3 pl-10 rounded-lg text-white" placeholder="Email">
+                                </div>
+                                <div class="relative form-input rounded-lg">
+                                     <i class="fas fa-lock absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"></i>
+                                    <input type="password" id="signup-password" required class="bg-transparent w-full p-3 pl-10 rounded-lg text-white" placeholder="Password (6+ characters)">
+                                </div>
+                                <button type="submit" class="main-button w-full py-3 rounded-lg font-bold text-lg">Create Account</button>
+                                <p id="signup-error" class="text-center text-red-400 text-sm h-4"></p>
+                                <div class="flex-grow"></div>
+                                <p class="text-center text-sm text-gray-400">
+                                    Already have an account? 
+                                    <button type="button" id="show-login-btn" class="font-semibold text-blue-400 hover:underline">Log In</button>
+                                 </p>
+                            </form>
+                        </div>
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
     </div>
