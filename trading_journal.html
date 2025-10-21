@@ -18,6 +18,10 @@
         .sidebar-link:hover, .sidebar-link.active { color: #ffffff; background-color: rgba(255, 255, 255, 0.08); }
         #sidebar { transition: transform 0.3s ease-in-out; }
         #sidebar-overlay { transition: opacity 0.3s ease-in-out; }
+        .glass-card { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem; }
+        .form-input { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .main-button { background-color: #0052cc; color: white; transition: background-color 0.3s ease; }
+        .main-button:hover { background-color: #0065ff; }
     </style>
 </head>
 <body class="antialiased">
@@ -46,8 +50,8 @@
             </div>
         </aside>
 
-        <div>
-            <header id="header" class="bg-transparent backdrop-blur-md sticky top-0 z-30">
+        <div class="min-h-screen flex flex-col">
+             <header id="header" class="bg-transparent backdrop-blur-md sticky top-0 z-30">
                 <div class="container mx-auto flex justify-between items-center p-4">
                      <div class="flex items-center gap-4">
                         <button id="open-sidebar-btn" class="text-white hover:text-blue-400 p-2 rounded-full hover:bg-white/10"><i class="fas fa-bars fa-lg"></i></button>
@@ -60,14 +64,197 @@
                 </div>
             </header>
 
-            <main class="container mx-auto p-4 md:p-8">
-                <div class="text-center">
-                    <h1 class="text-4xl md:text-5xl font-bold">Trading Journal</h1>
-                    <p class="text-lg text-gray-400 mt-4 max-w-2xl mx-auto">Log your trades, add notes, and analyze your performance. This powerful tool is under development. Coming soon!</p>
+            <main class="container mx-auto p-4 md:p-8 flex-grow">
+                <!-- Analytics Dashboard -->
+                <section id="analytics-dashboard" class="mb-10">
+                    <h2 class="text-2xl font-bold text-center mb-4">Performance Analytics</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 text-center">
+                        <div class="glass-card p-4"><span class="text-sm text-gray-400 block">Total P/L</span><span id="total-pl" class="text-2xl font-bold">-$--.--</span></div>
+                        <div class="glass-card p-4"><span class="text-sm text-gray-400 block">Total Trades</span><span id="total-trades" class="text-2xl font-bold">0</span></div>
+                        <div class="glass-card p-4"><span class="text-sm text-gray-400 block">Win Rate</span><span id="win-rate" class="text-2xl font-bold">--%</span></div>
+                        <div class="glass-card p-4"><span class="text-sm text-gray-400 block">Profit Factor</span><span id="profit-factor" class="text-2xl font-bold">--</span></div>
+                        <div class="glass-card p-4 col-span-2 md:col-span-1 lg:col-span-1"><span class="text-sm text-gray-400 block">Avg Win / Loss</span><span id="avg-win-loss" class="text-xl font-bold">-$-- / -$--</span></div>
+                    </div>
+                </section>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Trade Entry Form -->
+                    <div class="lg:col-span-1">
+                        <div class="glass-card p-6">
+                            <h2 class="text-2xl font-bold mb-4">Log a New Trade</h2>
+                            <form id="trade-form" class="space-y-4">
+                                <div>
+                                    <label class="text-sm text-gray-400">Symbol</label>
+                                    <input type="text" id="trade-symbol" required class="form-input w-full mt-1 p-2 rounded-lg" placeholder="e.g., AAPL, BTCUSD">
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-400">Direction</label>
+                                    <select id="trade-direction" class="form-input w-full mt-1 p-2 rounded-lg bg-[#0c111e]">
+                                        <option value="long">Long</option>
+                                        <option value="short">Short</option>
+                                    </select>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="text-sm text-gray-400">Entry Price</label>
+                                        <input type="number" step="any" id="trade-entry" required class="form-input w-full mt-1 p-2 rounded-lg">
+                                    </div>
+                                    <div>
+                                        <label class="text-sm text-gray-400">Exit Price</label>
+                                        <input type="number" step="any" id="trade-exit" required class="form-input w-full mt-1 p-2 rounded-lg">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-400">Notes / Setup</label>
+                                    <textarea id="trade-notes" rows="4" class="form-input w-full mt-1 p-2 rounded-lg" placeholder="Why did you take this trade?"></textarea>
+                                </div>
+                                <button type="submit" class="main-button w-full font-bold py-3 rounded-lg">Save Trade</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Trade History Log -->
+                    <div class="lg:col-span-2">
+                        <div class="glass-card p-6">
+                            <h2 class="text-2xl font-bold mb-4">Trade History</h2>
+                            <div id="trade-history" class="space-y-3 max-h-[60vh] overflow-y-auto pr-2">
+                                <p class="text-center text-gray-400">No trades logged yet.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </main>
         </div>
     </div>
+    
+    <script type="module">
+        import { getFirestore, collection, addDoc, serverTimestamp, onSnapshot, query, orderBy, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
+        import { db, auth } from './js/main.js';
+
+        let trades = [];
+
+        function calculateAnalytics() {
+            const totalTrades = trades.length;
+            const totalPL = trades.reduce((acc, trade) => acc + trade.pl, 0);
+            const winningTrades = trades.filter(t => t.pl > 0);
+            const losingTrades = trades.filter(t => t.pl < 0);
+            
+            const winRate = totalTrades > 0 ? (winningTrades.length / totalTrades) * 100 : 0;
+            
+            const grossProfit = winningTrades.reduce((acc, t) => acc + t.pl, 0);
+            const grossLoss = Math.abs(losingTrades.reduce((acc, t) => acc + t.pl, 0));
+            const profitFactor = grossLoss > 0 ? grossProfit / grossLoss : Infinity;
+
+            const avgWin = winningTrades.length > 0 ? grossProfit / winningTrades.length : 0;
+            const avgLoss = losingTrades.length > 0 ? grossLoss / losingTrades.length : 0;
+
+            // Update DOM
+            const totalPlEl = document.getElementById('total-pl');
+            totalPlEl.textContent = `${totalPL.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}`;
+            totalPlEl.className = `text-2xl font-bold ${totalPL >= 0 ? 'text-green-400' : 'text-red-400'}`;
+
+            document.getElementById('total-trades').textContent = totalTrades;
+            document.getElementById('win-rate').textContent = `${winRate.toFixed(1)}%`;
+            document.getElementById('profit-factor').textContent = isFinite(profitFactor) ? profitFactor.toFixed(2) : '∞';
+            
+            const avgWinLossEl = document.getElementById('avg-win-loss');
+            avgWinLossEl.innerHTML = `<span class="text-green-400">${avgWin.toFixed(2)}</span> / <span class="text-red-400">${avgLoss.toFixed(2)}</span>`;
+        }
+        
+        function renderTrades() {
+            const container = document.getElementById('trade-history');
+            if (trades.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-400">No trades logged yet.</p>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            trades.forEach(trade => {
+                const plColor = trade.pl >= 0 ? 'text-green-400' : 'text-red-400';
+                const directionColor = trade.direction === 'long' ? 'bg-green-500/20 text-green-300' : 'bg-red-500/20 text-red-300';
+
+                const tradeEl = document.createElement('div');
+                tradeEl.className = 'bg-white/5 p-4 rounded-lg';
+                tradeEl.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <div class="flex items-center gap-3">
+                                <span class="font-bold text-lg text-white">${trade.symbol.toUpperCase()}</span>
+                                <span class="text-xs font-semibold px-2 py-1 rounded-md ${directionColor}">${trade.direction.toUpperCase()}</span>
+                            </div>
+                            <p class="text-sm text-gray-400">${trade.createdAt.toDate().toLocaleString()}</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-bold text-lg ${plColor}">${trade.pl.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</p>
+                            <p class="text-xs text-gray-500">Entry: ${trade.entryPrice} &rarr; Exit: ${trade.exitPrice}</p>
+                        </div>
+                    </div>
+                    ${trade.notes ? `<p class="text-sm text-gray-300 mt-2 pt-2 border-t border-white/10">${trade.notes}</p>` : ''}
+                    <button data-id="${trade.id}" class="delete-trade-btn text-xs text-red-500 hover:text-red-400 mt-2">Delete</button>
+                `;
+                container.appendChild(tradeEl);
+            });
+        }
+
+
+        window.setupPage = () => {
+             if (!auth.currentUser) return;
+             const userId = auth.currentUser.uid;
+             const tradesCollection = collection(db, `artifacts/finclarity-prod/users/${userId}/trades`);
+             const q = query(tradesCollection, orderBy("createdAt", "desc"));
+
+             onSnapshot(q, (snapshot) => {
+                trades = snapshot.docs.map(doc => {
+                    const data = doc.data();
+                    let pl = 0;
+                    if(data.direction === 'long') {
+                        pl = (data.exitPrice - data.entryPrice);
+                    } else {
+                        pl = (data.entryPrice - data.exitPrice);
+                    }
+                    // For simplicity, we assume a quantity of 1. You could add a quantity field.
+                    return { id: doc.id, ...data, pl };
+                });
+                renderTrades();
+                calculateAnalytics();
+             });
+
+            // Handle Form Submission
+            const tradeForm = document.getElementById('trade-form');
+            tradeForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const tradeData = {
+                    symbol: document.getElementById('trade-symbol').value,
+                    direction: document.getElementById('trade-direction').value,
+                    entryPrice: parseFloat(document.getElementById('trade-entry').value),
+                    exitPrice: parseFloat(document.getElementById('trade-exit').value),
+                    notes: document.getElementById('trade-notes').value,
+                    createdAt: serverTimestamp()
+                };
+                
+                try {
+                    await addDoc(tradesCollection, tradeData);
+                    tradeForm.reset();
+                } catch (error) {
+                    console.error("Error adding trade: ", error);
+                }
+            });
+            
+            // Handle Deletion
+            document.getElementById('trade-history').addEventListener('click', async (e) => {
+                if (e.target.classList.contains('delete-trade-btn')) {
+                    const tradeId = e.target.dataset.id;
+                    if (confirm('Are you sure you want to delete this trade?')) {
+                        try {
+                            await deleteDoc(doc(db, `artifacts/finclarity-prod/users/${userId}/trades/${tradeId}`));
+                        } catch (error) {
+                            console.error("Error deleting trade: ", error);
+                        }
+                    }
+                }
+            });
+        };
+    </script>
     <script type="module" src="js/main.js"></script>
 </body>
 </html>
