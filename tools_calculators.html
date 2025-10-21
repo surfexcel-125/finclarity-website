@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Market Screener | Finclarity</title>
+    <title>Tools & Calculators | Finclarity</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,6 +19,9 @@
         #sidebar { transition: transform 0.3s ease-in-out; }
         #sidebar-overlay { transition: opacity 0.3s ease-in-out; }
         .glass-card { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem; }
+        .form-input { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .main-button { background-color: #0052cc; color: white; transition: background-color 0.3s ease; }
+        .main-button:hover { background-color: #0065ff; }
     </style>
 </head>
 <body class="antialiased">
@@ -33,12 +36,12 @@
                 <nav id="sidebar-nav" class="flex flex-col space-y-2 text-lg">
                     <a href="member_dashboard.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-tachometer-alt fa-fw w-6"></i><span>Dashboard</span></a>
                     <a href="portfolio.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-wallet fa-fw w-6"></i><span>Portfolio</span></a>
-                    <a href="market_screener.html" class="sidebar-link active flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-search-dollar fa-fw w-6"></i><span>Market Screener</span></a>
+                    <a href="market_screener.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-search-dollar fa-fw w-6"></i><span>Market Screener</span></a>
                     <a href="articles.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-book-reader fa-fw w-6"></i><span>Our Articles</span></a>
                     <a href="news.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-newspaper fa-fw w-6"></i><span>Live News Feed</span></a>
                     <a href="economic_calendar.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-calendar-alt fa-fw w-6"></i><span>Economic Calendar</span></a>
                     <a href="trading_journal.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-book fa-fw w-6"></i><span>Trading Journal</span></a>
-                    <a href="tools_calculators.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-tools fa-fw w-6"></i><span>Tools</span></a>
+                    <a href="tools_calculators.html" class="sidebar-link active flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-tools fa-fw w-6"></i><span>Tools</span></a>
                     <a href="settings.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-user-cog fa-fw w-6"></i><span>Settings</span></a>
                 </nav>
                 <div class="mt-auto">
@@ -52,7 +55,7 @@
                 <div class="container mx-auto flex justify-between items-center p-4">
                      <div class="flex items-center gap-4">
                         <button id="open-sidebar-btn" class="text-white hover:text-blue-400 p-2 rounded-full hover:bg-white/10"><i class="fas fa-bars fa-lg"></i></button>
-                        <div class="text-2xl font-bold tracking-wider text-white">Market Screener</div>
+                        <div class="text-2xl font-bold tracking-wider text-white">Tools & Calculators</div>
                     </div>
                     <nav class="flex items-center gap-4">
                          <span id="user-email" class="hidden sm:inline text-gray-300"></span>
@@ -63,15 +66,33 @@
 
             <main class="container mx-auto p-4 md:p-8 flex-grow">
                 <div class="text-center mb-8">
-                    <h1 class="text-4xl font-bold">Discover Opportunities</h1>
-                    <p class="text-lg text-gray-400 mt-2 max-w-3xl mx-auto">Use our powerful screening tool to find assets that match your specific criteria and trading strategy.</p>
+                    <h1 class="text-4xl font-bold">Trading Calculators</h1>
+                    <p class="text-lg text-gray-400 mt-2 max-w-3xl mx-auto">Essential tools for risk management and trade planning. More calculators coming soon.</p>
                 </div>
-                <div class="glass-card overflow-hidden" style="height: 75vh;">
-                    <div class="tradingview-widget-container h-full">
-                        <div class="tradingview-widget-container__widget h-full"></div>
-                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
-                        { "width": "100%", "height": "100%", "defaultColumn": "overview", "screener_type": "crypto_mkt", "displayCurrency": "USD", "colorTheme": "dark", "isTransparent": true, "locale": "en" }
-                        </script>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div class="glass-card p-6">
+                        <h2 class="text-2xl font-bold mb-4">Position Size Calculator</h2>
+                        <div class="space-y-4">
+                            <div><label class="text-sm text-gray-400">Account Size ($)</label><input type="number" class="form-input w-full mt-1 p-2 rounded-lg" value="10000"></div>
+                            <div><label class="text-sm text-gray-400">Risk per Trade (%)</label><input type="number" class="form-input w-full mt-1 p-2 rounded-lg" value="1"></div>
+                            <div><label class="text-sm text-gray-400">Stop Loss (pips/points)</label><input type="number" class="form-input w-full mt-1 p-2 rounded-lg" value="20"></div>
+                        </div>
+                         <div class="mt-6 text-center bg-white/5 p-4 rounded-lg">
+                            <span class="text-sm text-gray-400 block">Recommended Position Size</span>
+                            <span class="text-3xl font-bold text-green-400">0.05 Lots</span>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6">
+                         <h2 class="text-2xl font-bold mb-4">Risk/Reward Calculator</h2>
+                        <div class="space-y-4">
+                            <div><label class="text-sm text-gray-400">Entry Price</label><input type="number" step="any" class="form-input w-full mt-1 p-2 rounded-lg" value="1.25000"></div>
+                            <div><label class="text-sm text-gray-400">Stop Loss Price</label><input type="number" step="any" class="form-input w-full mt-1 p-2 rounded-lg" value="1.24800"></div>
+                            <div><label class="text-sm text-gray-400">Take Profit Price</label><input type="number" step="any" class="form-input w-full mt-1 p-2 rounded-lg" value="1.25600"></div>
+                        </div>
+                         <div class="mt-6 text-center bg-white/5 p-4 rounded-lg">
+                            <span class="text-sm text-gray-400 block">Risk/Reward Ratio</span>
+                            <span class="text-3xl font-bold text-green-400">1 : 3</span>
+                        </div>
                     </div>
                 </div>
             </main>
