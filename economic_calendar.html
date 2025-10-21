@@ -67,8 +67,6 @@
                 <div class="mb-12">
                     <h1 class="text-3xl font-bold text-center mb-4">Market-Moving Events</h1>
                      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        
-                        <!-- Event Card 1: High Impact -->
                         <div class="glass-card p-5">
                             <div class="flex justify-between items-start">
                                 <div>
@@ -78,22 +76,11 @@
                                 <span class="text-xs font-bold py-1 px-3 rounded-full impact-high">High</span>
                             </div>
                             <div class="grid grid-cols-3 gap-4 text-center mt-4 pt-4 border-t border-white/10">
-                                <div>
-                                    <p class="text-sm text-gray-400">Previous</p>
-                                    <p class="text-lg font-semibold text-white">5.50%</p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-400">Forecast</p>
-                                    <p class="text-lg font-semibold text-white">5.50%</p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-400">Actual</p>
-                                    <p class="text-lg font-semibold text-gray-500">...</p>
-                                </div>
+                                <div><p class="text-sm text-gray-400">Previous</p><p class="text-lg font-semibold text-white">5.50%</p></div>
+                                <div><p class="text-sm text-gray-400">Forecast</p><p class="text-lg font-semibold text-white">5.50%</p></div>
+                                <div><p class="text-sm text-gray-400">Actual</p><p class="text-lg font-semibold text-gray-500">...</p></div>
                             </div>
                         </div>
-
-                        <!-- Event Card 2: Medium Impact -->
                         <div class="glass-card p-5">
                             <div class="flex justify-between items-start">
                                 <div>
@@ -103,22 +90,11 @@
                                 <span class="text-xs font-bold py-1 px-3 rounded-full impact-medium">Medium</span>
                             </div>
                             <div class="grid grid-cols-3 gap-4 text-center mt-4 pt-4 border-t border-white/10">
-                                <div>
-                                    <p class="text-sm text-gray-400">Previous</p>
-                                    <p class="text-lg font-semibold text-white">8.9K</p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-400">Forecast</p>
-                                    <p class="text-lg font-semibold text-white">10.2K</p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-400">Actual</p>
-                                    <p class="text-lg font-semibold text-gray-500">...</p>
-                                </div>
+                                <div><p class="text-sm text-gray-400">Previous</p><p class="text-lg font-semibold text-white">8.9K</p></div>
+                                <div><p class="text-sm text-gray-400">Forecast</p><p class="text-lg font-semibold text-white">10.2K</p></div>
+                                <div><p class="text-sm text-gray-400">Actual</p><p class="text-lg font-semibold text-gray-500">...</p></div>
                             </div>
                         </div>
-                        
-                        <!-- Event Card 3: High Impact -->
                         <div class="glass-card p-5">
                             <div class="flex justify-between items-start">
                                 <div>
@@ -127,33 +103,17 @@
                                 </div>
                                 <span class="text-xs font-bold py-1 px-3 rounded-full impact-high">High</span>
                             </div>
-                             <div class="mt-4 pt-4 border-t border-white/10 text-center">
-                                <p class="text-gray-400">Provides insights into the ECB's monetary policy decisions. Market volatility expected.</p>
-                            </div>
+                             <div class="mt-4 pt-4 border-t border-white/10 text-center"><p class="text-gray-400">Provides insights into the ECB's monetary policy decisions. Market volatility expected.</p></div>
                         </div>
-
                     </div>
                 </div>
                 
                 <div class="glass-card overflow-hidden" style="height: 75vh;">
-                    <div class="tradingview-widget-container h-full">
-                        <div class="tradingview-widget-container__widget h-full"></div>
-                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
-                        {
-                          "colorTheme": "dark",
-                          "isTransparent": true,
-                          "width": "100%",
-                          "height": "100%",
-                          "locale": "en",
-                          "importanceFilter": "-1,0,1"
-                        }
-                        </script>
-                    </div>
+                    <div class="tradingview-widget-container h-full"><div class="tradingview-widget-container__widget h-full"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>{ "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "locale": "en", "importanceFilter": "-1,0,1" }</script></div>
                 </div>
             </main>
         </div>
     </div>
-    
     <script type="module" src="js/main.js"></script>
 </body>
 </html>
