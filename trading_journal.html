@@ -105,8 +105,12 @@
                                     </div>
                                 </div>
                                 <div>
+                                    <label class="text-sm text-gray-400">Position Size</label>
+                                    <input type="number" step="any" id="trade-size" required class="form-input w-full mt-1 p-2 rounded-lg" placeholder="e.g., 100 shares, 1 lot">
+                                </div>
+                                <div>
                                     <label class="text-sm text-gray-400">Notes / Setup</label>
-                                    <textarea id="trade-notes" rows="4" class="form-input w-full mt-1 p-2 rounded-lg" placeholder="Why did you take this trade?"></textarea>
+                                    <textarea id="trade-notes" rows="3" class="form-input w-full mt-1 p-2 rounded-lg" placeholder="Why did you take this trade?"></textarea>
                                 </div>
                                 <button type="submit" class="main-button w-full font-bold py-3 rounded-lg">Save Trade</button>
                             </form>
@@ -158,7 +162,7 @@
             document.getElementById('profit-factor').textContent = isFinite(profitFactor) ? profitFactor.toFixed(2) : '∞';
             
             const avgWinLossEl = document.getElementById('avg-win-loss');
-            avgWinLossEl.innerHTML = `<span class="text-green-400">${avgWin.toFixed(2)}</span> / <span class="text-red-400">${avgLoss.toFixed(2)}</span>`;
+            avgWinLossEl.innerHTML = `<span class="text-green-400">${avgWin.toLocaleString('en-US', {style:'currency', currency:'USD'})}</span> / <span class="text-red-400">${avgLoss.toLocaleString('en-US', {style:'currency', currency:'USD'})}</span>`;
         }
         
         function renderTrades() {
@@ -186,7 +190,7 @@
                         </div>
                         <div class="text-right">
                             <p class="font-bold text-lg ${plColor}">${trade.pl.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</p>
-                            <p class="text-xs text-gray-500">Entry: ${trade.entryPrice} &rarr; Exit: ${trade.exitPrice}</p>
+                            <p class="text-xs text-gray-500">Entry: ${trade.entryPrice} &rarr; Exit: ${trade.exitPrice} (Size: ${trade.positionSize})</p>
                         </div>
                     </div>
                     ${trade.notes ? `<p class="text-sm text-gray-300 mt-2 pt-2 border-t border-white/10">${trade.notes}</p>` : ''}
@@ -207,12 +211,12 @@
                 trades = snapshot.docs.map(doc => {
                     const data = doc.data();
                     let pl = 0;
+                    const positionSize = data.positionSize || 1; // Default to 1 for safety
                     if(data.direction === 'long') {
-                        pl = (data.exitPrice - data.entryPrice);
+                        pl = (data.exitPrice - data.entryPrice) * positionSize;
                     } else {
-                        pl = (data.entryPrice - data.exitPrice);
+                        pl = (data.entryPrice - data.exitPrice) * positionSize;
                     }
-                    // For simplicity, we assume a quantity of 1. You could add a quantity field.
                     return { id: doc.id, ...data, pl };
                 });
                 renderTrades();
@@ -228,6 +232,7 @@
                     direction: document.getElementById('trade-direction').value,
                     entryPrice: parseFloat(document.getElementById('trade-entry').value),
                     exitPrice: parseFloat(document.getElementById('trade-exit').value),
+                    positionSize: parseFloat(document.getElementById('trade-size').value),
                     notes: document.getElementById('trade-notes').value,
                     createdAt: serverTimestamp()
                 };
