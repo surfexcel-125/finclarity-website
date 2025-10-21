@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Member Login | Finclarity</title>
+    <title>Member Login | Finex</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +24,9 @@
 </head>
 <body class="antialiased">
     <div class="min-h-screen flex flex-col items-center justify-center p-4">
-        <div class="text-3xl font-bold tracking-wider text-white mb-8"><a href="index.html">FINCLARITY</a></div>
+        <div class="text-3xl font-bold tracking-wider text-white mb-8">
+            <a href="index.html">FINEX</a>
+        </div>
         <div class="w-full max-w-md">
             <div class="glass-card p-8">
                 <h2 class="text-2xl font-bold mb-6 text-center">Member Login</h2>
@@ -46,36 +48,21 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
-        const firebaseConfig = {
-            apiKey: "AIzaSyCRtzONV0M1syCLTF6H5__cGEBgJxM13sM",
-            authDomain: "adminpanel-93879.firebaseapp.com",
-            projectId: "adminpanel-93879",
-            storageBucket: "adminpanel-93879.appspot.com",
-            messagingSenderId: "854889610123",
-            appId: "1:854889610123:web:4522c7fc685e9864014d8e"
-        };
+        const firebaseConfig = { apiKey: "AIzaSyCRtzONV0M1syCLTF6H5__cGEBgJxM13sM", authDomain: "adminpanel-93879.firebaseapp.com", projectId: "adminpanel-93879", storageBucket: "adminpanel-93879.appspot.com", messagingSenderId: "854889610123", appId: "1:854889610123:web:4522c7fc685e9864014d8e" };
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const loginForm = document.getElementById('login-form');
         const loginError = document.getElementById('login-error');
         onAuthStateChanged(auth, user => {
-            if (user) {
-                window.location.href = new URL('member_dashboard.html', window.location.href).href;
-            }
+            if (user) { window.location.href = 'member_dashboard.html'; }
         });
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             signInWithEmailAndPassword(auth, email, password)
-                .then(() => {
-                    loginError.style.display = 'none';
-                    window.location.href = new URL('member_dashboard.html', window.location.href).href;
-                })
-                .catch(() => {
-                    loginError.textContent = "Error: Invalid email or password.";
-                    loginError.style.display = 'block';
-                });
+                .then(() => { window.location.href = 'member_dashboard.html'; })
+                .catch(() => { loginError.textContent = "Error: Invalid email or password."; loginError.style.display = 'block'; });
         });
     </script>
 </body>
