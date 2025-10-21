@@ -14,11 +14,11 @@
         html::-webkit-scrollbar { display: none; }
         body { background-color: #0c111e; color: #f4f6f9; font-family: 'Source Sans Pro', sans-serif; }
         h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; }
-        .glass-card { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem; }
         .sidebar-link { transition: all 0.2s ease; color: #a9a9b3; }
         .sidebar-link:hover, .sidebar-link.active { color: #ffffff; background-color: rgba(255, 255, 255, 0.08); }
         #sidebar { transition: transform 0.3s ease-in-out; }
         #sidebar-overlay { transition: opacity 0.3s ease-in-out; }
+        .glass-card { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem; }
     </style>
 </head>
 <body class="antialiased">
@@ -47,8 +47,8 @@
             </div>
         </aside>
 
-        <div>
-            <header id="header" class="bg-transparent backdrop-blur-md sticky top-0 z-30">
+        <div class="min-h-screen flex flex-col">
+             <header id="header" class="bg-transparent backdrop-blur-md sticky top-0 z-30">
                 <div class="container mx-auto flex justify-between items-center p-4">
                      <div class="flex items-center gap-4">
                         <button id="open-sidebar-btn" class="text-white hover:text-blue-400 p-2 rounded-full hover:bg-white/10"><i class="fas fa-bars fa-lg"></i></button>
@@ -61,10 +61,15 @@
                 </div>
             </header>
 
-            <main class="container mx-auto p-4 md:p-8">
-                <div class="text-center">
-                    <h1 class="text-4xl md:text-5xl font-bold">Portfolio Management</h1>
-                    <p class="text-lg text-gray-400 mt-4 max-w-2xl mx-auto">This is where your detailed portfolio analysis, transaction history, and performance charts will live. Coming soon!</p>
+            <main class="container mx-auto p-4 md:p-8 flex-grow">
+                <div class="text-center mb-8">
+                    <h1 class="text-4xl font-bold">Portfolio Overview</h1>
+                    <p class="text-lg text-gray-400 mt-2 max-w-3xl mx-auto">This page is under construction. It will soon feature a deep dive into your portfolio's performance, allocation, and history.</p>
+                </div>
+                <div class="glass-card p-8 text-center">
+                    <i class="fas fa-chart-pie text-6xl text-blue-500 mb-4"></i>
+                    <h2 class="text-2xl font-bold">Full Portfolio Analytics Coming Soon</h2>
+                    <p class="text-gray-400 mt-2">Track your holdings, visualize your asset allocation, and analyze your performance over time.</p>
                 </div>
             </main>
         </div>
