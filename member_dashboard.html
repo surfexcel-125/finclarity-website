@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Member Dashboard | Finclarity</title>
+    <title>Member Dashboard | Finex</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,22 +12,13 @@
     <style>
         html { scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none; }
         html::-webkit-scrollbar { display: none; }
-        body {
-            background-color: #0c111e;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                              radial-gradient(circle at top left, rgba(26, 35, 54, 0.8), transparent 40%),
-                              radial-gradient(circle at bottom right, rgba(26, 35, 54, 0.8), transparent 40%);
-            background-size: 2rem 2rem, 2rem 2rem, 100% 100%, 100% 100%;
-            color: #f4f6f9; font-family: 'Source Sans Pro', sans-serif;
-        }
+        body { background-color: #0c111e; background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px), radial-gradient(circle at top left, rgba(26, 35, 54, 0.8), transparent 40%), radial-gradient(circle at bottom right, rgba(26, 35, 54, 0.8), transparent 40%); background-size: 2rem 2rem, 2rem 2rem, 100% 100%, 100% 100%; color: #f4f6f9; font-family: 'Source Sans Pro', sans-serif; }
         h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; }
         .glass-card { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem; }
         .sidebar-link { transition: all 0.2s ease; color: #a9a9b3; }
         .sidebar-link:hover, .sidebar-link.active { color: #ffffff; background-color: rgba(255, 255, 255, 0.08); }
         #sidebar { transition: transform 0.3s ease-in-out; }
         #sidebar-overlay { transition: opacity 0.3s ease-in-out; }
-        #dashboard-content { scroll-margin-top: 1rem; }
         #watchlist-modal { transition: opacity 0.3s ease; }
         #watchlist-modal-content { transition: transform 0.3s ease; }
     </style>
@@ -37,10 +28,7 @@
         <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-60 z-40 opacity-0 hidden"></div>
         <aside id="sidebar" class="fixed top-0 left-0 h-full w-72 bg-[#111827]/80 backdrop-blur-lg shadow-2xl z-50 transform -translate-x-full">
             <div class="p-6 flex flex-col h-full">
-                <div class="flex justify-between items-center mb-8">
-                    <div class="text-xl font-bold tracking-wider text-white"><a href="index.html">FINCLARITY</a></div>
-                    <button id="close-sidebar-btn" class="text-gray-400 hover:text-white"><i class="fas fa-times fa-lg"></i></button>
-                </div>
+                <div class="flex justify-between items-center mb-8"><div class="text-xl font-bold tracking-wider text-white"><a href="index.html">FINEX</a></div><button id="close-sidebar-btn" class="text-gray-400 hover:text-white"><i class="fas fa-times fa-lg"></i></button></div>
                 <nav id="sidebar-nav" class="flex flex-col space-y-2 text-lg">
                     <a href="member_dashboard.html" class="sidebar-link active flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-tachometer-alt fa-fw w-6"></i><span>Dashboard</span></a>
                     <a href="portfolio.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-wallet fa-fw w-6"></i><span>Portfolio</span></a>
@@ -52,106 +40,24 @@
                     <a href="tools_calculators.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-tools fa-fw w-6"></i><span>Tools</span></a>
                     <a href="settings.html" class="sidebar-link flex items-center gap-4 p-3 rounded-lg"><i class="fas fa-user-cog fa-fw w-6"></i><span>Settings</span></a>
                 </nav>
-                <div class="mt-auto">
-                    <a href="#" id="logout-btn" class="flex items-center gap-4 text-red-400 hover:text-red-300 hover:bg-red-500/10 p-3 rounded-lg transition-colors"><i class="fas fa-sign-out-alt fa-fw w-6"></i><span>Log Out</span></a>
-                </div>
+                <div class="mt-auto"><a href="#" id="logout-btn" class="flex items-center gap-4 text-red-400 hover:text-red-300 hover:bg-red-500/10 p-3 rounded-lg transition-colors"><i class="fas fa-sign-out-alt fa-fw w-6"></i><span>Log Out</span></a></div>
             </div>
         </aside>
-
         <div>
-            <header id="header" class="bg-transparent backdrop-blur-md sticky top-0 z-30">
-                <div class="container mx-auto flex justify-between items-center p-4">
-                     <div class="flex items-center gap-4">
-                        <button id="open-sidebar-btn" class="text-white hover:text-blue-400 p-2 rounded-full hover:bg-white/10"><i class="fas fa-bars fa-lg"></i></button>
-                        <div class="text-2xl font-bold tracking-wider text-white">Dashboard</div>
-                    </div>
-                    <nav class="flex items-center gap-4">
-                         <span id="user-email" class="hidden sm:inline text-gray-300"></span>
-                         <a href="settings.html" class="text-white p-2 rounded-full hover:bg-white/10"><i class="fas fa-user-circle fa-lg"></i></a>
-                    </nav>
-                </div>
-            </header>
-
+            <header id="header" class="bg-transparent backdrop-blur-md sticky top-0 z-30"><div class="container mx-auto flex justify-between items-center p-4"><div class="flex items-center gap-4"><button id="open-sidebar-btn" class="text-white hover:text-blue-400 p-2 rounded-full hover:bg-white/10"><i class="fas fa-bars fa-lg"></i></button><div class="text-2xl font-bold tracking-wider text-white">Dashboard</div></div><nav class="flex items-center gap-4"><span id="user-email" class="hidden sm:inline text-gray-300"></span><a href="settings.html" class="text-white p-2 rounded-full hover:bg-white/10"><i class="fas fa-user-circle fa-lg"></i></a></nav></div></header>
             <main class="container mx-auto">
-                <section class="h-[calc(100vh-68px)] flex flex-col items-center justify-center text-center p-4 relative">
-                    <div class="max-w-4xl">
-                        <h1 id="welcome-message" class="text-4xl md:text-6xl font-bold">Welcome back.</h1>
-                        <p class="text-lg md:text-xl text-gray-300 mt-4 max-w-2xl mx-auto">This is your ultimate command center. Analyze, track, and stay ahead of the markets.</p>
-                    </div>
-                    <div class="absolute bottom-10 left-1/2 -translate-x-1/2">
-                        <a href="#dashboard-content" class="text-gray-400 animate-bounce"><i class="fas fa-chevron-down fa-2x"></i></a>
-                    </div>
-                </section>
-                
+                <section class="h-[calc(100vh-68px)] flex flex-col items-center justify-center text-center p-4 relative"><div class="max-w-4xl"><h1 id="welcome-message" class="text-4xl md:text-6xl font-bold">Welcome back.</h1><p class="text-lg md:text-xl text-gray-300 mt-4 max-w-2xl mx-auto">This is your ultimate command center. Analyze, track, and stay ahead of the markets.</p></div><div class="absolute bottom-10 left-1/2 -translate-x-1/2"><a href="#dashboard-content" class="text-gray-400 animate-bounce"><i class="fas fa-chevron-down fa-2x"></i></a></div></section>
                 <section id="dashboard-content" class="p-4 md:py-16 space-y-6">
-                     <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                        <div class="glass-card p-6">
-                             <h3 class="text-xl font-bold mb-4">Portfolio Snapshot</h3>
-                             <div class="flex items-center justify-between">
-                                 <div><span class="text-gray-400 text-sm">Total Value</span><p class="text-3xl font-bold">$125,430</p></div>
-                                 <div class="text-right"><span class="text-gray-400 text-sm">Today's P/L</span><p class="text-2xl font-bold text-green-400">+$1,820</p></div>
-                             </div>
-                        </div>
-                        <div class="glass-card p-6 flex flex-col items-center justify-center">
-                             <h3 class="text-xl font-bold mb-2">Market Sentiment</h3>
-                             <div id="sentiment-widget-container" class="h-24 w-full">
-                                <!-- Sentiment widget will be loaded here dynamically -->
-                             </div>
-                        </div>
-                        <div class="lg:col-span-2 glass-card p-6">
-                            <h3 class="text-xl font-bold mb-2">Major Markets</h3>
-                            <div class="tradingview-widget-container h-24 w-full">
-                                <div class="tradingview-widget-container__widget"></div>
-                                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
-                                { "width": "100%", "height": "100%", "symbolsGroups": [ { "name": "Indices & Forex", "symbols": [ { "name": "FOREXCOM:SPXUSD", "displayName": "S&P 500" }, { "name": "FOREXCOM:NSXUSD", "displayName": "NASDAQ 100" }, { "name": "FX_IDC:EURUSD", "displayName": "EUR/USD" }, { "name": "FX_IDC:USDJPY", "displayName": "USD/JPY" } ] } ], "showSymbolLogo": true, "colorTheme": "dark", "isTransparent": true, "locale": "en" }
-                                </script>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div class="lg:col-span-2 glass-card p-2" style="height: 60vh;">
-                             <div class="tradingview-widget-container h-full w-full"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>{ "autosize": true, "symbol": "NASDAQ:AAPL", "interval": "D", "timezone": "Etc/UTC", "theme": "dark", "style": "1", "locale": "en", "enable_publishing": false, "backgroundColor": "rgba(0, 0, 0, 0)", "gridColor": "rgba(255, 255, 255, 0.06)", "allow_symbol_change": true, "container_id": "tradingview-widget-container__widget" }</script></div>
-                        </div>
-                        <div class="space-y-6">
-                            <div class="glass-card p-6">
-                                <div class="flex justify-between items-center mb-4">
-                                    <h3 class="text-xl font-bold">Dynamic Watchlist</h3>
-                                    <button id="edit-watchlist-btn" class="text-gray-400 hover:text-white transition-colors"><i class="fas fa-cog"></i></button>
-                                </div>
-                                <div id="watchlist-container" class="tradingview-widget-container" style="height: 25vh; width:100%"></div>
-                            </div>
-                            <div class="glass-card p-6">
-                                <h3 class="text-xl font-bold mb-4">Upcoming Events</h3>
-                                <div class="space-y-4">
-                                    <div class="flex items-center justify-between"><div class="flex items-center gap-3"><span class="font-semibold text-gray-400 text-sm">23:30</span><span class="text-lg">🇺🇸</span><span class="text-white text-sm">Fed Rate Decision</span></div><div class="flex gap-1 items-center" title="High Impact"><div class="w-2 h-4 bg-red-500 rounded-sm"></div><div class="w-2 h-4 bg-red-500 rounded-sm"></div><div class="w-2 h-4 bg-red-500 rounded-sm"></div></div></div>
-                                    <div class="flex items-center justify-between"><div class="flex items-center gap-3"><span class="font-semibold text-gray-400 text-sm">11:30</span><span class="text-lg">🇬🇧</span><span class="text-white text-sm">Claimant Count</span></div><div class="flex gap-1 items-center" title="Medium Impact"><div class="w-2 h-4 bg-orange-500 rounded-sm"></div><div class="w-2 h-4 bg-orange-500 rounded-sm"></div><div class="w-2 h-4 bg-gray-600 rounded-sm"></div></div></div>
-                                     <div class="flex items-center justify-between"><div class="flex items-center gap-3"><span class="font-semibold text-gray-400 text-sm">18:15</span><span class="text-lg">🇪🇺</span><span class="text-white text-sm">ECB Press Conference</span></div><div class="flex gap-1 items-center" title="High Impact"><div class="w-2 h-4 bg-red-500 rounded-sm"></div><div class="w-2 h-4 bg-red-500 rounded-sm"></div><div class="w-2 h-4 bg-red-500 rounded-sm"></div></div></div>
-                                    <div class="flex items-center justify-between"><div class="flex items-center gap-3"><span class="font-semibold text-gray-400 text-sm">18:00</span><span class="text-lg">🇩🇪</span><span class="text-white text-sm">German ZEW Sentiment</span></div><div class="flex gap-1 items-center" title="Low Impact"><div class="w-2 h-4 bg-yellow-500 rounded-sm"></div><div class="w-2 h-4 bg-gray-600 rounded-sm"></div><div class="w-2 h-4 bg-gray-600 rounded-sm"></div></div></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                     <div class="grid grid-cols-1 lg:grid-cols-4 gap-6"><div class="glass-card p-6"><h3 class="text-xl font-bold mb-4">Portfolio Snapshot</h3><div class="flex items-center justify-between"><div><span class="text-gray-400 text-sm">Total Value</span><p class="text-3xl font-bold">$125,430</p></div><div class="text-right"><span class="text-gray-400 text-sm">Today's P/L</span><p class="text-2xl font-bold text-green-400">+$1,820</p></div></div></div><div class="glass-card p-6 flex flex-col items-center justify-center"><h3 class="text-xl font-bold mb-2">Market Sentiment</h3><div id="sentiment-widget-container" class="h-24 w-full"></div></div><div class="lg:col-span-2 glass-card p-6"><h3 class="text-xl font-bold mb-2">Major Markets</h3><div class="tradingview-widget-container h-24 w-full"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async> { "width": "100%", "height": "100%", "symbolsGroups": [ { "name": "Indices & Forex", "symbols": [ { "name": "FOREXCOM:SPXUSD", "displayName": "S&P 500" }, { "name": "FOREXCOM:NSXUSD", "displayName": "NASDAQ 100" }, { "name": "FX_IDC:EURUSD", "displayName": "EUR/USD" }, { "name": "FX_IDC:USDJPY", "displayName": "USD/JPY" } ] } ], "showSymbolLogo": true, "colorTheme": "dark", "isTransparent": true, "locale": "en" } </script></div></div></div>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6"><div class="lg:col-span-2 glass-card p-2" style="height: 60vh;"><div class="tradingview-widget-container h-full w-full"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>{ "autosize": true, "symbol": "NASDAQ:AAPL", "interval": "D", "timezone": "Etc/UTC", "theme": "dark", "style": "1", "locale": "en", "enable_publishing": false, "backgroundColor": "rgba(0, 0, 0, 0)", "gridColor": "rgba(255, 255, 255, 0.06)", "allow_symbol_change": true, "container_id": "tradingview-widget-container__widget" }</script></div></div><div class="space-y-6"><div class="glass-card p-6"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Dynamic Watchlist</h3><button id="edit-watchlist-btn" class="text-gray-400 hover:text-white transition-colors"><i class="fas fa-cog"></i></button></div><div id="watchlist-container" class="tradingview-widget-container" style="height: 25vh; width:100%"></div></div><div class="glass-card p-6"><h3 class="text-xl font-bold mb-4">Upcoming Events</h3><div class="space-y-4"><div class="flex items-center justify-between"><div class="flex items-center gap-3"><span class="font-semibold text-gray-400 text-sm">23:30</span><span class="text-lg">🇺🇸</span><span class="text-white text-sm">Fed Rate Decision</span></div><div class="flex gap-1 items-center" title="High Impact"><div class="w-2 h-4 bg-red-500 rounded-sm"></div><div class="w-2 h-4 bg-red-500 rounded-sm"></div><div class="w-2 h-4 bg-red-500 rounded-sm"></div></div></div><div class="flex items-center justify-between"><div class="flex items-center gap-3"><span class="font-semibold text-gray-400 text-sm">11:30</span><span class="text-lg">🇬🇧</span><span class="text-white text-sm">Claimant Count</span></div><div class="flex gap-1 items-center" title="Medium Impact"><div class="w-2 h-4 bg-orange-500 rounded-sm"></div><div class="w-2 h-4 bg-orange-500 rounded-sm"></div><div class="w-2 h-4 bg-gray-600 rounded-sm"></div></div></div><div class="flex items-center justify-between"><div class="flex items-center gap-3"><span class="font-semibold text-gray-400 text-sm">18:15</span><span class="text-lg">🇪🇺</span><span class="text-white text-sm">ECB Press Conference</span></div><div class="flex gap-1 items-center" title="High Impact"><div class="w-2 h-4 bg-red-500 rounded-sm"></div><div class="w-2 h-4 bg-red-500 rounded-sm"></div><div class="w-2 h-4 bg-red-500 rounded-sm"></div></div></div><div class="flex items-center justify-between"><div class="flex items-center gap-3"><span class="font-semibold text-gray-400 text-sm">18:00</span><span class="text-lg">🇩🇪</span><span class="text-white text-sm">German ZEW Sentiment</span></div><div class="flex gap-1 items-center" title="Low Impact"><div class="w-2 h-4 bg-yellow-500 rounded-sm"></div><div class="w-2 h-4 bg-gray-600 rounded-sm"></div><div class="w-2 h-4 bg-gray-600 rounded-sm"></div></div></div></div></div></div></div>
                 </section>
             </main>
         </div>
     </div>
-
-    <div id="watchlist-modal" class="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none">
-        <div id="watchlist-modal-content" class="glass-card p-8 rounded-2xl w-full max-w-md transform scale-95">
-            <div class="flex justify-between items-center mb-6"><h2 class="text-2xl font-bold">Edit Watchlist</h2><button id="close-watchlist-modal" class="text-gray-400 hover:text-white text-2xl">&times;</button></div>
-            <div>
-                <label for="watchlist-symbols" class="text-sm text-gray-400 block mb-2">Enter ticker symbols separated by commas.</label>
-                <textarea id="watchlist-symbols" rows="5" class="w-full p-3 bg-gray-900/50 border border-white/20 rounded-lg focus:outline-none focus:border-blue-500" placeholder="e.g., NASDAQ:AAPL, NASDAQ:TSLA, BITSTAMP:BTCUSD"></textarea>
-                <button id="save-watchlist-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg mt-4">Save Watchlist</button>
-            </div>
-        </div>
-    </div>
-    
+    <div id="watchlist-modal" class="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none"><div id="watchlist-modal-content" class="glass-card p-8 rounded-2xl w-full max-w-md transform scale-95"><div class="flex justify-between items-center mb-6"><h2 class="text-2xl font-bold">Edit Watchlist</h2><button id="close-watchlist-modal" class="text-gray-400 hover:text-white text-2xl">&times;</button></div><div><label for="watchlist-symbols" class="text-sm text-gray-400 block mb-2">Enter ticker symbols separated by commas.</label><textarea id="watchlist-symbols" rows="5" class="w-full p-3 bg-gray-900/50 border border-white/20 rounded-lg focus:outline-none focus:border-blue-500" placeholder="e.g., NASDAQ:AAPL, NASDAQ:TSLA, BITSTAMP:BTCUSD"></textarea><button id="save-watchlist-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg mt-4">Save Watchlist</button></div></div></div>
     <script type="module">
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
         import { auth } from './js/main.js';
-
         const watchlistContainer = document.getElementById('watchlist-container');
         const editBtn = document.getElementById('edit-watchlist-btn');
         const modal = document.getElementById('watchlist-modal');
@@ -159,67 +65,27 @@
         const closeModalBtn = document.getElementById('close-watchlist-modal');
         const saveBtn = document.getElementById('save-watchlist-btn');
         const symbolsTextarea = document.getElementById('watchlist-symbols');
-
         const defaultSymbols = [ { "name": "NASDAQ:AAPL" }, { "name": "NASDAQ:TSLA" }, { "name": "BITSTAMP:BTCUSD" }, { "name": "BITSTAMP:ETHUSD" } ];
-
-        function createWatchlistWidget(symbols) {
-            watchlistContainer.innerHTML = '';
-            new TradingView.widget({ "container_id": "watchlist-container", "width": "100%", "height": "100%", "symbolsGroups": [{ "name": "Watchlist", "symbols": symbols }], "showSymbolLogo": true, "colorTheme": "dark", "isTransparent": true, "locale": "en" });
-        }
-        
-        function loadWatchlist() {
-            const savedSymbolsStr = localStorage.getItem('userWatchlist');
-            if (savedSymbolsStr) {
-                const symbols = JSON.parse(savedSymbolsStr);
-                createWatchlistWidget(symbols);
-                symbolsTextarea.value = symbols.map(s => s.name).join(', ');
-            } else {
-                createWatchlistWidget(defaultSymbols);
-                symbolsTextarea.value = defaultSymbols.map(s => s.name).join(', ');
-            }
-        }
-
+        function createWatchlistWidget(symbols) { if (watchlistContainer.innerHTML !== '') { watchlistContainer.innerHTML = ''; } new TradingView.widget({ "container_id": "watchlist-container", "width": "100%", "height": "100%", "symbolsGroups": [{ "name": "Watchlist", "symbols": symbols }], "showSymbolLogo": true, "colorTheme": "dark", "isTransparent": true, "locale": "en" }); }
+        function loadWatchlist() { const savedSymbolsStr = localStorage.getItem('userWatchlist'); const symbols = savedSymbolsStr ? JSON.parse(savedSymbolsStr) : defaultSymbols; createWatchlistWidget(symbols); symbolsTextarea.value = symbols.map(s => s.name).join(', '); }
         function openModal() { modal.classList.remove('opacity-0', 'pointer-events-none'); modalContent.classList.remove('scale-95'); }
         function closeModal() { modal.classList.add('opacity-0', 'pointer-events-none'); modalContent.classList.add('scale-95'); }
-
         editBtn.addEventListener('click', openModal);
         closeModalBtn.addEventListener('click', closeModal);
         modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-
-        saveBtn.addEventListener('click', () => {
-            const symbols = symbolsTextarea.value.trim().split(',').map(s => ({ "name": s.trim() })).filter(s => s.name);
-            localStorage.setItem('userWatchlist', JSON.stringify(symbols));
-            createWatchlistWidget(symbols);
-            closeModal();
-        });
-        
-        // --- NEW: Robust Widget Loading ---
+        saveBtn.addEventListener('click', () => { const symbols = symbolsTextarea.value.trim().split(',').map(s => ({ "name": s.trim() })).filter(s => s.name); localStorage.setItem('userWatchlist', JSON.stringify(symbols)); createWatchlistWidget(symbols); closeModal(); });
         function loadSentimentWidget() {
             const container = document.getElementById('sentiment-widget-container');
-            if (container && container.children.length === 0) {
+            if (container && container.innerHTML === '') {
                 const script = document.createElement('script');
                 script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-fear-and-greed-index.js';
                 script.async = true;
-                script.innerHTML = JSON.stringify({
-                    "theme": "dark",
-                    "locale": "en",
-                    "isTransparent": true
-                });
+                script.innerHTML = JSON.stringify({ "theme": "dark", "locale": "en", "isTransparent": true });
                 container.appendChild(script);
             }
         }
-
-        onAuthStateChanged(auth, user => {
-            if (user && user.email) {
-                const welcomeMessage = document.getElementById('welcome-message');
-                if (welcomeMessage) { welcomeMessage.textContent = `Welcome back, ${user.email.split('@')[0]}.`; }
-            }
-        });
-        
-        window.setupPage = () => { 
-            loadWatchlist(); 
-            loadSentimentWidget(); // Load the sentiment widget dynamically
-        };
+        function setWelcomeMessage(user) { if (user && user.email) { const welcomeMessage = document.getElementById('welcome-message'); if (welcomeMessage) { welcomeMessage.textContent = `Welcome back, ${user.email.split('@')[0]}.`; } } }
+        window.setupPage = (user) => { loadWatchlist(); loadSentimentWidget(); setWelcomeMessage(user); };
     </script>
     <script type="module" src="js/main.js"></script>
 </body>
