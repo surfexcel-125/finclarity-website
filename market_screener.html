@@ -18,6 +18,7 @@
         .sidebar-link:hover, .sidebar-link.active { color: #ffffff; background-color: rgba(255, 255, 255, 0.08); }
         #sidebar { transition: transform 0.3s ease-in-out; }
         #sidebar-overlay { transition: opacity 0.3s ease-in-out; }
+        .glass-card { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem; }
     </style>
 </head>
 <body class="antialiased">
@@ -46,8 +47,8 @@
             </div>
         </aside>
 
-        <div>
-            <header id="header" class="bg-transparent backdrop-blur-md sticky top-0 z-30">
+        <div class="min-h-screen flex flex-col">
+             <header id="header" class="bg-transparent backdrop-blur-md sticky top-0 z-30">
                 <div class="container mx-auto flex justify-between items-center p-4">
                      <div class="flex items-center gap-4">
                         <button id="open-sidebar-btn" class="text-white hover:text-blue-400 p-2 rounded-full hover:bg-white/10"><i class="fas fa-bars fa-lg"></i></button>
@@ -60,8 +61,19 @@
                 </div>
             </header>
 
-            <main class="container mx-auto p-4 md:p-8">
-                <div class="tradingview-widget-container" style="height:80vh; width:100%"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>{ "width": "100%", "height": "100%", "defaultColumn": "overview", "screener_type": "stock", "displayCurrency": "USD", "colorTheme": "dark", "locale": "en", "isTransparent": true }</script></div>
+            <main class="container mx-auto p-4 md:p-8 flex-grow">
+                <div class="text-center mb-8">
+                    <h1 class="text-4xl font-bold">Discover Opportunities</h1>
+                    <p class="text-lg text-gray-400 mt-2 max-w-3xl mx-auto">Use our powerful screening tool to find assets that match your specific criteria and trading strategy.</p>
+                </div>
+                <div class="glass-card overflow-hidden" style="height: 75vh;">
+                    <div class="tradingview-widget-container h-full">
+                        <div class="tradingview-widget-container__widget h-full"></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
+                        { "width": "100%", "height": "100%", "defaultColumn": "overview", "screener_type": "crypto_mkt", "displayCurrency": "USD", "colorTheme": "dark", "isTransparent": true, "locale": "en" }
+                        </script>
+                    </div>
+                </div>
             </main>
         </div>
     </div>
